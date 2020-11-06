@@ -1,0 +1,4 @@
+rootProject.name="backpack-registrychecklists"
+include ':backpack-registrychecklists-app'
+include ':backpack-registrychecklists-consumer-app'
+include ':backpack-registrychecklists-service'

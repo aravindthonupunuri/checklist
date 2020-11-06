@@ -1,0 +1,58 @@
+plugins {
+    id "application"
+}
+
+apply from: "test.gradle"
+apply plugin: "com.target.platform.connector"
+
+mainClassName = "com.tgt.backpackregistrychecklists.api.Application"
+
+distTar {
+    archiveFileName = project.name + ".tar"
+}
+
+dependencies {
+    implementation project(":backpack-registrychecklists-service")
+    implementation "com.tgt.lists.micronaut:micronaut-resilience4j:2.201.0"
+    implementation "org.owasp.esapi:esapi:2.2.0.0"
+    testImplementation('org.apache.kafka:kafka-clients:2.4.0:test') { force = true }
+    testImplementation('org.apache.kafka:kafka_2.12:2.4.0:test') { force = true }
+    testImplementation project(':backpack-registrychecklists-service').sourceSets.test.output
+}
+
+def clientJarName = 'backpack-registry-client'
+task clientJar(type: Jar, dependsOn: classes) {
+    baseName = clientJarName
+    version =  System.properties["VERSION"]
+    includeEmptyDirs = false
+    from (sourceSets.main.output)
+    from (project(':backpack-registrychecklists-service').sourceSets.main.output) {
+        // exclude backpack-registry-service module's META-INF/services
+        exclude "**\\META-INF\\services\\**\\*"
+    }
+    // META-INF/services should be included when any of the included classes use micronaut annotations e.g. @Client, @Filter etc.
+    // Include Enum classes with <Classname>* rather than <Classname>.* as it may cause issues with Enums using companion objects
+    // Include micronaut's $ prefixed and suffixed classes for compiled time injection to work
+    include ("**\\META-INF\\services\\**\\*", "**\\transport\\**\\*", "**\\util\\**", "**\\client\\BackpackRegistryClient.*", "**\\client\\BackpackRegistryClient\$*", "**\\client\\\$BackpackRegistryClient\$*")
+}
+task clientSourcesJar(type: Jar, dependsOn: classes) {
+    baseName = clientJarName
+    version =  System.properties["VERSION"]
+    classifier = 'sources'
+    includeEmptyDirs = false
+    from (project(':backpack-registrychecklists-service').sourceSets.main.kotlin, sourceSets.main.kotlin)
+    include ("**\\transport\\**\\*", "**\\util\\**", "**\\client\\BackpackRegistryClient.*")
+}
+
+publishing {
+    publications {
+        client(MavenPublication) {
+            artifactId = 'backpack-registry-client'
+            version = System.properties["VERSION"]
+            artifact tasks.clientJar
+            artifact tasks.clientSourcesJar
+        }
+    }
+
+    // repositories section is in root build.gradle
+}
