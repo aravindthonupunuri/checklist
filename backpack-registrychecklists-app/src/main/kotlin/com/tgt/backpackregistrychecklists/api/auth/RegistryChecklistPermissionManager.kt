@@ -1,9 +1,7 @@
 package com.tgt.backpackregistrychecklists.api.auth
 
-import com.tgt.lists.cart.CartClient
 import com.tgt.lists.common.components.exception.BaseErrorCodes
 import com.tgt.lists.common.components.exception.ForbiddenException
-import com.tgt.lists.common.components.filters.auth.permissions.DefaultListPermissionManager
 import com.tgt.lists.common.components.filters.auth.permissions.ListPermissionManager
 import com.tgt.listspermissions.api.client.ListPermissionsClient
 import com.tgt.listspermissions.domain.model.PermissionType

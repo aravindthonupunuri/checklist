@@ -33,7 +33,6 @@ open class RegistryChecklistEventDispatcher(
 
     override fun dispatchEvent(eventHeaders: EventHeaders, data: Any, isPoisonEvent: Boolean): Mono<EventProcessingResult> {
         if (eventHeaders.source == source || eventHeaders.source == dlqSource || allowedSources.contains(eventHeaders.source)) {
-
         }
 
         logger.debug { "Unhandled eventType: ${eventHeaders.eventType}" }
