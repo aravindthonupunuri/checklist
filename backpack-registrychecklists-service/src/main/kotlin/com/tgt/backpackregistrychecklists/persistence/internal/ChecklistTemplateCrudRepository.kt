@@ -1,8 +1,8 @@
-package com.tgt.backpackchecklists.persistence.internal
+package com.tgt.backpackregistrychecklists.persistence.internal
 
-import com.tgt.backpackchecklists.model.ChecklistTemplatePK
-import com.tgt.backpackchecklists.model.ChecklistTemplate
-import com.tgt.backpackchecklists.persistence.ChecklistTemplateRepository
+import com.tgt.backpackregistrychecklists.domain.model.ChecklistTemplatePK
+import com.tgt.backpackregistrychecklists.domain.model.ChecklistTemplate
+import com.tgt.backpackregistrychecklists.persistence.ChecklistTemplateRepository
 import io.micronaut.data.jdbc.annotation.JdbcRepository
 import io.micronaut.data.model.query.builder.sql.Dialect
 import io.micronaut.data.repository.reactive.ReactiveStreamsCrudRepository

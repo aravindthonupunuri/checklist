@@ -42,7 +42,7 @@ abstract class BasePersistenceFunctionalTest extends BaseFunctionalTest implemen
         if(jdbc == null) {
             if (postgreSQLContainer == null) {
                 postgreSQLContainer = new PostgreSQLContainer()
-                    .withDatabaseName("lists")
+                    .withDatabaseName("registrychecklists")
                     .withUsername("postgres")
                     .withPassword("postgres")
                 postgreSQLContainer.start()

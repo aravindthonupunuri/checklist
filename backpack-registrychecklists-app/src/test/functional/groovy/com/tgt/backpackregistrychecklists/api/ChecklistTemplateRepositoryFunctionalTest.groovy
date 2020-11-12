@@ -1,8 +1,8 @@
 package com.tgt.backpackregistrychecklists.api
 
-import com.tgt.backpackchecklists.model.ChecklistTemplate
-import com.tgt.backpackchecklists.model.ChecklistTemplatePK
-import com.tgt.backpackchecklists.persistence.ChecklistTemplateRepository
+import com.tgt.backpackregistrychecklists.domain.model.ChecklistTemplate
+import com.tgt.backpackregistrychecklists.domain.model.ChecklistTemplatePK
+import com.tgt.backpackregistrychecklists.persistence.ChecklistTemplateRepository
 import com.tgt.backpackregistrychecklists.test.BasePersistenceFunctionalTest
 import io.micronaut.test.annotation.MicronautTest
 import org.slf4j.Logger
@@ -18,6 +18,11 @@ class ChecklistTemplateRepositoryFunctionalTest extends BasePersistenceFunctiona
 
     @Inject
     ChecklistTemplateRepository checklistTemplateRepository
+
+    @Override
+    Logger getLogger() {
+        return null
+    }
 
     def "test save checklist"() {
         given:
@@ -61,8 +66,4 @@ class ChecklistTemplateRepositoryFunctionalTest extends BasePersistenceFunctiona
         result1 != null
     }
 
-    @Override
-    Logger getLogger() {
-        return null
-    }
 }

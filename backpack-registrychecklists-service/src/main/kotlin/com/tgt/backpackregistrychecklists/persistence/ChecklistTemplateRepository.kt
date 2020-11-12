@@ -1,6 +1,6 @@
-package com.tgt.backpackchecklists.persistence
+package com.tgt.backpackregistrychecklists.persistence
 
-import com.tgt.backpackchecklists.model.ChecklistTemplate
+import com.tgt.backpackregistrychecklists.domain.model.ChecklistTemplate
 import io.micronaut.data.annotation.Query
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
