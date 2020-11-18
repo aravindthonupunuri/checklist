@@ -1,8 +1,7 @@
-package com.tgt.backpackregistrychecklists.api
+package com.tgt.backpackregistrychecklists.persistence
 
 import com.tgt.backpackregistrychecklists.domain.model.CheckedSubCategories
 import com.tgt.backpackregistrychecklists.domain.model.CheckedSubCategoriesId
-import com.tgt.backpackregistrychecklists.persistence.CheckedSubCategoriesRepository
 import com.tgt.backpackregistrychecklists.test.BasePersistenceFunctionalTest
 import io.micronaut.test.annotation.MicronautTest
 import org.slf4j.Logger
