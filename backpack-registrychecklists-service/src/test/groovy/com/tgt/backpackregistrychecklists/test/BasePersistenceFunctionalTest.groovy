@@ -1,6 +1,5 @@
 package com.tgt.backpackregistrychecklists.test
 
-
 import io.micronaut.test.support.TestPropertyProvider
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -35,7 +34,7 @@ abstract class BasePersistenceFunctionalTest extends BaseFunctionalTest implemen
     */
     @Override
     Map<String, String> getProperties() {
-        def map = Object.getProperties()
+        def map = super.getProperties()
 
         jdbc = System.getenv("JDBC_URL")
 
@@ -95,7 +94,7 @@ abstract class BasePersistenceFunctionalTest extends BaseFunctionalTest implemen
             if (jdbc != null) {
                 connection = DriverManager.getConnection(jdbc, "postgres", "postgres")
                 statement = connection.createStatement()
-                statement.executeUpdate("TRUNCATE TABLE REGISTRY_CHECKLIST, CHECKED_SUBCATEGORIES, CHECKLIST_TEMPLATE")
+                statement.executeUpdate("TRUNCATE TABLE CHECKLIST_TEMPLATE, CHECKED_SUBCATEGORIES, REGISTRY_CHECKLIST")
             }
         } catch(Throwable t) {
             t.printStackTrace()

@@ -6,9 +6,9 @@ scriptDir=`dirname $0`
 if [[ "$scriptDir" =~ ^\..* ]]; then
    scriptDir="$currDir/$scriptDir"
 fi
-appname=backpackregistry
+appname=backpackregistrychecklists
 gitorg=Registry-Modernization
-gitrepo=backpack-registry
+gitrepo=backpack-registrychecklists
 resources_location=$scriptDir/../src/main/resources
 secret_resources_location=$resources_location/secrets
 data_folder=${scriptDir}/../../data

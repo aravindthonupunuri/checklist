@@ -1,5 +1,5 @@
 services:
-  backpackregistrypostgres:
+  backpackregistrychecklistspostgres:
     image: 'postgres:11.5'
     environment:
       - POSTGRES_USER=postgres
@@ -31,36 +31,36 @@ pipeline:
       - cache_s3_secret_key
       - cache_s3_ca_cert
 
-  publish-config-backpack-registry-dev:
-    when:
-      event: [push]
-      branch: master
-    image: 'docker.target.com/app/lists/alpine-bash-curl-ssl:1.0.5'
-    environment:
-      CICD_MODE: 'true'
-    secrets:
-      - TAP_API_TOKEN
-      - backpack_registry_app_private_key_dev
-      - backpack_registry_consumer_app_private_key_dev
-    commands:
-      - 'tap_api_token=$TAP_API_TOKEN app_private_key=$BACKPACK_REGISTRY_APP_PRIVATE_KEY_DEV ./backpack-registry-app/scripts/config_deploy_manager.sh conf.dev.0.0'
-      - 'tap_api_token=$TAP_API_TOKEN app_private_key=$BACKPACK_REGISTRY_CONSUMER_APP_PRIVATE_KEY_DEV ./backpack-registry-consumer-app/scripts/config_deploy_manager.sh conf.dev.0.0'
+#  publish-config-backpack-registrychecklists-dev:
+#    when:
+#      event: [push]
+#      branch: master
+#    image: 'docker.target.com/app/lists/alpine-bash-curl-ssl:1.0.5'
+#    environment:
+#      CICD_MODE: 'true'
+#    secrets:
+#      - TAP_API_TOKEN
+#      - backpack_registrychecklists_app_private_key_dev
+#      - backpack_registrychecklists_consumer_app_private_key_dev
+#    commands:
+#      - 'tap_api_token=$TAP_API_TOKEN app_private_key=$BACKPACK_REGISTRYCHECKLISTS_APP_PRIVATE_KEY_DEV ./backpack-registrychecklists-app/scripts/config_deploy_manager.sh conf.dev.0.0'
+#      - 'tap_api_token=$TAP_API_TOKEN app_private_key=$BACKPACK_REGISTRYCHECKLISTS_CONSUMER_APP_PRIVATE_KEY_DEV ./backpack-registrychecklists-consumer-app/scripts/config_deploy_manager.sh conf.dev.0.0'
 
-  publish-config-backpack-registry-stage:
+  publish-config-backpack-registrychecklists-stage:
     when:
       event: tag
-      ref: 'refs/tags/conf.stage.backpackregistry.*'
+      ref: 'refs/tags/conf.stage.registrychecklists.*'
       branch: master
     image: 'docker.target.com/app/lists/alpine-bash-curl-ssl:1.0.5'
     environment:
       CICD_MODE: 'true'
     secrets:
       - TAP_API_TOKEN
-      - backpack_registry_app_private_key_stage
-      - backpack_registry_consumer_app_private_key_stage
+      - backpack_registrychecklists_app_private_key_stage
+      - backpack_registrychecklists_consumer_app_private_key_stage
     commands:
-      - 'tap_api_token=$TAP_API_TOKEN app_private_key=$BACKPACK_REGISTRY_APP_PRIVATE_KEY_STAGE ./backpack-registry-app/scripts/config_deploy_manager.sh ${DRONE_TAG}'
-      - 'tap_api_token=$TAP_API_TOKEN app_private_key=$BACKPACK_REGISTRY_CONSUMER_APP_PRIVATE_KEY_STAGE ./backpack-registry-consumer-app/scripts/config_deploy_manager.sh ${DRONE_TAG}'
+      - 'tap_api_token=$TAP_API_TOKEN app_private_key=$BACKPACK_REGISTRYCHECKLISTS_APP_PRIVATE_KEY_STAGE ./backpack-registrychecklists-app/scripts/config_deploy_manager.sh ${DRONE_TAG}'
+      - 'tap_api_token=$TAP_API_TOKEN app_private_key=$BACKPACK_REGISTRYCHECKLISTS_CONSUMER_APP_PRIVATE_KEY_STAGE ./backpack-registrychecklists-consumer-app/scripts/config_deploy_manager.sh ${DRONE_TAG}'
 
   build:
     when:
@@ -70,7 +70,7 @@ pipeline:
       JAVA_TOOL_OPTIONS: '-Xmx4000M'
       GRADLE_USER_HOME: .gradle
       GRADLE_OPTS: '-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=1 -Dorg.gradle.parallel=false'
-      JDBC_URL: 'jdbc:postgresql://backpackregistrypostgres:5432/grws'
+      JDBC_URL: 'jdbc:postgresql://backpackregistrychecklistspostgres:5432/grws'
       KAFKA_BOOTSTRAP_SERVERS: 'kafka:9092'
     commands:
       - './gradlew build distTar'
@@ -96,12 +96,12 @@ pipeline:
     flush: true
     flush_age: 14
 
-  publish-docker-backpack-registry-app-dev:
+  publish-docker-backpack-registrychecklists-app-dev:
     image: plugins/docker
     group: devimggroup
     registry: docker.target.com
-    repo: docker.target.com/app/backpack-registry/backpack-registry-app
-    dockerfile: ./backpack-registry-app/Dockerfile
+    repo: docker.target.com/app/backpack-registrychecklists/backpack-registrychecklists-app
+    dockerfile: ./backpack-registrychecklists-app/Dockerfile
     tags:
       - 'b${DRONE_BUILD_NUMBER}-${DRONE_COMMIT:0:8}'
       - latest
@@ -112,29 +112,29 @@ pipeline:
       - {source: artifactory_username, target: plugin_username}
       - {source: artifactory_password, target: plugin_password}
 
-  publish-docker-backpack-registry-app-stage:
+  publish-docker-backpack-registrychecklists-app-stage:
     image: 'plugins/docker:latest'
     group: stgimggroup
     registry: docker.target.com
-    repo: docker.target.com/app/backpack-registry/backpack-registry-app
-    dockerfile: ./backpack-registry-app/Dockerfile
+    repo: docker.target.com/app/backpack-registrychecklists/backpack-registrychecklists-app
+    dockerfile: ./backpack-registrychecklists-app/Dockerfile
     tags: 'rc.${DRONE_TAG:28}'
     when:
       event: tag
       branch: master
-      ref: 'refs/tags/conf.stage.backpackregistry.*'
+      ref: 'refs/tags/conf.stage.backpackregistrychecklists.*'
     secrets:
       - {source: artifactory_username, target: plugin_username}
       - {source: artifactory_password, target: plugin_password}
 
-  publish-docker-backpack-registry-consumer-app-dev:
+  publish-docker-backpack-registrychecklists-consumer-app-dev:
     image: plugins/docker
     environment:
       CICD_MODE: 'true'
     group: devimggroup
     registry: docker.target.com
-    repo: docker.target.com/app/backpack-registry/backpack-registry-consumer-app
-    dockerfile: ./backpack-registry-consumer-app/Dockerfile
+    repo: docker.target.com/app/backpack-registrychecklists/backpack-registrychecklists-consumer-app
+    dockerfile: ./backpack-registrychecklists-consumer-app/Dockerfile
     tags:
       - 'b${DRONE_BUILD_NUMBER}-${DRONE_COMMIT:0:8}'
       - latest
@@ -145,19 +145,19 @@ pipeline:
       - {source: artifactory_username, target: plugin_username}
       - {source: artifactory_password, target: plugin_password}
 
-  publish-docker-backpack-registry-consumer-app-stage:
+  publish-docker-backpack-registrychecklists-consumer-app-stage:
     image: 'plugins/docker:latest'
     environment:
       CICD_MODE: 'true'
     group: stgimggroup
     registry: docker.target.com
-    repo: docker.target.com/app/backpack-registry/backpack-registry-consumer-app
-    dockerfile: ./backpack-registry-consumer-app/Dockerfile
+    repo: docker.target.com/app/backpack-registrychecklists/backpack-registrychecklists-consumer-app
+    dockerfile: ./backpack-registrychecklists-consumer-app/Dockerfile
     tags: 'rc.${DRONE_TAG:28}'
     when:
       event: tag
       branch: master
-      ref: 'refs/tags/conf.stage.backpackregistry.*'
+      ref: 'refs/tags/conf.stage.backpackregistrychecklists.*'
     secrets:
       - {source: artifactory_username, target: plugin_username}
       - {source: artifactory_password, target: plugin_password}
@@ -172,7 +172,7 @@ pipeline:
       JAVA_TOOL_OPTIONS: '-Xmx4000M'
       GRADLE_USER_HOME: .gradle
       GRADLE_OPTS: '-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=1 -Dorg.gradle.parallel=false'
-      JDBC_URL: 'jdbc:postgresql://backpackregistrypostgres:5432/grws'
+      JDBC_URL: 'jdbc:postgresql://backpackregistrychecklistspostgres:5432/grws'
       KAFKA_BOOTSTRAP_SERVERS: 'kafka:9092'
     commands:
       - ./gradlew publish -DUSERNAME=$ARTIFACTORY_USERNAME -DPASSWORD=$ARTIFACTORY_PASSWORD -DVERSION="${DRONE_TAG:7}"
@@ -188,10 +188,10 @@ secrets:
   cache_s3_ca_cert:
     path: secret/shared/drone/prod-secrets/cache_s3_ca_cert
   backpack_registry_app_private_key_dev:
-    path: secret/repo/Registry-Modernization/backpack-registry/backpackregistry-privkey-dev
+    path: secret/repo/Registry-Modernization/backpack-registrychecklists/backpackregistrychecklists-privkey-dev
   backpack_registry_app_private_key_stage:
-    path: secret/repo/Registry-Modernization/backpack-registry/backpackregistry-privkey-stage
+    path: secret/repo/Registry-Modernization/backpack-registrychecklists/backpackregistrychecklists-privkey-stage
   backpack_registry_consumer_app_private_key_dev:
-    path: secret/repo/Registry-Modernization/backpack-registry/backpackregistryconsumer-privkey-dev
+    path: secret/repo/Registry-Modernization/backpack-registrychecklists/backpackregistrychecklistsconsumer-privkey-dev
   backpack_registry_consumer_app_private_key_stage:
-    path: secret/repo/Registry-Modernization/backpack-registry/backpackregistryconsumer-privkey-stage
+    path: secret/repo/Registry-Modernization/backpack-registrychecklists/backpackregistrychecklistsconsumer-privkey-stage
