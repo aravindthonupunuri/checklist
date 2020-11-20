@@ -26,7 +26,7 @@ data class ChecklistTemplate(
     @Column(name = "category_image_ur")
     val categoryImageUr: String? = null,
     @Column(name = "subcategory_id")
-    val subcategoryId: Int? = null,
+    val subcategoryId: String? = null,
     @Column(name = "subcategory_name")
     val subcategoryName: String? = null,
     @Column(name = "subcategory_order")

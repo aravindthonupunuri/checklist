@@ -37,7 +37,7 @@ class GetChecklistTemplatesFunctionalTest extends BasePersistenceFunctionalTest{
 
         checklistTemplateRepository.save(new ChecklistTemplate(new ChecklistTemplatePK(RegistryType.BABY, 1,
             1), "firstChecklistName", true, 1, "name", "name", "name",
-            1, "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())).block()
+            "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())).block()
 
         when:
         HttpResponse<RegistryChecklistTemplateResponseTO> getAllTemplatesResponse =
@@ -61,10 +61,10 @@ class GetChecklistTemplatesFunctionalTest extends BasePersistenceFunctionalTest{
 
         checklistTemplateRepository.save(new ChecklistTemplate(new ChecklistTemplatePK(RegistryType.BABY, 1,
             2), "firstChecklistName", true, 1, "name", "name", "name",
-            1, "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())).block()
+            "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())).block()
         checklistTemplateRepository.save(new ChecklistTemplate(new ChecklistTemplatePK(RegistryType.BABY, 2,
             1), "secondChecklistName", true, 1, "name", "name", "name",
-            1, "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())).block()
+            "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())).block()
 
         when:
         HttpResponse<RegistryChecklistTemplateResponseTO> getAllTemplatesResponse =
@@ -91,7 +91,7 @@ class GetChecklistTemplatesFunctionalTest extends BasePersistenceFunctionalTest{
 
         ChecklistTemplate checklistTemplate3 = new ChecklistTemplate(new ChecklistTemplatePK(RegistryType.BABY, 1,
             3), "firstChecklistName", true, 1, "name", "name", "name",
-            1, "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+            "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
 
         checklistTemplateRepository.save(checklistTemplate3).block()
 
@@ -137,7 +137,7 @@ class GetChecklistTemplatesFunctionalTest extends BasePersistenceFunctionalTest{
 
         ChecklistTemplate checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK(RegistryType.WEDDING, 2,
             1), "weddingChecklistName", true, 1, "name", "name", "name",
-            1, "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+            "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
 
         checklistTemplateRepository.save(checklistTemplate2).block()
 

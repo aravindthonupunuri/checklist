@@ -1,6 +1,9 @@
 package com.tgt.backpackregistrychecklists.api.controller
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper
+import com.tgt.backpackregistrychecklists.service.CreateChecklistTemplateService
 import com.tgt.backpackregistrychecklists.service.GetChecklistTemplatesService
+import com.tgt.backpackregistrychecklists.transport.Checklist
 import com.tgt.backpackregistrychecklists.service.UnmarkChecklistService
 import com.tgt.backpackregistrychecklists.transport.RegistryChecklistResponseTO
 import com.tgt.backpackregistrychecklists.transport.RegistryChecklistTemplateResponseTO
@@ -8,18 +11,46 @@ import com.tgt.backpackregistryclient.util.RegistryChannel
 import com.tgt.backpackregistryclient.util.RegistrySubChannel
 import com.tgt.backpackregistryclient.util.RegistryType
 import io.micronaut.http.HttpStatus
+import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
+import io.micronaut.http.multipart.CompletedFileUpload
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import reactor.core.publisher.Mono
+import java.io.IOException
+import javax.xml.stream.XMLInputFactory
+import javax.xml.stream.XMLStreamException
 import java.util.*
 
 @Controller("/registry_checklists/v1")
+
 class RegistryChecklistController(
+    private val createChecklistTemplateService: CreateChecklistTemplateService,
     private val getCheckListTemplatesService: GetChecklistTemplatesService,
     private val unmarkChecklistService: UnmarkChecklistService
 ) {
+    @Post(value = "/checklists", consumes = [MediaType.MULTIPART_FORM_DATA])
+    @Status(HttpStatus.CREATED)
+    @Throws(XMLStreamException::class, IOException::class)
+    fun createChecklist(
+        @Header("profile_id") guestId: String,
+        @QueryValue("channel") channel: RegistryChannel,
+        @QueryValue("sub_channel") subChannel: RegistrySubChannel,
+        @QueryValue("location_id") locationId: Long?,
+        @QueryValue("registry_type") registryType: RegistryType,
+        @QueryValue("template_id") templateId: Int,
+        @QueryValue("checklist_name") checklistName: String,
+        @Body("file") requestBody: CompletedFileUpload
+    ): Mono<Void> {
+        val resourceAsStream = this.javaClass.classLoader.getResourceAsStream(requestBody.filename)
+        val inputFactory = XMLInputFactory.newInstance()
+        val xmlStreamReader = inputFactory.createXMLStreamReader(resourceAsStream)
+        val mapper = XmlMapper()
+        val checklist: Checklist = mapper.readValue(xmlStreamReader, Checklist::class.java)
+
+        return createChecklistTemplateService.uploadChecklistToDatabase(registryType, checklist, templateId, checklistName)
+    }
 
     @Get("/checklists")
     @Status(HttpStatus.OK)

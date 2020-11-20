@@ -23,7 +23,7 @@ class GetChecklistTemplatesServiceTest extends Specification {
 
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(new ChecklistTemplatePK(RegistryType.BABY, 1,
             1), "firstChecklistName", true, 1, "name", "name", "name",
-            1, "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+            "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
 
         when:
         def actual = getChecklistTemplatesService.getTemplatesForRegistryType(RegistryType.BABY).block()
@@ -41,11 +41,11 @@ class GetChecklistTemplatesServiceTest extends Specification {
 
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(new ChecklistTemplatePK(RegistryType.BABY, 1,
             1), "firstChecklistName", true, 1, "name", "name", "name",
-            1, "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+            "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
 
         ChecklistTemplate checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK(RegistryType.BABY, 2,
             1), "secondChecklistName", false, 1, "name", "name", "name",
-            1, "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+            "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
 
         when:
         def actual = getChecklistTemplatesService.getTemplatesForRegistryType(RegistryType.BABY).block()

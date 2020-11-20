@@ -31,11 +31,11 @@ class ChecklistTemplateRepositoryFunctionalTest extends BasePersistenceFunctiona
         def checklistTemplatePk2 = new ChecklistTemplatePK(RegistryType.WEDDING, 1, 2)
         def checklistTemplatePk3 = new ChecklistTemplatePK(RegistryType.BABY, 1, 2)
         def checklistTemplatePk4 = new ChecklistTemplatePK(RegistryType.BABY, 2, 1)
-        def checklistTemplate = new ChecklistTemplate(checklistTemplatePk, "name", true, 1, "name", "name", "name", 1, "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
-        def checklistTemplate1 = new ChecklistTemplate(checklistTemplatePk1, "name", true, 1, "name", "name", "name", 1, "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
-        def checklistTemplate2 = new ChecklistTemplate(checklistTemplatePk2, "name", true, 1, "name", "name", "name", 1, "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
-        def checklistTemplate3 = new ChecklistTemplate(checklistTemplatePk3, "name", true, 1, "name", "name", "name", 1, "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
-        def checklistTemplate4 = new ChecklistTemplate(checklistTemplatePk4, "name", true, 1, "name", "name", "name", 1, "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+        def checklistTemplate = new ChecklistTemplate(checklistTemplatePk, "name", true, 1, "name", "name", "name", "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+        def checklistTemplate1 = new ChecklistTemplate(checklistTemplatePk1, "name", true, 1, "name", "name", "name", "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+        def checklistTemplate2 = new ChecklistTemplate(checklistTemplatePk2, "name", true, 1, "name", "name", "name", "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+        def checklistTemplate3 = new ChecklistTemplate(checklistTemplatePk3, "name", true, 1, "name", "name", "name", "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+        def checklistTemplate4 = new ChecklistTemplate(checklistTemplatePk4, "name", true, 1, "name", "name", "name", "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
 
         when:
         def result = checklistTemplateRepository.save(checklistTemplate).block()
@@ -55,12 +55,34 @@ class ChecklistTemplateRepositoryFunctionalTest extends BasePersistenceFunctiona
     def "test find checklist"() {
 
         when:
-        def result = checklistTemplateRepository.find(RegistryType.WEDDING).collect(Collectors.toList()).block()
-        def result1 = checklistTemplateRepository.find(RegistryType.BABY).collect(Collectors.toList()).block()
+        def result = checklistTemplateRepository.countByRegistryType(RegistryType.WEDDING).block()
+        def result1 = checklistTemplateRepository.countByRegistryType(RegistryType.BABY).block()
 
         then:
-        result.size() == 2
+        result == 2
         result1 != null
+    }
+
+    def "test countByChecklistName"() {
+
+        when:
+        def result = checklistTemplateRepository.countByChecklistName("name").block()
+
+        then:
+        result == 5
+    }
+
+    def "test find by templateId"() {
+
+        when:
+        def result = checklistTemplateRepository.findByTemplateId(1).collect(Collectors.toList()).block()
+        def result1 = checklistTemplateRepository.findByTemplateId(11).collect(Collectors.toList()).block()
+
+        then:
+        result1 == []
+        result.size() == 4
+        result.get(0).getChecklistTemplatePK().registryType == RegistryType.BABY
+        result.get(0).getChecklistTemplatePK().templateId == 1
     }
 
     def "test findDistinctTemplateId"() {
