@@ -16,5 +16,5 @@ data class CheckedSubCategoriesId(
     val templateId: Int,
 
     @Column(name = "checklist_id")
-    val checklistId: String
+    val checklistId: Int
 )

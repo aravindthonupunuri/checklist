@@ -24,14 +24,14 @@ data class RegistryChecklist(
 
     @Column(name = "CREATED_TS")
     @DateCreated
-    val createdTs: LocalDateTime? = null,
+    var createdTs: LocalDateTime? = null,
 
     @Column(name = "CREATED_USER")
     val createdUser: String? = null,
 
     @Column(name = "UPDATED_TS")
     @DateUpdated
-    val updatedTs: LocalDateTime? = null,
+    var updatedTs: LocalDateTime? = null,
 
     @Column(name = "UPDATED_USER")
     val updatedUser: String? = null

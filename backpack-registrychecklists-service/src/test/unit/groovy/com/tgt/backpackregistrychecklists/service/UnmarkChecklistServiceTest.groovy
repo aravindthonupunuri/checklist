@@ -17,7 +17,7 @@ class UnmarkChecklistServiceTest extends Specification {
 
     def "test unMarkChecklistId - happy path"() {
         def registryId = UUID.randomUUID()
-        def checklistId = "201"
+        def checklistId = 201
         def templateId = 2
 
         when:
@@ -35,7 +35,7 @@ class UnmarkChecklistServiceTest extends Specification {
     def "test unMarkChecklistId - if checklistId/templateId doesn't exist"() {
         given:
         def registryId = UUID.randomUUID()
-        def checklistId = "201"
+        def checklistId = 201
         def templateId = 2
 
         when:
@@ -50,7 +50,7 @@ class UnmarkChecklistServiceTest extends Specification {
     def "test unmarkChecklistId - Exception from database"() {
         given:
         def registryId = UUID.randomUUID()
-        def checklistId = "201"
+        def checklistId = 201
         def templateId = 2
 
         when:

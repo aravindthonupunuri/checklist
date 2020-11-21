@@ -16,7 +16,7 @@ class UnmarkChecklistService(
 ) {
     fun unmarkChecklistId(
         registryId: UUID,
-        checklistId: String,
+        checklistId: Int,
         templateId: Int
     ): Mono<RegistryChecklistResponseTO> {
         return checkedSubCategoriesRepository.delete(CheckedSubCategoriesId(registryId, templateId, checklistId))

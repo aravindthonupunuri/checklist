@@ -5,6 +5,6 @@ import java.util.*
 data class RegistryChecklistResponseTO(
     val registryId: UUID,
     val isChecked: Boolean,
-    val checklistId: String,
+    val checklistId: Int,
     val templateId: Int
 )

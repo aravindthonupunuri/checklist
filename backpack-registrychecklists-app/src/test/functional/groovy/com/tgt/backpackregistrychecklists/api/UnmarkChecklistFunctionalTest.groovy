@@ -6,7 +6,7 @@ import com.tgt.backpackregistrychecklists.persistence.CheckedSubCategoriesReposi
 import com.tgt.backpackregistrychecklists.test.BasePersistenceFunctionalTest
 import com.tgt.backpackregistrychecklists.test.DataProvider
 import com.tgt.backpackregistrychecklists.transport.RegistryChecklistResponseTO
-import com.tgt.backpackregistryclient.util.BackpackRegistryConstants
+import com.tgt.backpackregistryclient.util.RegistrySubChannel
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
@@ -35,12 +35,13 @@ class UnmarkChecklistFunctionalTest extends BasePersistenceFunctionalTest{
         given:
         def guestId = "1234"
         def registryId = UUID.randomUUID()
-        def checklistId = "201"
+        def checklistId = 201
         def templateId = 2
 
         def uri = "/registry_checklists/v1/"+registryId+"/checklists/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
 
-        registryChecklistSubCategoryRepository.save(new CheckedSubCategories(new CheckedSubCategoriesId(registryId, templateId, checklistId), LocalDateTime.now(), "KIOSK", LocalDateTime.now(), "KIOSK")).block()
+        registryChecklistSubCategoryRepository.save(new CheckedSubCategories(new CheckedSubCategoriesId(registryId, templateId, checklistId),
+            LocalDateTime.now(), RegistrySubChannel.KIOSK.value, LocalDateTime.now(), RegistrySubChannel.KIOSK.value)).block()
         when:
         HttpResponse<RegistryChecklistResponseTO> markChecklistIdResponse =
             client.toBlocking().exchange(
@@ -60,7 +61,7 @@ class UnmarkChecklistFunctionalTest extends BasePersistenceFunctionalTest{
         given:
         def guestId = "1234"
         def registryId = UUID.randomUUID()
-        def checklistId = "201"
+        def checklistId = 201
         def templateId = 2
 
         def uri = "/registry_checklists/v1/"+registryId+"/checklists/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
@@ -72,6 +73,5 @@ class UnmarkChecklistFunctionalTest extends BasePersistenceFunctionalTest{
         def error = thrown(HttpClientResponseException)
         error.status == HttpStatus.BAD_REQUEST
     }
-
 }
 

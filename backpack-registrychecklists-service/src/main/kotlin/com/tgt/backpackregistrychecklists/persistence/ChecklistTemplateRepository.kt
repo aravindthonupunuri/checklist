@@ -10,6 +10,7 @@ interface ChecklistTemplateRepository {
     fun save(checkList: ChecklistTemplate): Mono<ChecklistTemplate>
     fun countByRegistryType(registryType: RegistryType): Mono<Long>
     fun findByTemplateId(templateId: Int): Flux<ChecklistTemplate>
+    fun findByTemplateIdAndChecklistId(templateId: Int, checklistId: Int): Mono<ChecklistTemplate>
     fun countByTemplateId(templateId: Int): Mono<Long>
     fun countByChecklistName(checkListName: String): Mono<Long>
     fun deleteByTemplateId(templateId: Int): Mono<Int>

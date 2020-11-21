@@ -33,12 +33,12 @@ class CheckedSubCategoriesRepositoryFunctionalTest extends BasePersistenceFuncti
     Integer templateId
 
     @Shared
-    String checklistId
+    Integer checklistId
 
     def setupSpec() {
         registryId = UUID.randomUUID()
         templateId = 2
-        checklistId = "200"
+        checklistId = 200
     }
 
     def "test save"() {

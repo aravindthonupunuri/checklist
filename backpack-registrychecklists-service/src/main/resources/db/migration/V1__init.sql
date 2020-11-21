@@ -21,7 +21,7 @@ CONSTRAINT CHECKLIST_TEMPLATE_PK PRIMARY KEY (REGISTRY_TYPE, TEMPLATE_ID, CATEGO
 create table CHECKED_SUBCATEGORIES (
 REGISTRY_ID uuid not null,
 TEMPLATE_ID int not null,
-CHECKLIST_ID text not null,
+CHECKLIST_ID int not null,
 CREATED_TS timestamp not null,
 CREATED_USER text not null,
 UPDATED_TS timestamp not null,
