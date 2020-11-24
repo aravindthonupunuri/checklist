@@ -1,0 +1,108 @@
+{
+	"info": {
+		"_postman_id": "58736741-9248-4d41-b6c3-c3d1cafbffdf",
+		"name": "RegistryChecklists",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "uploadChecklist",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}?channel={{channel}}&sub_channel={{subChannel}}&registry_type={{registryType}}&template_id={{templateId}}&checklist_name={{checklistName}}",
+					"host": [
+						"{{host}}"
+					],
+					"query": [
+						{
+							"key": "channel",
+							"value": "{{channel}}"
+						},
+						{
+							"key": "sub_channel",
+							"value": "{{subChannel}}"
+						},
+						{
+							"key": "registry_type",
+							"value": "{{registryType}}"
+						},
+						{
+							"key": "template_id",
+							"value": "{{templateId}}"
+						},
+						{
+							"key": "checklist_name",
+							"value": "{{checklistName}}"
+						}
+					]
+				},
+				"description": "for uploading the checklist template"
+			},
+			"response": []
+		},
+		{
+			"name": "deleteChecklist",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/checklists?channel={{channe}}&sub_channel={{sub_channel}}&template_id={{template_id}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"checklists"
+					],
+					"query": [
+						{
+							"key": "channel",
+							"value": "{{channe}}"
+						},
+						{
+							"key": "sub_channel",
+							"value": "{{sub_channel}}"
+						},
+						{
+							"key": "template_id",
+							"value": "{{template_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

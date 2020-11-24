@@ -36,7 +36,7 @@ abstract class BaseKafkaFunctionalTest extends BasePersistenceFunctionalTest imp
 
     @Override
     Map<String, String> getProperties() {
-        def map = Object.getProperties()
+        def map = super.getProperties()
         String kafkaBootstrapServers = System.getenv("KAFKA_BOOTSTRAP_SERVERS")
 
         if (kafkaBootstrapServers == null) {

@@ -177,12 +177,6 @@ paths:
           description: The consumer's valid API key.
           required: true
           type: string
-        - name: registry_type
-          in: query
-          description: The registry type for which checklist will be used
-          enum: [ "BABY", "WEDDING", "COLLEGE"]
-          required: true
-          type: string
         - name: template_id
           in: query
           description: The checklist's template id

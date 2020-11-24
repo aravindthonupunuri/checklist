@@ -24,11 +24,9 @@ class CreateChecklistTemplateService(
         templateId: Int,
         checklistName: String
     ): Mono<Void> {
-
-        val default = checklistTemplateRepository.countByRegistryType(registryType).block() == 0L
-
         return deleteDuplicateChecklistIfExists(templateId, checklistName)
-            .flatMap {
+            .flatMap { checkIfRegistryTypeIsDefault(registryType) }
+            .flatMap { default ->
             checklist.categories!!.toFlux()
                     .flatMap {
                         val checklistTemplate = formChecklistDTO(registryType, it, default, templateId, checklistName)
@@ -39,6 +37,12 @@ class CreateChecklistTemplateService(
                 throw BadRequestException(AppErrorCodes.BAD_REQUEST_ERROR_CODE(listOf(it.stackTrace.toString())))
             }
             .then()
+    }
+
+    fun checkIfRegistryTypeIsDefault(registryType: RegistryType): Mono<Boolean> {
+        return checklistTemplateRepository.countByRegistryType(registryType).map {
+            it == 0L
+        }
     }
 
     fun deleteDuplicateChecklistIfExists(templateId: Int, checklistName: String): Mono<Boolean> {

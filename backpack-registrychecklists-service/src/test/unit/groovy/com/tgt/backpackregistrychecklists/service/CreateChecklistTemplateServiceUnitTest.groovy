@@ -143,7 +143,7 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         def result = createChecklistTemplateService.uploadChecklistToDatabase(RegistryType.BABY, checklist, 1, "checklistName").block()
 
         then:
-        1 * checklistTemplateRepository.countByRegistryType(RegistryType.BABY) >> Mono.just(0L)
+        0 * checklistTemplateRepository.countByRegistryType(RegistryType.BABY) >> Mono.just(0L)
         0 * checklistTemplateRepository.deleteByTemplateId(1) >> Mono.just(1)
         1 * checklistTemplateRepository.findByTemplateId(1) >> Flux.just(checklistTemplate)
         0 * checklistTemplateRepository.countByTemplateId(1) >> Mono.just(1L)

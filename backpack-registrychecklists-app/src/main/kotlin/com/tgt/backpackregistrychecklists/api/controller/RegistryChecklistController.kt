@@ -2,6 +2,7 @@ package com.tgt.backpackregistrychecklists.api.controller
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.tgt.backpackregistrychecklists.service.CreateChecklistTemplateService
+import com.tgt.backpackregistrychecklists.service.DeleteChecklistService
 import com.tgt.backpackregistrychecklists.service.GetChecklistTemplatesService
 import com.tgt.backpackregistrychecklists.service.MarkChecklistService
 import com.tgt.backpackregistrychecklists.transport.Checklist
@@ -29,6 +30,7 @@ import java.util.*
 class RegistryChecklistController(
     private val createChecklistTemplateService: CreateChecklistTemplateService,
     private val getCheckListTemplatesService: GetChecklistTemplatesService,
+    private val deleteChecklistService: DeleteChecklistService,
     private val markChecklistService: MarkChecklistService,
     private val unmarkChecklistService: UnmarkChecklistService
 ) {
@@ -101,5 +103,17 @@ class RegistryChecklistController(
         @QueryValue("sub_channel") subChannel: RegistrySubChannel
     ): Mono<RegistryChecklistResponseTO> {
         return unmarkChecklistService.unmarkChecklistId(registryId, checklistId, templateId)
+    }
+
+    @Delete(value = "/checklists")
+    @Status(HttpStatus.NO_CONTENT)
+    fun deleteChecklist(
+        @Header("profile_id") guestId: String,
+        @QueryValue("channel") channel: RegistryChannel,
+        @QueryValue("sub_channel") subChannel: RegistrySubChannel,
+        @QueryValue("location_id") locationId: Long?,
+        @QueryValue("template_id") templateId: Int
+    ): Mono<Void> {
+        return deleteChecklistService.deleteChecklist(guestId, templateId)
     }
 }

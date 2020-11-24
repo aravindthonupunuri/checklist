@@ -80,6 +80,5 @@ class CheckedSubCategoriesRepositoryFunctionalTest extends BasePersistenceFuncti
         actual == null
 //        actual.checkedSubcategoriesId.checklistId == checklistId
     }
-
 }
 
