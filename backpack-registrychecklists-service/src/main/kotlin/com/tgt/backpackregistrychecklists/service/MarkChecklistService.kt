@@ -9,7 +9,7 @@ import com.tgt.backpackregistrychecklists.transport.RegistryChecklistRequestTO
 import com.tgt.backpackregistrychecklists.transport.RegistryChecklistResponseTO
 import com.tgt.backpackregistryclient.util.RegistrySubChannel
 import com.tgt.lists.common.components.exception.BadRequestException
-import com.tgt.lists.lib.api.util.AppErrorCodes
+import com.tgt.lists.common.components.exception.BaseErrorCodes.BAD_REQUEST_ERROR_CODE
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.switchIfEmpty
 import java.util.*
@@ -31,13 +31,13 @@ class MarkChecklistService(
     ): Mono<RegistryChecklistResponseTO> {
         return registryChecklistRepository.find(registryId)
             .switchIfEmpty {
-                throw BadRequestException(AppErrorCodes.BAD_REQUEST_ERROR_CODE(listOf("No templateId found for the given registryId")))
+                throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("No templateId found for the given registryId")))
             }
             .flatMap {
                 if (it.templateId == registryChecklistRequest.templateId) {
                     checklistTemplateRepository.findByTemplateIdAndChecklistId(registryChecklistRequest.templateId, checklistId)
                         .switchIfEmpty {
-                            throw BadRequestException(AppErrorCodes.BAD_REQUEST_ERROR_CODE(listOf("No checklistId found for the given templateId")))
+                            throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("No checklistId found for the given templateId")))
                         }
                         .flatMap { checklistTemplate ->
                             if (checklistTemplate.checklistId == checklistId) {
@@ -47,10 +47,10 @@ class MarkChecklistService(
                                         RegistryChecklistResponseTO(registryId = registryId, isChecked = true, checklistId = checklistId, templateId = registryChecklistRequest.templateId)
                                     }
                             } else
-                                throw BadRequestException(AppErrorCodes.BAD_REQUEST_ERROR_CODE(listOf("Not a valid templateId - checklistId combination")))
+                                throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("Not a valid templateId - checklistId combination")))
                         }
                 } else {
-                    throw BadRequestException(AppErrorCodes.BAD_REQUEST_ERROR_CODE(listOf("Not a valid registryId - templateId combination")))
+                    throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("Not a valid registryId - templateId combination")))
                 }
             }
     }

@@ -12,11 +12,6 @@ micronaut:
           - http://localhost:${server-port:32000}
         pool:
           enabled: false
-      carts-api:
-        urls:
-          - http://localhost:${server-port:32000}
-        pool:
-          enabled: false
       redsky-api:
         urls:
           - http://localhost:${server-port:32000}
@@ -82,12 +77,15 @@ filter:
       resilience-client-filter: 800
       oauth-filter: 701
       oauth-key-filter: 700
+
 api-key: "testkey"
+
 logging:
   mdc:
     enabled: true
     keys:
       - test
+
 resilience4j:
   circuitbreaker:
     failure-rate-threshold: 50            # failure rate threshold in percentage (default: 50)
@@ -96,6 +94,7 @@ resilience4j:
     sliding-window-size: 100               # seconds for TIME_BASED, request-count for COUNT_BASED (default: 100)
     minimum-number-of-calls: 10            # min calls required (per sliding window period) before cb calculates error rate (default: 10)
     permitted-number-of-calls-in-half-open-state: 10  # min calls permitted when circuit breaker is half open
+
 tracing:
   zipkin:
     enabled: true
@@ -104,9 +103,7 @@ tracing:
       probability: 1
     http:
       url: http://localhost:9411/zipkin
-cart:
-  client:
-    refresh-cycle-sec: 999999999
+
 list:
   list-type: SHOPPING
   max-count: 50
@@ -114,10 +111,10 @@ list:
   max-completed-items-count: 100
   abandon-after-duration-in-days: 730 # It is two years duration
   redsky-batch-size: 28
-  features.two-carts: true
   features.dedupe: true
   features.sort-position: true
   features.fixed-default-list: false
+
 components:
   server:
     list-authorization-filter:
@@ -126,6 +123,7 @@ components:
       enabled: false
     registry-channel-subchannel-filter:
       enabled: false
+
 msgbus:
   source: backpack-registrychecklists
   dlq-source: backpackregistrychecklists-dlq
@@ -146,6 +144,7 @@ msgbus:
     dlq-event-retry-interval-secs: 1
     dlq-max-event-retry-count: 3
     dlq-consumer-batch-size: 10
+
 mockfilter:
   paths: /zipkin,/testserver/auth/oauth/v2/token,/
 

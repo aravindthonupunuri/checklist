@@ -3,7 +3,7 @@ package com.tgt.backpackregistrychecklists.transport.kafka.model
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.tgt.lists.lib.api.util.EventType
+import com.tgt.lists.msgbus.EventType
 
 data class DeleteChecklistActionEvent(
 

@@ -1,7 +1,5 @@
 package com.tgt.backpackregistrychecklists.test
 
-import com.tgt.backpackregistrychecklists.test.util.CartDataProvider
-import com.tgt.backpackregistrychecklists.test.util.RegistryDataProvider
 import com.tgt.lists.micronaut.test.MockServer
 import com.tgt.lists.micronaut.test.MockServerDelegate
 import com.tgt.lists.msgbus.ListsMessageBusProducer
@@ -51,11 +49,6 @@ abstract class BaseFunctionalTest extends Specification implements TestPropertyP
     @Value("\${msgbus.dlq-source}")
     String dlqSource
 
-    CartDataProvider cartDataProvider
-
-    @Shared
-    RegistryDataProvider registryDataProvider
-
     abstract Logger getLogger()
 
     def setup() {
@@ -64,11 +57,6 @@ abstract class BaseFunctionalTest extends Specification implements TestPropertyP
         mockServer.post({ path -> path.contains("/api/v2/spans") }, _, _) >> [status: 200, body: []]
 
         mockServerDelegate.delegate = mockServer
-        cartDataProvider = new CartDataProvider(listType)
-    }
-
-    def setupSpec() {
-        registryDataProvider = new RegistryDataProvider()
     }
 
     @Override

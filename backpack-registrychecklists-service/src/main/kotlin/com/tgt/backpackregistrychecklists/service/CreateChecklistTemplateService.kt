@@ -7,7 +7,7 @@ import com.tgt.backpackregistrychecklists.transport.Category
 import com.tgt.backpackregistrychecklists.transport.Checklist
 import com.tgt.backpackregistryclient.util.RegistryType
 import com.tgt.lists.common.components.exception.BadRequestException
-import com.tgt.lists.lib.api.util.AppErrorCodes
+import com.tgt.lists.common.components.exception.BaseErrorCodes.BAD_REQUEST_ERROR_CODE
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toFlux
 import java.time.LocalDateTime
@@ -34,7 +34,7 @@ class CreateChecklistTemplateService(
                     }.collectList()
             }
             .onErrorResume {
-                throw BadRequestException(AppErrorCodes.BAD_REQUEST_ERROR_CODE(listOf(it.stackTrace.toString())))
+                throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf(it.stackTrace.toString())))
             }
             .then()
     }
@@ -65,7 +65,7 @@ class CreateChecklistTemplateService(
 
     fun checkIfChecklistNameIsUnique(checklistName: String) {
         if (checklistTemplateRepository.countByChecklistName(checklistName).block() != 0L)
-            throw BadRequestException(AppErrorCodes.BAD_REQUEST_ERROR_CODE(listOf("The checklist name already exists enter a new checklist name")))
+            throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("The checklist name already exists enter a new checklist name")))
     }
 
     fun formChecklistDTO(

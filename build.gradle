@@ -67,27 +67,18 @@ allprojects {
         implementation "javax.annotation:javax.annotation-api"
         implementation "com.lmax:disruptor:3.4.2"
 
-        implementation("com.tgt.backpackregistry:backpack-registry-components:2.201.0") {
+        implementation("com.tgt.backpackregistry:backpack-registry-components:2.201.1") {
             exclude group: 'com.tgt.lists', module: 'lists-components'
         }
+        implementation("com.tgt.lists:atlas-client:2.201.38")
+        implementation("com.tgt.lists:lists-components:2.201.5") {
+            exclude group: 'com.tgt.lists.micronaut', module: 'micronaut-resilience4j'
+        }
+        implementation "com.tgt.lists:lists-permissions-client:2.201.2"
 
-        implementation("com.tgt.lists:lists-lib:2.201.8") {
-            exclude group: 'com.tgt.lists.micronaut', module: 'micronaut-resilience4j'
+        implementation("com.tgt.backpackregistry:backpack-registry-client:2.201.47") {
             exclude group: 'com.tgt.lists', module: 'lists-components'
-            exclude group: 'com.tgt.lists', module: 'lists-oauth'
-            exclude group: 'com.tgt.lists', module: 'lists-message-bus'
         }
-        implementation("com.tgt.lists:lists-components:2.201.0") {
-            exclude group: 'com.tgt.lists.micronaut', module: 'micronaut-resilience4j'
-        }
-        implementation "com.tgt.lists:lists-permissions-client:2.201.0"
-        implementation("com.tgt.backpackregistry:backpack-transactions-client:2.201.3") {
-            exclude group: 'com.tgt.backpackregistry', module: 'backpack-registry-client'
-        }
-        implementation "com.tgt.backpackregistry:backpack-registry-client:2.201.30"
-        implementation "com.tgt.lists:lists-cart-client:2.201.0"
-        implementation "com.tgt.lists:lists-guestprofile-client:2.201.1"
-        implementation "com.tgt.lists:lists-guestaddress-client:2.201.1"
         implementation "com.tgt.lists:lists-oauth:2.201.0"
         implementation "com.tgt.lists.micronaut:micronaut-zipkin:2.201.0"
         implementation "com.tgt.lists:lists-message-bus:2.201.0"
@@ -98,9 +89,11 @@ allprojects {
         implementation "com.tgt.lists.micronaut:micronaut-metrics:2.201.0"
         implementation "io.micronaut.kotlin:micronaut-kotlin-runtime"
         implementation "io.micronaut:micronaut-runtime"
-        implementation "com.tgt.backpackregistry:backpack-redsky-components:2.201.5"
+        implementation "io.micronaut.kafka:micronaut-kafka"
+        implementation 'org.apache.kafka:kafka_2.12:2.3.0'
+
         // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml
-        compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.9.9'
+        implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.9"
 
         implementation "io.micronaut.data:micronaut-data-processor"
         implementation "io.micronaut.data:micronaut-data-jdbc"
@@ -183,7 +176,6 @@ allprojects {
         input = files(
             "src/main/kotlin/com/tgt/lists/api"
         )
-        filters = ".*/com/tgt/lists/integration/cart/transport/.*"
 
         reports {
             html {

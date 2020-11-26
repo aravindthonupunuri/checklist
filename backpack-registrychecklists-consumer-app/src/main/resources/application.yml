@@ -9,15 +9,6 @@ micronaut:
     client.connect-ttl: 30m
     client.pool.acquire-timeout: 2000ms
     services:
-      carts-api:
-        urls:
-          - "https://stgapi-internal.target.com"
-        connect-timeout: 300ms
-        read-timeout: 1000ms
-        pool:
-          enabled: true
-          max-connections: 128
-          max-pending-acquires: 50
       redsky-api:
         urls:
           - "https://redsky-stage.perf.target.com"
@@ -109,9 +100,7 @@ tracing:
       probability: 1
     http:
       url: http://localhost:9411/zipkin
-cart:
-  client:
-    refresh-cycle-sec: 999999999
+
 list:
   list-type: SHOPPING
   max-count: 50
@@ -119,7 +108,6 @@ list:
   max-completed-items-count: 100
   abandon-after-duration-in-days: 730 # It is two years duration
   redsky-batch-size: 28
-  features.two-carts: true
   features.dedupe: true
   features.sort-position: true
   features.fixed-default-list: false

@@ -1,8 +1,8 @@
 package com.tgt.backpackregistrychecklists.service
 
 import com.tgt.backpackregistrychecklists.persistence.ChecklistTemplateRepository
+import com.tgt.backpackregistrychecklists.util.EventPublisher
 import com.tgt.lists.common.components.exception.BadRequestException
-import com.tgt.lists.lib.api.domain.EventPublisher
 import org.apache.kafka.clients.producer.RecordMetadata
 import reactor.core.publisher.Mono
 import spock.lang.Specification

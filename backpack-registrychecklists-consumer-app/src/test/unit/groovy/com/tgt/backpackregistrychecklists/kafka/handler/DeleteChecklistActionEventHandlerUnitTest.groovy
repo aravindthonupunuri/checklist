@@ -1,9 +1,8 @@
 package com.tgt.backpackregistrychecklists.kafka.handler
 
-
 import com.tgt.backpackregistrychecklists.service.async.ChecklistService
 import com.tgt.backpackregistrychecklists.transport.kafka.model.DeleteChecklistActionEvent
-import com.tgt.lists.lib.kafka.model.CreateListNotifyEvent
+import com.tgt.lists.atlas.kafka.model.CreateListNotifyEvent
 import com.tgt.lists.msgbus.event.EventHeaderFactory
 import com.tgt.lists.msgbus.event.EventHeaders
 import reactor.core.publisher.Mono
