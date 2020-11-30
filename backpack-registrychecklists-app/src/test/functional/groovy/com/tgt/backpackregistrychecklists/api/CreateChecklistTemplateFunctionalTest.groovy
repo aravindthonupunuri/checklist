@@ -89,7 +89,7 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 1, 2)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "name", true, 1, "categoryId", "categoryName",
-        "categoryImageUrl", "subCategoryId", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+        "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
 
         when:
         HttpResponse<Void> response = client.toBlocking()
@@ -113,7 +113,7 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.WEDDING, 91, 4)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "name", true, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
         checklistTemplateRepository.save(checklistTemplate).block()
 
         when:
@@ -138,7 +138,7 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 1, 4)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "name", false, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
         checklistTemplateRepository.save(checklistTemplate).block()
 
         when:
@@ -163,7 +163,7 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 7, 4)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "checklistName", false, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
         checklistTemplateRepository.save(checklistTemplate).block()
 
         when:
@@ -188,7 +188,7 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 11, 3)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "checklistName", false, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
         checklistTemplateRepository.save(checklistTemplate).block()
 
         when:

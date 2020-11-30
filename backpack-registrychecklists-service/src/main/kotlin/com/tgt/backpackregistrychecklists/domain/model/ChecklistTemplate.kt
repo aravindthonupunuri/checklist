@@ -27,6 +27,8 @@ data class ChecklistTemplate(
     val categoryImageUr: String? = null,
     @Column(name = "subcategory_id")
     val subcategoryId: String? = null,
+    @Column(name = "subcategory_child_ids") // This attribute is the list of childIds for a given taxonomyId.
+    val subcategoryChildIds: String? = null, // Ex: 5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u
     @Column(name = "subcategory_name")
     val subcategoryName: String? = null,
     @Column(name = "subcategory_order")

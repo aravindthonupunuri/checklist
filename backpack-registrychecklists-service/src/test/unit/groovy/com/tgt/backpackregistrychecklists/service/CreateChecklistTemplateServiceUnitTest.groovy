@@ -26,7 +26,7 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         given:
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 1, 1)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "checklistName", true, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "subCategoryName", "subcategory_child_ids", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
 
         Category category = new Category(1, "l1TaxonomyId", "l1AliasName", 1, "l2TaxonomyId", "l2ChildIds", "l2TaxonomyUrl", "plpParm", "l2AliasName",
             1, 0, "defaultImage", "imageUrl")
@@ -51,7 +51,7 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         given:
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 1, 1)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "name", true, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "subCategoryName", "subcategory_child_ids", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
 
         Category category = new Category(1, "l1TaxonomyId", "l1AliasName", 1, "l2TaxonomyId", "l2ChildIds", "l2TaxonomyUrl", "plpParm", "l2AliasName",
             1, 0, "defaultImage", "imageUrl")
@@ -78,7 +78,7 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         given:
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 1, 1)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "name", false, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "subCategoryName", "subcategory_child_ids", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
 
         Category category = new Category(1, "l1TaxonomyId", "l1AliasName", 1, "l2TaxonomyId", "l2ChildIds", "l2TaxonomyUrl", "plpParm", "l2AliasName",
             1, 0, "defaultImage", "imageUrl")
@@ -103,7 +103,7 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         given:
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 1, 1)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "checklistName", true, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "subCategoryName", "subcategory_child_ids", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
 
         Category category = new Category(1, "l1TaxonomyId", "l1AliasName", 1, "l2TaxonomyId", "l2ChildIds", "l2TaxonomyUrl", "plpParm", "l2AliasName",
             1, 0, "defaultImage", "imageUrl")
@@ -129,7 +129,7 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         given:
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 1, 1)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "name", true, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "subCategoryName", "subcategory_child_ids", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
 
         Category category = new Category(1, "l1TaxonomyId", "l1AliasName", 1, "l2TaxonomyId", "l2ChildIds", "l2TaxonomyUrl", "plpParm", "l2AliasName",
             1, 0, "defaultImage", "imageUrl")
@@ -156,7 +156,7 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         given:
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 1, 1)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "name", true, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "subCategoryName", "subcategory_child_ids", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
 
         Category category = new Category(1, "l1TaxonomyId", "l1AliasName", 1, "l2TaxonomyId", "l2ChildIds", "l2TaxonomyUrl", "plpParm", "l2AliasName",
             1, 0, "defaultImage", "imageUrl")

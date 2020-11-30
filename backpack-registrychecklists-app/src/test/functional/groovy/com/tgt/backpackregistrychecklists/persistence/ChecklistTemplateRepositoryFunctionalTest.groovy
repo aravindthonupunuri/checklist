@@ -31,11 +31,11 @@ class ChecklistTemplateRepositoryFunctionalTest extends BasePersistenceFunctiona
         def checklistTemplatePk2 = new ChecklistTemplatePK(RegistryType.WEDDING, 2, 2)
         def checklistTemplatePk3 = new ChecklistTemplatePK(RegistryType.BABY, 1, 2)
         def checklistTemplatePk4 = new ChecklistTemplatePK(RegistryType.BABY, 3, 1)
-        def checklistTemplate = new ChecklistTemplate(checklistTemplatePk, "Baby1", true, 1, "categoryId", "name", "name", "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
-        def checklistTemplate1 = new ChecklistTemplate(checklistTemplatePk1, "Wedding1", true, 2, "categoryId", "name", "name", "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
-        def checklistTemplate2 = new ChecklistTemplate(checklistTemplatePk2, "Wedding2", true, 3, "categoryId", "name", "name", "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
-        def checklistTemplate3 = new ChecklistTemplate(checklistTemplatePk3, "Baby2", true, 4, "categoryId", "name", "name", "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
-        def checklistTemplate4 = new ChecklistTemplate(checklistTemplatePk4, "Baby3", true, 5, "categoryId", "name", "name", "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+        def checklistTemplate = new ChecklistTemplate(checklistTemplatePk, "Baby1", true, 1, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+        def checklistTemplate1 = new ChecklistTemplate(checklistTemplatePk1, "Wedding1", true, 2, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+        def checklistTemplate2 = new ChecklistTemplate(checklistTemplatePk2, "Wedding2", true, 3, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+        def checklistTemplate3 = new ChecklistTemplate(checklistTemplatePk3, "Baby2", true, 4, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+        def checklistTemplate4 = new ChecklistTemplate(checklistTemplatePk4, "Baby3", true, 5, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
 
         when:
         def result = checklistTemplateRepository.save(checklistTemplate).block()

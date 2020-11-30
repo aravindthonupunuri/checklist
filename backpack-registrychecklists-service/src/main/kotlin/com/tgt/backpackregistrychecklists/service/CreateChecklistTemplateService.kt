@@ -85,6 +85,7 @@ class CreateChecklistTemplateService(
             categoryName = category.l1AliasName,
             categoryImageUr = category.defaultImage,
             subcategoryId = category.l2TaxonomyId,
+            subcategoryChildIds = category.l2ChildIds,
             subcategoryName = category.l2AliasName,
             subcategoryOrder = category.l2DisplayOrder,
             subcategoryUrl = category.imageUrl,

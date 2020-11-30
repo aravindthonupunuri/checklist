@@ -40,7 +40,7 @@ class MarkChecklistServiceTest extends Specification {
 
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(new ChecklistTemplatePK(RegistryType.BABY, templateId, 1),
             "firstChecklistName", true, checklistId, "name", "name", "name",
-            "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
 
         CheckedSubCategories registryChecklistSubCategory = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, templateId, checklistId),
             LocalDateTime.now(), RegistrySubChannel.KIOSK.value, LocalDateTime.now(), RegistrySubChannel.KIOSK.value)
@@ -120,7 +120,7 @@ class MarkChecklistServiceTest extends Specification {
 
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(new ChecklistTemplatePK(RegistryType.BABY, templateId, 1),
             "firstChecklistName", true, 202, "name", "name", "name",
-            "1", "name", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
 
         when:
         markChecklistService.markChecklistId(registryId, checklistId, registryChecklistRequest, RegistrySubChannel.KIOSK).block()
