@@ -21,8 +21,8 @@ class GetChecklistTemplatesServiceTest extends Specification {
 
     def "test getChecklistTemplates - baby - single template"() {
 
-        ChecklistTemplate checklistTemplate = new ChecklistTemplate(new ChecklistTemplatePK(RegistryType.BABY, 1,
-            1), "firstChecklistName", true, 1, "name", "name", "name",
+        ChecklistTemplate checklistTemplate = new ChecklistTemplate(new ChecklistTemplatePK( 1,
+            101), RegistryType.BABY, "firstChecklistName", true, 1, "name", "name", "name",
             "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
 
         when:
@@ -39,12 +39,12 @@ class GetChecklistTemplatesServiceTest extends Specification {
 
     def "test getChecklistTemplates - baby - multiple templates"() {
 
-        ChecklistTemplate checklistTemplate = new ChecklistTemplate(new ChecklistTemplatePK(RegistryType.BABY, 1,
-            1), "firstChecklistName", true, 1, "name", "name", "name",
+        ChecklistTemplate checklistTemplate = new ChecklistTemplate(new ChecklistTemplatePK( 1,
+            101), RegistryType.BABY, "firstChecklistName", true, 1, "name", "name", "name",
             "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
 
-        ChecklistTemplate checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK(RegistryType.BABY, 2,
-            1), "secondChecklistName", false, 1, "name", "name", "name",
+        ChecklistTemplate checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK( 2,
+            1), RegistryType.BABY, "secondChecklistName", false, 1, "name", "name", "name",
             "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
 
         when:

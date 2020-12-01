@@ -75,12 +75,13 @@ class CreateChecklistTemplateService(
         templateId: Int,
         checklistName: String
     ): ChecklistTemplate {
-        val checkListTemplatePK = ChecklistTemplatePK(registryType, templateId, category.l1DisplayOrder!!)
+        val checkListTemplatePK = ChecklistTemplatePK(templateId, category.checklistId!!)
         return ChecklistTemplate(
             checklistTemplatePK = checkListTemplatePK,
+            registryType = registryType,
             checklistName = checklistName,
             defaultChecklist = true,
-            checklistId = category.checklistId,
+            categoryOrder = category.l1DisplayOrder,
             categoryId = category.l1TaxonomyId,
             categoryName = category.l1AliasName,
             categoryImageUr = category.defaultImage,

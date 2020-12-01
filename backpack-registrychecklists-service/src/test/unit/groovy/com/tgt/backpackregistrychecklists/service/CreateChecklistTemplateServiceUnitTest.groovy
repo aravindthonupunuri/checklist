@@ -24,8 +24,8 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
 
     def "Test uploadChecklistToDatabase() integrity"() {
         given:
-        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 1, 1)
-        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "checklistName", true, 1, "categoryId", "categoryName",
+        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 101)
+        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", true, 1, "categoryId", "categoryName",
             "categoryImageUrl", "subCategoryId", "subCategoryName", "subcategory_child_ids", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
 
         Category category = new Category(1, "l1TaxonomyId", "l1AliasName", 1, "l2TaxonomyId", "l2ChildIds", "l2TaxonomyUrl", "plpParm", "l2AliasName",
@@ -49,8 +49,8 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
 
     def "Test uploadChecklistToDatabase() - replace an existing checklist for a given templateId and checklistName"() {
         given:
-        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 1, 1)
-        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "name", true, 1, "categoryId", "categoryName",
+        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 101)
+        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "name", true, 1, "categoryId", "categoryName",
             "categoryImageUrl", "subCategoryId", "subCategoryName", "subcategory_child_ids", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
 
         Category category = new Category(1, "l1TaxonomyId", "l1AliasName", 1, "l2TaxonomyId", "l2ChildIds", "l2TaxonomyUrl", "plpParm", "l2AliasName",
@@ -76,8 +76,8 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
 
     def "Test uploadChecklistToDatabase() - checklist template table already have a default checklist"() {
         given:
-        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 1, 1)
-        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "name", false, 1, "categoryId", "categoryName",
+        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 101)
+        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "name", false, 1, "categoryId", "categoryName",
             "categoryImageUrl", "subCategoryId", "subCategoryName", "subcategory_child_ids", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
 
         Category category = new Category(1, "l1TaxonomyId", "l1AliasName", 1, "l2TaxonomyId", "l2ChildIds", "l2TaxonomyUrl", "plpParm", "l2AliasName",
@@ -101,8 +101,8 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
 
     def "Test uploadChecklistToDatabase() - checklist name already exists for the given template id"() {
         given:
-        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 1, 1)
-        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "checklistName", true, 1, "categoryId", "categoryName",
+        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 101)
+        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", true, 1, "categoryId", "categoryName",
             "categoryImageUrl", "subCategoryId", "subCategoryName", "subcategory_child_ids", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
 
         Category category = new Category(1, "l1TaxonomyId", "l1AliasName", 1, "l2TaxonomyId", "l2ChildIds", "l2TaxonomyUrl", "plpParm", "l2AliasName",
@@ -127,8 +127,8 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
 
     def "Test uploadChecklistToDatabase() - checklist name already exists for a different templateId"() {
         given:
-        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 1, 1)
-        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "name", true, 1, "categoryId", "categoryName",
+        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 101)
+        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "name", true, 1, "categoryId", "categoryName",
             "categoryImageUrl", "subCategoryId", "subCategoryName", "subcategory_child_ids", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
 
         Category category = new Category(1, "l1TaxonomyId", "l1AliasName", 1, "l2TaxonomyId", "l2ChildIds", "l2TaxonomyUrl", "plpParm", "l2AliasName",
@@ -154,8 +154,8 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
 
     def "Test uploadChecklistToDatabase() - error while saving the checklist"() {
         given:
-        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 1, 1)
-        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "name", true, 1, "categoryId", "categoryName",
+        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 101)
+        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "name", true, 1, "categoryId", "categoryName",
             "categoryImageUrl", "subCategoryId", "subCategoryName", "subcategory_child_ids", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
 
         Category category = new Category(1, "l1TaxonomyId", "l1AliasName", 1, "l2TaxonomyId", "l2ChildIds", "l2TaxonomyUrl", "plpParm", "l2AliasName",

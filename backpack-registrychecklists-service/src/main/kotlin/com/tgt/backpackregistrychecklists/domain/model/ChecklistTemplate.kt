@@ -1,5 +1,6 @@
 package com.tgt.backpackregistrychecklists.domain.model
 
+import com.tgt.backpackregistryclient.util.RegistryType
 import io.micronaut.data.annotation.DateCreated
 import io.micronaut.data.annotation.DateUpdated
 import io.micronaut.data.annotation.MappedEntity
@@ -13,12 +14,14 @@ import javax.persistence.Table
 data class ChecklistTemplate(
     @EmbeddedId
     val checklistTemplatePK: ChecklistTemplatePK,
+    @Column(name = "registry_type")
+    val registryType: RegistryType,
     @Column(name = "checklist_name")
     val checklistName: String,
     @Column(name = "default_checklist")
     val defaultChecklist: Boolean? = null,
-    @Column(name = "checklist_id")
-    val checklistId: Int? = null,
+    @Column(name = "category_order")
+    val categoryOrder: Int? = null,
     @Column(name = "category_id")
     val categoryId: String? = null,
     @Column(name = "category_name")

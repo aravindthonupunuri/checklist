@@ -87,8 +87,8 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
             .addPart("file", "file.xml", MediaType.APPLICATION_XML_TYPE, file)
             .build()
 
-        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 1, 2)
-        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "name", true, 1, "categoryId", "categoryName",
+        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(1, 201)
+        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY,  "name", true, 1, "categoryId", "categoryName",
         "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
 
         when:
@@ -111,8 +111,8 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
             .addPart("file", "file.xml", MediaType.APPLICATION_XML_TYPE, file)
             .build()
 
-        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.WEDDING, 91, 4)
-        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "name", true, 1, "categoryId", "categoryName",
+        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 91, 401)
+        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.WEDDING, "name", true, 1, "categoryId", "categoryName",
             "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
         checklistTemplateRepository.save(checklistTemplate).block()
 
@@ -136,8 +136,8 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
             .addPart("file", "file.xml", MediaType.APPLICATION_XML_TYPE, file)
             .build()
 
-        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 1, 4)
-        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "name", false, 1, "categoryId", "categoryName",
+        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 401)
+        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "name", false, 1, "categoryId", "categoryName",
             "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
         checklistTemplateRepository.save(checklistTemplate).block()
 
@@ -161,8 +161,8 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
             .addPart("file", "file.xml", MediaType.APPLICATION_XML_TYPE, file)
             .build()
 
-        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 7, 4)
-        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "checklistName", false, 1, "categoryId", "categoryName",
+        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 7, 401)
+        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", false, 1, "categoryId", "categoryName",
             "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
         checklistTemplateRepository.save(checklistTemplate).block()
 
@@ -186,8 +186,8 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
             .addPart("file", "file.xml", MediaType.APPLICATION_XML_TYPE, file)
             .build()
 
-        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(RegistryType.BABY, 11, 3)
-        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, "checklistName", false, 1, "categoryId", "categoryName",
+        ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 11, 301)
+        ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", false, 1, "categoryId", "categoryName",
             "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
         checklistTemplateRepository.save(checklistTemplate).block()
 

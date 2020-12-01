@@ -35,8 +35,8 @@ class GetChecklistTemplatesFunctionalTest extends BasePersistenceFunctionalTest{
         def registryType = "BABY"
         def uri = "/registry_checklists/v1/checklists?registry_type="+registryType+"&channel=WEB&sub_channel=KIOSK"
 
-        checklistTemplateRepository.save(new ChecklistTemplate(new ChecklistTemplatePK(RegistryType.BABY, 1,
-            1), "firstChecklistName", true, 1, "name", "name", "name",
+        checklistTemplateRepository.save(new ChecklistTemplate(new ChecklistTemplatePK( 1,
+            101), RegistryType.BABY, "firstChecklistName", true, 1, "name", "name", "name",
             "1", "name", "subCategoryChildIds", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())).block()
 
         when:
@@ -59,11 +59,11 @@ class GetChecklistTemplatesFunctionalTest extends BasePersistenceFunctionalTest{
         def registryType = "BABY"
         def uri = "/registry_checklists/v1/checklists?registry_type="+registryType+"&channel=WEB&sub_channel=KIOSK"
 
-        checklistTemplateRepository.save(new ChecklistTemplate(new ChecklistTemplatePK(RegistryType.BABY, 1,
-            2), "firstChecklistName", true, 1, "name", "name", "name",
+        checklistTemplateRepository.save(new ChecklistTemplate(new ChecklistTemplatePK( 1,
+            111), RegistryType.BABY, "firstChecklistName", true, 2, "name", "name", "name",
             "1", "name", "subCategoryChildIds", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())).block()
-        checklistTemplateRepository.save(new ChecklistTemplate(new ChecklistTemplatePK(RegistryType.BABY, 2,
-            1), "secondChecklistName", true, 1, "name", "name", "name",
+        checklistTemplateRepository.save(new ChecklistTemplate(new ChecklistTemplatePK( 2,
+            112), RegistryType.BABY,"secondChecklistName", true, 1, "name", "name", "name",
             "1", "name", "subCategoryChildIds", 1,  "name", "name", LocalDateTime.now(), LocalDateTime.now())).block()
 
         when:
@@ -89,8 +89,8 @@ class GetChecklistTemplatesFunctionalTest extends BasePersistenceFunctionalTest{
         def registryType = "BABY"
         def uri = "/registry_checklists/v1/checklists?registry_type="+registryType+"&channel=WEB&sub_channel=KIOSK"
 
-        ChecklistTemplate checklistTemplate3 = new ChecklistTemplate(new ChecklistTemplatePK(RegistryType.BABY, 1,
-            3), "firstChecklistName", true, 1, "name", "name", "name",
+        ChecklistTemplate checklistTemplate3 = new ChecklistTemplate(new ChecklistTemplatePK( 1,
+            100), RegistryType.BABY, "firstChecklistName", true, 3, "name", "name", "name",
             "1", "name", "subCategoryChildIds", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
 
         checklistTemplateRepository.save(checklistTemplate3).block()
@@ -135,8 +135,8 @@ class GetChecklistTemplatesFunctionalTest extends BasePersistenceFunctionalTest{
         def registryType = "WEDDING"
         def uri = "/registry_checklists/v1/checklists?registry_type="+registryType+"&channel=WEB&sub_channel=KIOSK"
 
-        ChecklistTemplate checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK(RegistryType.WEDDING, 2,
-            1), "weddingChecklistName", true, 1, "name", "name", "name",
+        ChecklistTemplate checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK( 2,
+            100), RegistryType.WEDDING, "weddingChecklistName", true, 1, "name", "name", "name",
             "1", "name", "subCategoryChildIds", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
 
         checklistTemplateRepository.save(checklistTemplate2).block()

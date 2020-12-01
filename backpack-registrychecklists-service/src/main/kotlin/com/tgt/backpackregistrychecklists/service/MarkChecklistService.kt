@@ -40,7 +40,7 @@ class MarkChecklistService(
                             throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("No checklistId found for the given templateId")))
                         }
                         .flatMap { checklistTemplate ->
-                            if (checklistTemplate.checklistId == checklistId) {
+                            if (checklistTemplate.checklistTemplatePK.checklistId == checklistId) {
                                 checkedSubCategoriesRepository.save(CheckedSubCategories(CheckedSubCategoriesId(registryId = registryId, templateId = registryChecklistRequest.templateId, checklistId = checklistId),
                                     createdUser = subChannel.value, updatedUser = subChannel.value))
                                     .map {
