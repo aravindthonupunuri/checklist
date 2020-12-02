@@ -1,6 +1,7 @@
 package com.tgt.backpackregistrychecklists.kafka
 
-import com.tgt.backpackregistry.kafka.RegistryChecklistEventDispatcher
+
+import com.tgt.backpackregistrychecklists.kafka.handler.CreateListNotifyEventHandler
 import com.tgt.backpackregistrychecklists.kafka.handler.DeleteChecklistActionEventHandler
 import com.tgt.backpackregistrychecklists.transport.kafka.model.DeleteChecklistActionEvent
 import com.tgt.lists.msgbus.event.EventHeaders
@@ -8,6 +9,7 @@ import spock.lang.Shared
 import spock.lang.Specification
 
 class RegistryChecklistEventDispatcherTest extends Specification {
+    CreateListNotifyEventHandler createListNotifyEventHandler
     DeleteChecklistActionEventHandler deleteChecklistActionEventHandler
     RegistryChecklistEventDispatcher registryChecklistEventDispatcher
 
@@ -18,9 +20,10 @@ class RegistryChecklistEventDispatcherTest extends Specification {
     String dlqSource = "Valid DLQ Source"
 
     def setup() {
+        createListNotifyEventHandler = Mock(CreateListNotifyEventHandler)
         deleteChecklistActionEventHandler = Mock(DeleteChecklistActionEventHandler)
         registryChecklistEventDispatcher = new RegistryChecklistEventDispatcher
-            (deleteChecklistActionEventHandler, source, dlqSource, [source, dlqSource])
+            (deleteChecklistActionEventHandler, createListNotifyEventHandler, source, dlqSource, [source, dlqSource])
     }
 
     def "Event available with invalid source - transformValue method"() {

@@ -1,15 +1,8 @@
 package com.tgt.backpackregistrychecklists.api.controller
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
-import com.tgt.backpackregistrychecklists.service.CreateChecklistTemplateService
-import com.tgt.backpackregistrychecklists.service.DeleteChecklistService
-import com.tgt.backpackregistrychecklists.service.GetChecklistTemplatesService
-import com.tgt.backpackregistrychecklists.service.MarkChecklistService
-import com.tgt.backpackregistrychecklists.transport.Checklist
-import com.tgt.backpackregistrychecklists.service.UnmarkChecklistService
-import com.tgt.backpackregistrychecklists.transport.RegistryChecklistResponseTO
-import com.tgt.backpackregistrychecklists.transport.RegistryChecklistRequestTO
-import com.tgt.backpackregistrychecklists.transport.RegistryChecklistTemplateResponseTO
+import com.tgt.backpackregistrychecklists.service.*
+import com.tgt.backpackregistrychecklists.transport.*
 import com.tgt.backpackregistryclient.util.RegistryChannel
 import com.tgt.backpackregistryclient.util.RegistrySubChannel
 import com.tgt.backpackregistryclient.util.RegistryType
@@ -22,9 +15,9 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import reactor.core.publisher.Mono
 import java.io.IOException
+import java.util.*
 import javax.xml.stream.XMLInputFactory
 import javax.xml.stream.XMLStreamException
-import java.util.*
 
 @Controller("/registry_checklists/v1")
 class RegistryChecklistController(
@@ -69,6 +62,37 @@ class RegistryChecklistController(
         @QueryValue("sub_channel") subChannel: RegistrySubChannel
     ): Mono<RegistryChecklistTemplateResponseTO> {
         return getCheckListTemplatesService.getTemplatesForRegistryType(registryType)
+    }
+
+    @Get("/{registry_id}/checklists")
+    @Status(HttpStatus.OK)
+    @ApiResponse(
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ChecklistResponseTO::class))]
+    )
+    fun getRegistryChecklists(
+        @Header("profile_id") guestId: String,
+        @PathVariable("registry_id") registryId: UUID,
+        @QueryValue("location_id") locationId: Long?,
+        @QueryValue("channel") channel: RegistryChannel,
+        @QueryValue("sub_channel") subChannel: RegistrySubChannel
+    ): Mono<ChecklistResponseTO> {
+        return Mono.just(ChecklistResponseTO(UUID.randomUUID(), null, null))
+    }
+
+    @Put("/{registry_id}/checklists")
+    @Status(HttpStatus.OK)
+    @ApiResponse(
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ChecklistResponseTO::class))]
+    )
+    fun updateDefaultTemplate(
+        @Header("profile_id") guestId: String,
+        @PathVariable("registry_id") registryId: UUID,
+        @QueryValue("location_id") locationId: Long?,
+        @QueryValue("channel") channel: RegistryChannel,
+        @QueryValue("sub_channel") subChannel: RegistrySubChannel,
+        @Body registryChecklistRequest: RegistryChecklistRequestTO
+    ): Mono<ChecklistResponseTO> {
+        return Mono.just(ChecklistResponseTO(UUID.randomUUID(), null, null))
     }
 
     @Post("/{registry_id}/checklists/{checklist_id}")

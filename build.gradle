@@ -70,7 +70,7 @@ allprojects {
         implementation("com.tgt.backpackregistry:backpack-registry-components:2.201.1") {
             exclude group: 'com.tgt.lists', module: 'lists-components'
         }
-        implementation("com.tgt.lists:atlas-client:2.201.38")
+        implementation("com.tgt.lists:atlas-client:2.201.41")
         implementation("com.tgt.lists:lists-components:2.201.5") {
             exclude group: 'com.tgt.lists.micronaut', module: 'micronaut-resilience4j'
         }

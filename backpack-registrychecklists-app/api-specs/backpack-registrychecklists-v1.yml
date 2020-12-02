@@ -171,6 +171,24 @@ paths:
           description: The checklist's template id
           required: true
           type: string
+        - name: channel
+          in: query
+          description: registry channel
+          required: true
+          type: string
+          enum: [ "WEB", "MOBILE", "STORE" ]
+        - name: sub_channel
+          in: query
+          description: registry subchannel
+          required: true
+          type: string
+          enum: [ "KIOSK", "SCANNER", "TGTWEB", "GRIPHAPP", "GRANDAPP", "SPARTA" ]
+        - name: location_id
+          in: query
+          description: The store id
+          required: true
+          type: integer
+          format: int32
 
       responses:
         '204':
@@ -191,8 +209,6 @@ paths:
           description: Not found
           schema:
             $ref: '#/definitions/Error404'
-
-
     get:
       x-incident_priority: P4
       x-response_time_sla: 800ms
@@ -220,19 +236,21 @@ paths:
         - name: registry_type
           in: query
           description: The registry type for which checklist will be used
-          enum: [ "BABY", "WEDDING", "COLLEGE"]
+          enum: [ "BABY", "WEDDING"]
           required: true
           type: string
         - name: channel
           in: query
-          description: The channel creating this request
+          description: registry channel
           required: true
           type: string
+          enum: [ "WEB", "MOBILE", "STORE" ]
         - name: sub_channel
           in: query
-          description: The sub channel creating this request
+          description: registry subchannel
           required: true
           type: string
+          enum: [ "KIOSK", "SCANNER", "TGTWEB", "GRIPHAPP", "GRANDAPP", "SPARTA" ]
         - name: location_id
           in: query
           description: The store id
@@ -243,7 +261,7 @@ paths:
         '200':
           description: registry checklist transfer object
           schema:
-            $ref: '#/definitions/RegistryTypeChecklistsTO'
+            $ref: '#/definitions/RegistryChecklistTemplateResponseTO'
         '400':
           description: Bad Request
           schema:
@@ -286,14 +304,16 @@ paths:
           type: string
         - name: channel
           in: query
-          description: The channel creating this request
+          description: registry channel
           required: true
           type: string
+          enum: [ "WEB", "MOBILE", "STORE" ]
         - name: sub_channel
           in: query
-          description: The sub channel creating this request
+          description: registry subchannel
           required: true
           type: string
+          enum: [ "KIOSK", "SCANNER", "TGTWEB", "GRIPHAPP", "GRANDAPP", "SPARTA" ]
         - name: location_id
           in: query
           description: The store id
@@ -351,14 +371,16 @@ paths:
           type: string
         - name: channel
           in: query
-          description: The channel creating this request
+          description: registry channel
           required: true
           type: string
+          enum: [ "WEB", "MOBILE", "STORE" ]
         - name: sub_channel
           in: query
-          description: The sub channel creating this request
+          description: registry subchannel
           required: true
           type: string
+          enum: [ "KIOSK", "SCANNER", "TGTWEB", "GRIPHAPP", "GRANDAPP", "SPARTA" ]
         - name: location_id
           in: query
           description: The store id
@@ -371,11 +393,11 @@ paths:
           required: true
           type: string
           format: uuid
-        - name: template_id
-          in: query
-          description: The checklist's template id
-          required: true
-          type: string
+        - name: checklist_request
+          in: body
+          description: registry checklist update request  body
+          schema:
+            $ref: '#/definitions/RegistryChecklistRequestTO'
       responses:
         '200':
           description: registry checklist transfer object
@@ -428,11 +450,6 @@ paths:
           description: checklist id
           required: true
           type: string
-        - name: template_id
-          in: query
-          description: template id
-          required: true
-          type: string
         - name: key
           in: query
           description: The consumer's valid API key.
@@ -440,25 +457,32 @@ paths:
           type: string
         - name: channel
           in: query
-          description: The channel creating this request
+          description: registry channel
           required: true
           type: string
+          enum: [ "WEB", "MOBILE", "STORE" ]
         - name: sub_channel
           in: query
-          description: The sub channel creating this request
+          description: registry subchannel
           required: true
           type: string
+          enum: [ "KIOSK", "SCANNER", "TGTWEB", "GRIPHAPP", "GRANDAPP", "SPARTA" ]
         - name: location_id
           in: query
           description: The store id
           required: true
           type: integer
           format: int32
+        - name: checklist_request
+          in: body
+          description: registry checklist request  body
+          schema:
+            $ref: '#/definitions/RegistryChecklistRequestTO'
       responses:
         '200':
           description: registry checklist transfer object
           schema:
-            $ref: '#/definitions/RegistryChecklistUpdateResponseTO'
+            $ref: '#/definitions/RegistryChecklistResponseTO'
         '400':
           description: Bad Request
           schema:
@@ -516,14 +540,16 @@ paths:
           type: string
         - name: channel
           in: query
-          description: The channel creating this request
+          description: registry channel
           required: true
           type: string
+          enum: [ "WEB", "MOBILE", "STORE" ]
         - name: sub_channel
           in: query
-          description: The sub channel creating this request
+          description: registry subchannel
           required: true
           type: string
+          enum: [ "KIOSK", "SCANNER", "TGTWEB", "GRIPHAPP", "GRANDAPP", "SPARTA" ]
         - name: location_id
           in: query
           description: The store id
@@ -534,7 +560,7 @@ paths:
         '200':
           description: registry checklist transfer object
           schema:
-            $ref: '#/definitions/RegistryChecklistUpdateResponseTO'
+            $ref: '#/definitions/RegistryChecklistResponseTO'
         '400':
           description: Bad Request
           schema:
@@ -555,6 +581,12 @@ paths:
 
 
 definitions:
+  RegistryChecklistRequestTO:
+    type: object
+    properties:
+      template_id:
+        type: string
+
   RegistryChecklistsResponseTO:
     type: object
     properties:
@@ -619,7 +651,7 @@ definitions:
       image_url:
         type: string
 
-  RegistryChecklistUpdateResponseTO:
+  RegistryChecklistResponseTO:
     type: object
     properties:
       registry_id:
@@ -633,7 +665,7 @@ definitions:
       template_id:
         type: string
 
-  RegistryTypeChecklistsTO:
+  RegistryChecklistTemplateResponseTO:
     type: object
     properties:
       registry_type:

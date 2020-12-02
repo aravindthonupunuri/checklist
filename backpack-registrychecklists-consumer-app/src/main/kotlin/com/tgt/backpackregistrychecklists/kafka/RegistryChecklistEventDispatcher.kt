@@ -1,7 +1,9 @@
-package com.tgt.backpackregistry.kafka
+package com.tgt.backpackregistrychecklists.kafka
 
+import com.tgt.backpackregistrychecklists.kafka.handler.CreateListNotifyEventHandler
 import com.tgt.backpackregistrychecklists.kafka.handler.DeleteChecklistActionEventHandler
 import com.tgt.backpackregistrychecklists.transport.kafka.model.DeleteChecklistActionEvent
+import com.tgt.lists.atlas.kafka.model.CreateListNotifyEvent
 import com.tgt.lists.msgbus.EventDispatcher
 import com.tgt.lists.msgbus.event.DeadEventTransformedValue
 import com.tgt.lists.msgbus.event.EventHeaders
@@ -17,6 +19,7 @@ import javax.inject.Singleton
 @Singleton
 open class RegistryChecklistEventDispatcher(
     @Inject private val deleteChecklistActionEventHandler: DeleteChecklistActionEventHandler,
+    @Inject private val createListNotifyEventHandler: CreateListNotifyEventHandler,
     @Value("\${msgbus.source}") private val source: String,
     @Value("\${msgbus.dlq-source}") private val dlqSource: String,
     @Value("\${kafka-sources.allow}") val allowedSources: List<String>
@@ -39,6 +42,10 @@ open class RegistryChecklistEventDispatcher(
                     val deleteChecklistActionEvent = DeleteChecklistActionEvent.deserialize(data)
                     EventTransformedValue("template_${deleteChecklistActionEvent.templateId}", ExecutionSerialization.ID_SERIALIZATION, deleteChecklistActionEvent)
                 }
+                CreateListNotifyEvent.getEventType() -> {
+                    val createListNotifyEvent = CreateListNotifyEvent.deserialize(data)
+                    EventTransformedValue("guest_${createListNotifyEvent.guestId}", ExecutionSerialization.ID_SERIALIZATION, createListNotifyEvent)
+                }
                 else -> null
             }
         }
@@ -53,6 +60,12 @@ open class RegistryChecklistEventDispatcher(
                     val deleteChecklistActionEvent = data as DeleteChecklistActionEvent
                     logger.debug { "Got DeleteChecklist Action Event: $deleteChecklistActionEvent" }
                     return deleteChecklistActionEventHandler.handleDeleteChecklistActionEvent(deleteChecklistActionEvent, eventHeaders, isPoisonEvent)
+                }
+                CreateListNotifyEvent.getEventType() -> {
+                    // always use transformValue to convert raw data to concrete type
+                    val createListNotifyEvent = data as CreateListNotifyEvent
+                    logger.debug { "Got CreateList Event: $createListNotifyEvent" }
+                    return createListNotifyEventHandler.handleCreateRegistryNotifyEvent(createListNotifyEvent, eventHeaders, isPoisonEvent)
                 }
             }
 
