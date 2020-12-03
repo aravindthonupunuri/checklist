@@ -44,7 +44,7 @@ class MarkChecklistService(
                                 checkedSubCategoriesRepository.save(CheckedSubCategories(CheckedSubCategoriesId(registryId = registryId, templateId = registryChecklistRequest.templateId, checklistId = checklistId),
                                     createdUser = subChannel.value, updatedUser = subChannel.value))
                                     .map {
-                                        RegistryChecklistResponseTO(registryId = registryId, isChecked = true, checklistId = checklistId, templateId = registryChecklistRequest.templateId)
+                                        RegistryChecklistResponseTO(registryId = registryId, checked = true, checklistId = checklistId, templateId = registryChecklistRequest.templateId)
                                     }
                             } else
                                 throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("Not a valid templateId - checklistId combination")))

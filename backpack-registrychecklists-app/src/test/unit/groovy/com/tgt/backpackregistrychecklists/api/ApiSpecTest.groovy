@@ -1,7 +1,6 @@
-//package com.tgt.backpackregistry.api
+//package com.tgt.backpackregistrychecklists.api
 //
 //import com.tgt.swagger_sync.ApiSpec
-//import com.tgt.swagger_sync.OpenApi3ExtParser
 //import com.tgt.swagger_sync.OpenApi3Parser
 //import com.tgt.swagger_sync.SpecComparator
 //import com.tgt.swagger_sync.Swagger2Parser
@@ -9,17 +8,17 @@
 //
 //class ApiSpecTest extends Specification {
 //
-//    static String staticSpecRelativePath = "/api-specs/backpack-registry-v2.yaml"
-//    static String dynamicSpecRelativePath = "/build/tmp/kapt3/classes/main/META-INF/swagger/backpack-registry-v2.yml"
+//    static String staticSpecRelativePath = "/api-specs/backpack-registrychecklists-v1.yml"
+//    static String dynamicSpecRelativePath = "/build/tmp/kapt3/classes/main/META-INF/swagger/backpack-registry-checklists-v1.yml"
 //
-//    OpenApi3ExtParser staticSpecFileParser
+//    Swagger2Parser staticSpecFileParser
 //    OpenApi3Parser dynamicSpecFileParser
 //
 //    def setup() {
 //        def appDir = System.getProperty("user.dir")
 //
 //        String staticSpecFilePath = "${appDir}${staticSpecRelativePath}"
-//        staticSpecFileParser = new OpenApi3ExtParser(staticSpecFilePath)
+//        staticSpecFileParser = new Swagger2Parser(staticSpecFilePath)
 //
 //        String dynamicSpecFilePath = "${appDir}${dynamicSpecRelativePath}"
 //        dynamicSpecFileParser = new OpenApi3Parser(dynamicSpecFilePath)

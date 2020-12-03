@@ -22,7 +22,7 @@ class UnmarkChecklistService(
         return checkedSubCategoriesRepository.delete(CheckedSubCategoriesId(registryId, templateId, checklistId))
             .map {
                 if (it == 1)
-                    RegistryChecklistResponseTO(registryId = registryId, isChecked = false, checklistId = checklistId, templateId = templateId)
+                    RegistryChecklistResponseTO(registryId = registryId, checked = false, checklistId = checklistId, templateId = templateId)
                 else
                     throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("No record found in database for the provided registryId/checklistId combination")))
             }

@@ -330,7 +330,7 @@ paths:
         '200':
           description: registry checklist transfer object
           schema:
-            $ref: '#/definitions/RegistryChecklistsResponseTO'
+            $ref: '#/definitions/ChecklistResponseTO'
         '400':
           description: Bad Request
           schema:
@@ -402,7 +402,7 @@ paths:
         '200':
           description: registry checklist transfer object
           schema:
-            $ref: '#/definitions/RegistryChecklistsResponseTO'
+            $ref: '#/definitions/ChecklistResponseTO'
         '400':
           description: Bad Request
           schema:
@@ -583,11 +583,13 @@ paths:
 definitions:
   RegistryChecklistRequestTO:
     type: object
+    required:
+      - template_id
     properties:
       template_id:
-        type: string
+        type: integer
 
-  RegistryChecklistsResponseTO:
+  ChecklistResponseTO:
     type: object
     properties:
       registry_id:
@@ -599,37 +601,35 @@ definitions:
       categories:
         type: array
         items:
-          $ref: '#/definitions/RegistryChecklistCategoriesTO'
+          $ref: '#/definitions/ChecklistCategoryTO'
 
-  RegistryChecklistCategoriesTO:
+  ChecklistCategoryTO:
     type: object
     properties:
-      checklist_id:
-        type: string
       category_id:
         type: string
       category_name:
         type: string
       category_display_order:
-        type: string
+        type: integer
       category_image_url:
         type: string
-      checked:
-        type: boolean
       subcategories:
         type: array
         items:
-          $ref: '#/definitions/RegistryChecklistSubCategoriesTO'
+          $ref: '#/definitions/SubcategoryTO'
 
-  RegistryChecklistSubCategoriesTO:
+  SubcategoryTO:
     type: object
     properties:
+      checklist_id:
+        type: integer
       subcategory_id:
         type: string
       subcategory_name:
         type: string
       subcategory_display_order:
-        type: string
+        type: integer
       subcategory_url:
         type: string
       plp_param:
@@ -640,8 +640,8 @@ definitions:
       checked:
         type: boolean
       last_updated_item:
-        $ref: '#/definitions/RegistryChecklistLastUpdatemItemTO'
-  RegistryChecklistLastUpdatemItemTO:
+        $ref: '#/definitions/ItemDetailsTO'
+  ItemDetailsTO:
     type: object
     properties:
       tcin:
@@ -650,6 +650,12 @@ definitions:
         type: string
       image_url:
         type: string
+      added_ts:
+        type: string
+        format: date-time
+      last_modified_ts:
+        type: string
+        format: date-time
 
   RegistryChecklistResponseTO:
     type: object
@@ -657,33 +663,40 @@ definitions:
       registry_id:
         type: string
         format: uuid
-      checked:
-        type: string
-        example: true or false
       checklist_id:
-        type: string
+        type: integer
       template_id:
-        type: string
+        type: integer
+      checked:
+        type: boolean
+        example: true or false
 
   RegistryChecklistTemplateResponseTO:
     type: object
     properties:
       registry_type:
-        type: string
+        $ref: '#/definitions/RegistryType'
       checklists:
         type: array
         items:
-          $ref: '#/definitions/RegistryChecklistTO'
+          $ref: '#/definitions/ChecklistTemplateTO'
 
-  RegistryChecklistTO:
+  RegistryType:
+    type: string
+    enum:
+      - BABY
+      - WEDDING
+
+  ChecklistTemplateTO:
     type: object
     properties:
       template_id:
-        type: string
+        type: integer
       checklist_name:
         type: string
 
-
+  Void:
+    type: object
 
   Error401:
     type: object
