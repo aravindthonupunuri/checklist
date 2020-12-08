@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory
 import spock.lang.Shared
 import spock.lang.Stepwise
 import javax.inject.Inject
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.util.stream.Collectors
 
 @MicronautTest
@@ -43,7 +43,7 @@ class CheckedSubCategoriesRepositoryFunctionalTest extends BasePersistenceFuncti
 
     def "test save"() {
 
-        LocalDateTime date = LocalDateTime.now()
+        LocalDate date = LocalDate.now()
         def checkedSubCategories = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, templateId, checklistId), date, "null", date, "null")
         def checkedSubCategories2 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, templateId, 201), date, "null", date, "null")
         def checkedSubCategories3 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 3, 202), date, "null", date, "null")
@@ -101,4 +101,3 @@ class CheckedSubCategoriesRepositoryFunctionalTest extends BasePersistenceFuncti
         actual.get(1).checkedSubcategoriesId.checklistId == 203
     }
 }
-

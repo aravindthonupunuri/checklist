@@ -4,7 +4,7 @@ import com.tgt.backpackregistryclient.util.RegistryType
 import io.micronaut.data.annotation.DateCreated
 import io.micronaut.data.annotation.DateUpdated
 import io.micronaut.data.annotation.MappedEntity
-import java.time.LocalDateTime
+import java.time.LocalDate
 import javax.persistence.Column
 import javax.persistence.EmbeddedId
 import javax.persistence.Table
@@ -42,8 +42,8 @@ data class ChecklistTemplate(
     val plpParam: String? = null,
     @Column(name = "created_ts")
     @DateCreated
-    var createdTs: LocalDateTime? = null,
+    var createdTs: LocalDate? = null,
     @Column(name = "updated_ts")
     @DateUpdated
-    var updatedTs: LocalDateTime? = null
+    var updatedTs: LocalDate? = null
 )

@@ -20,9 +20,7 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import spock.lang.Shared
 import spock.lang.Specification
-
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.Month
 
 class GetRegistryChecklistsServiceTest extends Specification{
@@ -82,20 +80,20 @@ class GetRegistryChecklistsServiceTest extends Specification{
     def setupSpec() {
         redskyDataProvider = new RedskyDataProvider()
 
-        registryChecklist = new RegistryChecklist(registryId, 1, LocalDateTime.now(), subChannel.value, LocalDateTime.now(), subChannel.value)
+        registryChecklist = new RegistryChecklist(registryId, 1, LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)
         checklistTemplate1 = new ChecklistTemplate(new ChecklistTemplatePK(1, 201), RegistryType.BABY,
             "firstChecklistName", true, 1, "963002", "strollers and car seats", "name",
-            "5xtjw", "5xtjw", "travel system", 1, "name", "reg_type=baby", LocalDateTime.now(), LocalDateTime.now())
+            "5xtjw", "5xtjw", "travel system", 1, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
         checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK(1, 202), RegistryType.BABY,
             "firstChecklistName", true, 1, "963002", "strollers and car seats", "name",
-            "5xtk7", "5xtk7", "stroller", 2, "name", "reg_type=baby", LocalDateTime.now(), LocalDateTime.now())
+            "5xtk7", "5xtk7", "stroller", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
         checklistTemplate3 = new ChecklistTemplate(new ChecklistTemplatePK(1, 203), RegistryType.BABY,
             "firstChecklistName", true, 1, "963002", "strollers and car seats", "name",
-            "5q0ev", "5q0ev", "infant car seat", 2, "name", "reg_type=baby", LocalDateTime.now(), LocalDateTime.now())
+            "5q0ev", "5q0ev", "infant car seat", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
         items = [new RegistryItemsTO(registryId, "12954094", null, 2, 0, "itemTitle1", LocalDate.of(2020, Month.DECEMBER, 30), LocalDate.of(2020, Month.DECEMBER, 30)),
-                     new RegistryItemsTO(registryId, "22222", null, 2, 0, "itemTitle2", LocalDate.of(2020, Month.DECEMBER, 12), LocalDate.of(2020, Month.DECEMBER, 30)),
-                     new RegistryItemsTO(registryId, "55555", null, 2, 0, "itemTitle3", LocalDate.of(2020, Month.DECEMBER, 12), LocalDate.of(2020, Month.DECEMBER, 30))]
+                 new RegistryItemsTO(registryId, "22222", null, 2, 0, "itemTitle2", LocalDate.of(2020, Month.DECEMBER, 12), LocalDate.of(2020, Month.DECEMBER, 30)),
+                 new RegistryItemsTO(registryId, "55555", null, 2, 0, "itemTitle3", LocalDate.of(2020, Month.DECEMBER, 12), LocalDate.of(2020, Month.DECEMBER, 30))]
         getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", null, items, null,
             null, null, null, LocalDate.now())
 
@@ -103,9 +101,9 @@ class GetRegistryChecklistsServiceTest extends Specification{
         redskyItemDetails2 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("22222", "5xtjw"))
         redskyItemDetails3 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("55555", "5q0ev"))
 
-        checkedSubcategories1 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 201), LocalDateTime.now(), subChannel.value, LocalDateTime.now(), subChannel.value)
-        checkedSubcategories2 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 202), LocalDateTime.now(), subChannel.value, LocalDateTime.now(), subChannel.value)
-        checkedSubcategories3 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 203), LocalDateTime.now(), subChannel.value, LocalDateTime.now(), subChannel.value)
+        checkedSubcategories1 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 201), LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)
+        checkedSubcategories2 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 202), LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)
+        checkedSubcategories3 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 203), LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)
     }
 
     def "test get checklist info for a registryId - integrity"() {
@@ -147,7 +145,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
 
         def checklistTemplate4 = new ChecklistTemplate(new ChecklistTemplatePK(1, 203), RegistryType.BABY,
             "firstChecklistName", true, 1, "963003", "strollers and car seats", "name",
-            "5q0ev", "5q0ev", "infant car seat", 2, "name", "reg_type=baby", LocalDateTime.now(), LocalDateTime.now())
+            "5q0ev", "5q0ev", "infant car seat", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
         when:
         def result = getRegistryChecklistsService.getChecklistsForRegistryId(registryId, guestId, channel, subChannel).block()
@@ -186,7 +184,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
 
         def checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK(1, 202), RegistryType.BABY,
             "firstChecklistName", true, 1, "963003", "strollers and car seats", "name",
-            "5xtk7", "5xtk7, 5q0ev", "stroller", 2, "name", "reg_type=baby", LocalDateTime.now(), LocalDateTime.now())
+            "5xtk7", "5xtk7, 5q0ev", "stroller", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
         items.add(new RegistryItemsTO(registryId, "44444", null, 2, 0, "itemTitle4", LocalDate.of(2020, Month.MAY, 30), LocalDate.of(2020, Month.APRIL, 30)))
         RegistryDetailsResponseTO getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", null, items, null,
@@ -230,7 +228,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
         def guestId = "1234"
         def checklistTemplate4 = new ChecklistTemplate(new ChecklistTemplatePK(1, 202), RegistryType.BABY,
             "firstChecklistName", true, 1, "963003", "strollers and car seats", "name", "5xtk7",
-            "5xtk7, 5q0ev", "stroller", 2, "name", "reg_type=baby", LocalDateTime.now(), LocalDateTime.now())
+            "5xtk7, 5q0ev", "stroller", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
         when:
         def result = getRegistryChecklistsService.getChecklistsForRegistryId(registryId, guestId, channel, subChannel).block()
@@ -262,7 +260,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
         def guestId = "1234"
         def checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK(1, 202), RegistryType.BABY,
             "firstChecklistName", true, 1, "963003", "strollers and car seats", "name", "5xtk7",
-            "5xtk7, 5q0ev", "stroller", 2, "name", "reg_type=baby", LocalDateTime.now(), LocalDateTime.now())
+            "5xtk7, 5q0ev", "stroller", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
         RegistryDetailsResponseTO getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", null, [], null,
             null, null, null, LocalDate.now())

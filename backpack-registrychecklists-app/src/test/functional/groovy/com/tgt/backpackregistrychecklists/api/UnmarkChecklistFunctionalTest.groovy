@@ -16,7 +16,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import javax.inject.Inject
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 @MicronautTest
 class UnmarkChecklistFunctionalTest extends BasePersistenceFunctionalTest{
@@ -41,7 +41,7 @@ class UnmarkChecklistFunctionalTest extends BasePersistenceFunctionalTest{
         def uri = "/registry_checklists/v1/"+registryId+"/checklists/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
 
         registryChecklistSubCategoryRepository.save(new CheckedSubCategories(new CheckedSubCategoriesId(registryId, templateId, checklistId),
-            LocalDateTime.now(), RegistrySubChannel.KIOSK.value, LocalDateTime.now(), RegistrySubChannel.KIOSK.value)).block()
+            LocalDate.now(), RegistrySubChannel.KIOSK.value, LocalDate.now(), RegistrySubChannel.KIOSK.value)).block()
         when:
         HttpResponse<RegistryChecklistResponseTO> markChecklistIdResponse =
             client.toBlocking().exchange(

@@ -19,9 +19,8 @@ import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.test.annotation.MicronautTest
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-
 import javax.inject.Inject
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 @MicronautTest
 class MarkChecklistFunctionalTest extends BasePersistenceFunctionalTest {
@@ -53,12 +52,12 @@ class MarkChecklistFunctionalTest extends BasePersistenceFunctionalTest {
         RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
         def uri = "/registry_checklists/v1/"+registryId+"/checklists/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
 
-        RegistryChecklist registryChecklist = new RegistryChecklist(registryId, templateId, LocalDateTime.now(), RegistrySubChannel.KIOSK.value,
-            LocalDateTime.now(), RegistrySubChannel.KIOSK.value)
+        RegistryChecklist registryChecklist = new RegistryChecklist(registryId, templateId, LocalDate.now(), RegistrySubChannel.KIOSK.value,
+            LocalDate.now(), RegistrySubChannel.KIOSK.value)
 
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(new ChecklistTemplatePK( templateId, checklistId), RegistryType.BABY,
             "firstChecklistName", true, 1, "name", "name", "name",
-            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
 
         registryChecklistRepository.save(registryChecklist).block()
         checklistTemplateRepository.save(checklistTemplate).block()
@@ -105,8 +104,8 @@ class MarkChecklistFunctionalTest extends BasePersistenceFunctionalTest {
         RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
         def uri = "/registry_checklists/v1/"+registryId+"/checklists/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
 
-        RegistryChecklist registryChecklist = new RegistryChecklist(registryId, templateId, LocalDateTime.now(), RegistrySubChannel.KIOSK.value,
-            LocalDateTime.now(), RegistrySubChannel.KIOSK.value)
+        RegistryChecklist registryChecklist = new RegistryChecklist(registryId, templateId, LocalDate.now(), RegistrySubChannel.KIOSK.value,
+            LocalDate.now(), RegistrySubChannel.KIOSK.value)
 
         registryChecklistRepository.save(registryChecklist).block()
 
@@ -128,8 +127,8 @@ class MarkChecklistFunctionalTest extends BasePersistenceFunctionalTest {
         RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
         def uri = "/registry_checklists/v1/"+registryId+"/checklists/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
 
-        RegistryChecklist registryChecklist = new RegistryChecklist(registryId, 4, LocalDateTime.now(), RegistrySubChannel.KIOSK.value,
-            LocalDateTime.now(), RegistrySubChannel.KIOSK.value)
+        RegistryChecklist registryChecklist = new RegistryChecklist(registryId, 4, LocalDate.now(), RegistrySubChannel.KIOSK.value,
+            LocalDate.now(), RegistrySubChannel.KIOSK.value)
 
         registryChecklistRepository.save(registryChecklist).block()
 
@@ -150,12 +149,12 @@ class MarkChecklistFunctionalTest extends BasePersistenceFunctionalTest {
         RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
         def uri = "/registry_checklists/v1/"+registryId+"/checklists/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
 
-        RegistryChecklist registryChecklist = new RegistryChecklist(registryId, templateId, LocalDateTime.now(), RegistrySubChannel.KIOSK.value,
-            LocalDateTime.now(), RegistrySubChannel.KIOSK.value)
+        RegistryChecklist registryChecklist = new RegistryChecklist(registryId, templateId, LocalDate.now(), RegistrySubChannel.KIOSK.value,
+            LocalDate.now(), RegistrySubChannel.KIOSK.value)
 
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(new ChecklistTemplatePK( templateId, 202), RegistryType.BABY,
             "firstChecklistName", true, 1, "name", "name", "name",
-            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
 
         registryChecklistRepository.save(registryChecklist).block()
         checklistTemplateRepository.save(checklistTemplate).block()

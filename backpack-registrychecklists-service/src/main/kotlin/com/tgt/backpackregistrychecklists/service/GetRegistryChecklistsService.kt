@@ -77,10 +77,10 @@ class GetRegistryChecklistsService(
                         updateSubcategories(it.t1, itemDetails).collectList()
                             .flatMap {
                                 markSubcategories(registryId, templateId, it)
-                                .map { categoryList ->
-                                    ChecklistResponseTO(registryId = registryId, registryItemCount = itemDetails.size.toLong(),
-                                        categories = categoryList)
-                                }
+                                    .map { categoryList ->
+                                        ChecklistResponseTO(registryId = registryId, registryItemCount = itemDetails.size.toLong(),
+                                            categories = categoryList)
+                                    }
                             }
                     }
             }
@@ -103,7 +103,7 @@ class GetRegistryChecklistsService(
             categoryTO.subcategories?.forEach {
                 val subcategoryIdList = it.subcategoryChildIds?.split(",")?.map { it.trim() }
                 subcategoryIdList?.forEach { subcategoryId ->
-                if (itemDetailsMap.containsKey(subcategoryId)) {
+                    if (itemDetailsMap.containsKey(subcategoryId)) {
                         itemDetailsMap[subcategoryId]?.forEach { checklistItemDetails ->
                             val lastUpdatedItem = it.lastUpdatedItem
                             if (isLatestItem(checklistItemDetails, lastUpdatedItem)) {
@@ -148,15 +148,15 @@ class GetRegistryChecklistsService(
         categoryList: List<ChecklistCategoryTO>
     ): Mono<List<ChecklistCategoryTO>> {
         return checkedSubCategoriesRepository.findByRegistryIdAndTemplateId(registryId, templateId).collectList()
-        .map { checklistIdList ->
-            categoryList.map {
-                it.subcategories?.map { subCategory ->
-                    if (checklistIdList.map { it.checkedSubcategoriesId.checklistId }.contains(subCategory.checklistId))
-                        subCategory.checked = true
+            .map { checklistIdList ->
+                categoryList.map {
+                    it.subcategories?.map { subCategory ->
+                        if (checklistIdList.map { it.checkedSubcategoriesId.checklistId }.contains(subCategory.checklistId))
+                            subCategory.checked = true
+                    }
                 }
+                categoryList
             }
-            categoryList
-        }
     }
 
     fun getDetailsResponse(
@@ -180,12 +180,12 @@ class GetRegistryChecklistsService(
     ): Mono<List<ChecklistItemTO>> {
         // Make call to Redsky and get ItemDetails
         return registryDetails.toFlux()
-        .flatMap { registryItems ->
-            registryItems.tcin?.let { it1 -> redskyHydrationManager.getDetailsForChecklistItems(it1) }
-                ?.map {
-                    ChecklistItemTO(nodeId = it.taxonomy?.category?.nodeId, itemDetails = ItemDetailsTO(it.tcin, it.items?.productDescription?.title, it.items?.enrichment?.images?.primaryImageUrl,
-                        registryItems?.addedTs, registryItems?.lastModifiedTs))
-                }
-        }.collectList()
+            .flatMap { registryItems ->
+                registryItems.tcin?.let { it1 -> redskyHydrationManager.getDetailsForChecklistItems(it1) }
+                    ?.map {
+                        ChecklistItemTO(nodeId = it.taxonomy?.category?.nodeId, itemDetails = ItemDetailsTO(it.tcin, it.items?.productDescription?.title, it.items?.enrichment?.images?.primaryImageUrl,
+                            registryItems?.addedTs, registryItems?.lastModifiedTs))
+                    }
+            }.collectList()
     }
 }

@@ -13,7 +13,7 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import spock.lang.Specification
 
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 class CreateListNotifyEventHandlerUnitTest extends Specification {
     DefaultChecklistService defaultChecklistService
@@ -31,9 +31,9 @@ class CreateListNotifyEventHandlerUnitTest extends Specification {
         UUID registryId = UUID.randomUUID()
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 101)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", true, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDate.now(), LocalDate.now())
 
-        RegistryChecklist registryChecklist = new RegistryChecklist(registryId, 1, LocalDateTime.now(), "user", LocalDateTime.now(), "user")
+        RegistryChecklist registryChecklist = new RegistryChecklist(registryId, 1, LocalDate.now(), "user", LocalDate.now(), "user")
 
         when:
         def response = defaultChecklistService.addDefaultTemplateIdToRegistry(registryId, "BABY", RegistrySubChannel.KIOSK.name()).block()
@@ -48,9 +48,9 @@ class CreateListNotifyEventHandlerUnitTest extends Specification {
         UUID registryId = UUID.randomUUID()
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 101)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", true, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDate.now(), LocalDate.now())
 
-        RegistryChecklist registryChecklist = new RegistryChecklist(registryId, 1, LocalDateTime.now(), "user", LocalDateTime.now(), "user")
+        RegistryChecklist registryChecklist = new RegistryChecklist(registryId, 1, LocalDate.now(), "user", LocalDate.now(), "user")
 
         when:
         def response = defaultChecklistService.addDefaultTemplateIdToRegistry(registryId, "BABY", RegistrySubChannel.KIOSK.name()).block()
@@ -66,9 +66,9 @@ class CreateListNotifyEventHandlerUnitTest extends Specification {
         UUID registryId = UUID.randomUUID()
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 101)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", true, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDate.now(), LocalDate.now())
 
-        RegistryChecklist registryChecklist = new RegistryChecklist(registryId, 1, LocalDateTime.now(), "user", LocalDateTime.now(), "user")
+        RegistryChecklist registryChecklist = new RegistryChecklist(registryId, 1, LocalDate.now(), "user", LocalDate.now(), "user")
 
         when:
         def response = defaultChecklistService.addDefaultTemplateIdToRegistry(registryId, "BABY", RegistrySubChannel.KIOSK.name()).block()

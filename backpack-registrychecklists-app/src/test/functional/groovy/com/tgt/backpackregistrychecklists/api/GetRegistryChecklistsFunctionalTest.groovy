@@ -21,10 +21,8 @@ import io.micronaut.test.annotation.MicronautTest
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import spock.lang.Shared
-
 import javax.inject.Inject
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.Month
 
 @MicronautTest
@@ -60,11 +58,11 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/get_details"
 
         def items = [new RegistryItemsTO(registryId, "12954094", null, 2, 0, "itemTitle1", LocalDate.of(2020, Month.DECEMBER, 30), LocalDate.of(2020, Month.DECEMBER, 30)),
-                 new RegistryItemsTO(registryId, "22222", null, 2, 0, "itemTitle2", LocalDate.of(2020, Month.APRIL, 12), LocalDate.of(2020, Month.AUGUST, 30)),
-                 new RegistryItemsTO(registryId, "55555", null, 2, 0, "itemTitle3", LocalDate.of(2020, Month.DECEMBER, 12), LocalDate.of(2020, Month.DECEMBER, 30)),
-                 new RegistryItemsTO(registryId, "44444", null, 2, 0, "itemTitle4", LocalDate.of(2020, Month.MAY, 12), LocalDate.of(2020, Month.OCTOBER, 30)),
-                 new RegistryItemsTO(registryId, "33333", null, 2, 0, "itemTitle5", LocalDate.of(2020, Month.MAY, 12), LocalDate.of(2020, Month.SEPTEMBER, 30)),
-                 new RegistryItemsTO(registryId, "66666", null, 2, 0, "itemTitle6", null, null)]
+                     new RegistryItemsTO(registryId, "22222", null, 2, 0, "itemTitle2", LocalDate.of(2020, Month.APRIL, 12), LocalDate.of(2020, Month.AUGUST, 30)),
+                     new RegistryItemsTO(registryId, "55555", null, 2, 0, "itemTitle3", LocalDate.of(2020, Month.DECEMBER, 12), LocalDate.of(2020, Month.DECEMBER, 30)),
+                     new RegistryItemsTO(registryId, "44444", null, 2, 0, "itemTitle4", LocalDate.of(2020, Month.MAY, 12), LocalDate.of(2020, Month.OCTOBER, 30)),
+                     new RegistryItemsTO(registryId, "33333", null, 2, 0, "itemTitle5", LocalDate.of(2020, Month.MAY, 12), LocalDate.of(2020, Month.SEPTEMBER, 30)),
+                     new RegistryItemsTO(registryId, "66666", null, 2, 0, "itemTitle6", null, null)]
 
 
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", null, items, null,
@@ -79,22 +77,22 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
 
         def checklistTemplate1 = new ChecklistTemplate(new ChecklistTemplatePK(1, 201), RegistryType.BABY,
             "firstChecklistName", true, 1, "963002", "strollers and car seats", "name",
-            "5xtjw", "5xtjw", "travel system", 1, "name", "reg_type=baby", LocalDateTime.now(), LocalDateTime.now())
+            "5xtjw", "5xtjw", "travel system", 1, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
         def checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK(1, 202), RegistryType.BABY,
             "firstChecklistName", true, 1, "963002", "strollers and car seats", "name",
-            "5xtk7", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "stroller", 2, "name", "reg_type=baby", LocalDateTime.now(), LocalDateTime.now())
+            "5xtk7", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "stroller", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
         def checklistTemplate3 = new ChecklistTemplate(new ChecklistTemplatePK(1, 203), RegistryType.BABY,
             "firstChecklistName", true, 1, "963002", "strollers and car seats", "name",
-            "5q0ev", "5q0ev", "infant car seat", 2, "name", "reg_type=baby", LocalDateTime.now(), LocalDateTime.now())
+            "5q0ev", "5q0ev", "infant car seat", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
         def checklistTemplate4 = new ChecklistTemplate(new ChecklistTemplatePK(1, 208), RegistryType.BABY,
             "checklistName", true, 1, "29504", "gear &amp; activity", "name",
-            "5q0eu", "5q0eu", "baby carrier", 2, "name", "reg_type=baby", LocalDateTime.now(), LocalDateTime.now())
+            "5q0eu", "5q0eu", "baby carrier", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
-        def checkedSubcategories1 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 201), LocalDateTime.now(), subChannel.value, LocalDateTime.now(), subChannel.value)
-        def checkedSubcategories2 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 202), LocalDateTime.now(), subChannel.value, LocalDateTime.now(), subChannel.value)
+        def checkedSubcategories1 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 201), LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)
+        def checkedSubcategories2 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 202), LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)
 
 
-        registryChecklistRepository.save(new RegistryChecklist(registryId, 1, LocalDateTime.now(), subChannel.value, LocalDateTime.now(), subChannel.value)).block()
+        registryChecklistRepository.save(new RegistryChecklist(registryId, 1, LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)).block()
         checklistTemplateRepository.save(checklistTemplate1).block()
         checklistTemplateRepository.save(checklistTemplate2).block()
         checklistTemplateRepository.save(checklistTemplate3).block()
@@ -151,8 +149,8 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/get_details"
 
         def items = [
-                     new RegistryItemsTO(registryId, "44444", null, 2, 0, "itemTitle4", null, null),
-                     new RegistryItemsTO(registryId, "33333", null, 2, 0, "itemTitle5", null, null)
+            new RegistryItemsTO(registryId, "44444", null, 2, 0, "itemTitle4", null, null),
+            new RegistryItemsTO(registryId, "33333", null, 2, 0, "itemTitle5", null, null)
         ]
 
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", null, items, null,
@@ -161,11 +159,11 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         RedskyResponseTO redskyResponseTO4 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("44444", "5xtk4"))
         RedskyResponseTO redskyResponseTO5 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("33333", "54x8u"))
 
-        def checkedSubcategories1 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 201), LocalDateTime.now(), subChannel.value, LocalDateTime.now(), subChannel.value)
-        def checkedSubcategories2 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 202), LocalDateTime.now(), subChannel.value, LocalDateTime.now(), subChannel.value)
+        def checkedSubcategories1 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 201), LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)
+        def checkedSubcategories2 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 202), LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)
 
 
-        registryChecklistRepository.save(new RegistryChecklist(registryId, 1, LocalDateTime.now(), subChannel.value, LocalDateTime.now(), subChannel.value)).block()
+        registryChecklistRepository.save(new RegistryChecklist(registryId, 1, LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)).block()
         registryChecklistSubCategoryRepository.save(checkedSubcategories1).block()
         registryChecklistSubCategoryRepository.save(checkedSubcategories2).block()
 
@@ -230,7 +228,7 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         def uri = "/registry_checklists/v1/"+registryId+"/checklists?channel=WEB&sub_channel=KIOSK"
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/get_details"
 
-        registryChecklistRepository.save(new RegistryChecklist(registryId, 2, LocalDateTime.now(), subChannel.value, LocalDateTime.now(), subChannel.value)).block()
+        registryChecklistRepository.save(new RegistryChecklist(registryId, 2, LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)).block()
 
         when:
         client.toBlocking().exchange(HttpRequest.GET(uri).headers(DataProvider.getHeaders(guestId)), ChecklistResponseTO)

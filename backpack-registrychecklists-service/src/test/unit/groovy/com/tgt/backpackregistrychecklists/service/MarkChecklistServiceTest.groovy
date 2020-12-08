@@ -14,7 +14,7 @@ import com.tgt.backpackregistryclient.util.RegistryType
 import com.tgt.lists.common.components.exception.BadRequestException
 import reactor.core.publisher.Mono
 import spock.lang.Specification
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 class MarkChecklistServiceTest extends Specification {
 
@@ -40,10 +40,10 @@ class MarkChecklistServiceTest extends Specification {
 
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(new ChecklistTemplatePK( templateId, checklistId), RegistryType.BABY,
             "firstChecklistName", true, 1, "name", "name", "name",
-            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
 
         CheckedSubCategories registryChecklistSubCategory = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, templateId, checklistId),
-            LocalDateTime.now(), RegistrySubChannel.KIOSK.value, LocalDateTime.now(), RegistrySubChannel.KIOSK.value)
+            LocalDate.now(), RegistrySubChannel.KIOSK.value, LocalDate.now(), RegistrySubChannel.KIOSK.value)
 
         when:
         def actual = markChecklistService.markChecklistId(registryId, checklistId, registryChecklistRequest, RegistrySubChannel.KIOSK).block()
@@ -120,7 +120,7 @@ class MarkChecklistServiceTest extends Specification {
 
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(new ChecklistTemplatePK( templateId, 202), RegistryType.BABY,
             "firstChecklistName", true, 1, "name", "name", "name",
-            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
 
         when:
         markChecklistService.markChecklistId(registryId, checklistId, registryChecklistRequest, RegistrySubChannel.KIOSK).block()

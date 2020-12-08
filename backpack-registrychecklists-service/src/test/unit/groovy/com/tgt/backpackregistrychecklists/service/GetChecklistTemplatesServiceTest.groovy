@@ -7,7 +7,7 @@ import com.tgt.backpackregistryclient.util.RegistryType
 import reactor.core.publisher.Flux
 import spock.lang.Specification
 
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 class GetChecklistTemplatesServiceTest extends Specification {
 
@@ -23,7 +23,7 @@ class GetChecklistTemplatesServiceTest extends Specification {
 
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(new ChecklistTemplatePK( 1,
             101), RegistryType.BABY, "firstChecklistName", true, 1, "name", "name", "name",
-            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
 
         when:
         def actual = getChecklistTemplatesService.getTemplatesForRegistryType(RegistryType.BABY).block()
@@ -41,11 +41,11 @@ class GetChecklistTemplatesServiceTest extends Specification {
 
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(new ChecklistTemplatePK( 1,
             101), RegistryType.BABY, "firstChecklistName", true, 1, "name", "name", "name",
-            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
 
         ChecklistTemplate checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK( 2,
             1), RegistryType.BABY, "secondChecklistName", false, 1, "name", "name", "name",
-            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
 
         when:
         def actual = getChecklistTemplatesService.getTemplatesForRegistryType(RegistryType.BABY).block()

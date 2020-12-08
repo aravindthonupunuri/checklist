@@ -16,7 +16,7 @@ import io.micronaut.test.annotation.MicronautTest
 import org.slf4j.Logger
 
 import javax.inject.Inject
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 @MicronautTest
 class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTest {
@@ -89,7 +89,7 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK(1, 201)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY,  "name", true, 1, "categoryId", "categoryName",
-        "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+        "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDate.now(), LocalDate.now())
 
         when:
         HttpResponse<Void> response = client.toBlocking()
@@ -113,7 +113,7 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 91, 401)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.WEDDING, "name", true, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDate.now(), LocalDate.now())
         checklistTemplateRepository.save(checklistTemplate).block()
 
         when:
@@ -138,7 +138,7 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 401)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "name", false, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDate.now(), LocalDate.now())
         checklistTemplateRepository.save(checklistTemplate).block()
 
         when:
@@ -163,7 +163,7 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 7, 401)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", false, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDate.now(), LocalDate.now())
         checklistTemplateRepository.save(checklistTemplate).block()
 
         when:
@@ -188,7 +188,7 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 11, 301)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", false, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDate.now(), LocalDate.now())
         checklistTemplateRepository.save(checklistTemplate).block()
 
         when:

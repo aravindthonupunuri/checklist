@@ -9,7 +9,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import spock.lang.Stepwise
 import javax.inject.Inject
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.util.stream.Collectors
 
 @MicronautTest
@@ -33,11 +33,11 @@ class ChecklistTemplateRepositoryFunctionalTest extends BasePersistenceFunctiona
         def checklistTemplatePk2 = new ChecklistTemplatePK( 2, 201)
         def checklistTemplatePk3 = new ChecklistTemplatePK( 1, 201)
         def checklistTemplatePk4 = new ChecklistTemplatePK( 3, 101)
-        def checklistTemplate = new ChecklistTemplate(checklistTemplatePk, RegistryType.BABY, "Baby1", true, 1, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
-        def checklistTemplate1 = new ChecklistTemplate(checklistTemplatePk1, RegistryType.WEDDING, "Wedding1", true, 2, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
-        def checklistTemplate2 = new ChecklistTemplate(checklistTemplatePk2, RegistryType.WEDDING, "Wedding2", true, 3, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
-        def checklistTemplate3 = new ChecklistTemplate(checklistTemplatePk3, RegistryType.BABY, "Baby2", true, 4, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
-        def checklistTemplate4 = new ChecklistTemplate(checklistTemplatePk4, RegistryType.BABY, "Baby3", true, 5, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDateTime.now(), LocalDateTime.now())
+        def checklistTemplate = new ChecklistTemplate(checklistTemplatePk, RegistryType.BABY, "Baby1", true, 1, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
+        def checklistTemplate1 = new ChecklistTemplate(checklistTemplatePk1, RegistryType.WEDDING, "Wedding1", true, 2, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
+        def checklistTemplate2 = new ChecklistTemplate(checklistTemplatePk2, RegistryType.WEDDING, "Wedding2", true, 3, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
+        def checklistTemplate3 = new ChecklistTemplate(checklistTemplatePk3, RegistryType.BABY, "Baby2", true, 4, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
+        def checklistTemplate4 = new ChecklistTemplate(checklistTemplatePk4, RegistryType.BABY, "Baby3", true, 5, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
 
         when:
         def result = checklistTemplateRepository.save(checklistTemplate).block()

@@ -24,7 +24,6 @@ import spock.lang.Stepwise
 import spock.util.concurrent.PollingConditions
 import javax.inject.Inject
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.stream.Collectors
 
 @MicronautTest
@@ -90,7 +89,7 @@ class CreateListNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalTest
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 101)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", true, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDate.now(), LocalDate.now())
 
 
         checklistTemplateRepository.save(checklistTemplate).block()
@@ -132,7 +131,7 @@ class CreateListNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalTest
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 3)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", false, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDateTime.now(), LocalDateTime.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDate.now(), LocalDate.now())
 
 
         checklistTemplateRepository.save(checklistTemplate).block()

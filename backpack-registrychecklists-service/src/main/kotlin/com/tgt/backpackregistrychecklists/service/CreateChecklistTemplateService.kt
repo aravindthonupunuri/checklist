@@ -10,7 +10,7 @@ import com.tgt.lists.common.components.exception.BadRequestException
 import com.tgt.lists.common.components.exception.BaseErrorCodes.BAD_REQUEST_ERROR_CODE
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toFlux
-import java.time.LocalDateTime
+import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -91,8 +91,8 @@ class CreateChecklistTemplateService(
             subcategoryOrder = category.l2DisplayOrder,
             subcategoryUrl = category.imageUrl,
             plpParam = category.plpParam,
-            createdTs = LocalDateTime.now(),
-            updatedTs = LocalDateTime.now()
+            createdTs = LocalDate.now(),
+            updatedTs = LocalDate.now()
         )
     }
 }

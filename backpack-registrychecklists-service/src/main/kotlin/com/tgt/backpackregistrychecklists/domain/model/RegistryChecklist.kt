@@ -5,7 +5,7 @@ import io.micronaut.data.annotation.DateUpdated
 import io.micronaut.data.annotation.MappedEntity
 import io.micronaut.data.annotation.MappedProperty
 import io.micronaut.data.model.DataType
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.util.*
 import javax.persistence.Column
 import javax.persistence.Id
@@ -24,14 +24,14 @@ data class RegistryChecklist(
 
     @Column(name = "CREATED_TS")
     @DateCreated
-    var createdTs: LocalDateTime? = null,
+    var createdTs: LocalDate? = null,
 
     @Column(name = "CREATED_USER")
     val createdUser: String? = null,
 
     @Column(name = "UPDATED_TS")
     @DateUpdated
-    var updatedTs: LocalDateTime? = null,
+    var updatedTs: LocalDate? = null,
 
     @Column(name = "UPDATED_USER")
     val updatedUser: String? = null
