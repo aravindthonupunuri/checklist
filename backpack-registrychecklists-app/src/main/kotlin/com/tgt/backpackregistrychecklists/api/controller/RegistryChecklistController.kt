@@ -25,7 +25,8 @@ class RegistryChecklistController(
     private val getCheckListTemplatesService: GetChecklistTemplatesService,
     private val deleteChecklistService: DeleteChecklistService,
     private val markChecklistService: MarkChecklistService,
-    private val unmarkChecklistService: UnmarkChecklistService
+    private val unmarkChecklistService: UnmarkChecklistService,
+    private val getRegistryChecklistsService: GetRegistryChecklistsService
 ) {
     @Post(value = "/checklists", consumes = [MediaType.MULTIPART_FORM_DATA])
     @Status(HttpStatus.CREATED)
@@ -76,7 +77,7 @@ class RegistryChecklistController(
         @QueryValue("channel") channel: RegistryChannel,
         @QueryValue("sub_channel") subChannel: RegistrySubChannel
     ): Mono<ChecklistResponseTO> {
-        return Mono.just(ChecklistResponseTO(UUID.randomUUID(), null, null))
+        return getRegistryChecklistsService.getChecklistsForRegistryId(registryId, guestId, channel, subChannel)
     }
 
     @Put("/{registry_id}/checklists")
@@ -92,7 +93,7 @@ class RegistryChecklistController(
         @QueryValue("sub_channel") subChannel: RegistrySubChannel,
         @Body registryChecklistRequest: RegistryChecklistRequestTO
     ): Mono<ChecklistResponseTO> {
-        return Mono.just(ChecklistResponseTO(UUID.randomUUID(), null, null))
+        return Mono.empty()
     }
 
     @Post("/{registry_id}/checklists/{checklist_id}")

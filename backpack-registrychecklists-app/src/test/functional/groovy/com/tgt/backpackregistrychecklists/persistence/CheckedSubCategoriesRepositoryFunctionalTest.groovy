@@ -8,9 +8,9 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import spock.lang.Shared
 import spock.lang.Stepwise
-
 import javax.inject.Inject
 import java.time.LocalDateTime
+import java.util.stream.Collectors
 
 @MicronautTest
 @Stepwise
@@ -44,14 +44,22 @@ class CheckedSubCategoriesRepositoryFunctionalTest extends BasePersistenceFuncti
     def "test save"() {
 
         LocalDateTime date = LocalDateTime.now()
-        def compositeKey = new CheckedSubCategoriesId(registryId, templateId, checklistId)
-        def markChecklist = new CheckedSubCategories(compositeKey, date, "null", date, "null")
+        def checkedSubCategories = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, templateId, checklistId), date, "null", date, "null")
+        def checkedSubCategories2 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, templateId, 201), date, "null", date, "null")
+        def checkedSubCategories3 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 3, 202), date, "null", date, "null")
+        def checkedSubCategories4 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, templateId, 203), date, "null", date, "null")
 
         when:
-        def actual = registryChecklistSubCategoryRepository.save(markChecklist).block()
+        def actual = registryChecklistSubCategoryRepository.save(checkedSubCategories).block()
+        def actual2 = registryChecklistSubCategoryRepository.save(checkedSubCategories2).block()
+        def actual3 = registryChecklistSubCategoryRepository.save(checkedSubCategories3).block()
+        def actual4 = registryChecklistSubCategoryRepository.save(checkedSubCategories4).block()
 
         then:
         actual != null
+        actual2 != null
+        actual3 != null
+        actual4 != null
         actual.checkedSubcategoriesId.registryId == registryId
         actual.checkedSubcategoriesId.templateId == templateId
         actual.checkedSubcategoriesId.checklistId == checklistId
@@ -78,7 +86,19 @@ class CheckedSubCategoriesRepositoryFunctionalTest extends BasePersistenceFuncti
 
         then:
         actual == null
-//        actual.checkedSubcategoriesId.checklistId == checklistId
+    }
+
+    def "test findByRegistryIdAndTemplateId"() {
+        when:
+        def actual = registryChecklistSubCategoryRepository.findByRegistryIdAndTemplateId(registryId, templateId).collect(Collectors.toList()).block()
+
+        then:
+        actual != null
+        actual.size() == 2
+        actual.get(0).checkedSubcategoriesId.templateId == templateId
+        actual.get(0).checkedSubcategoriesId.registryId == registryId
+        actual.get(0).checkedSubcategoriesId.checklistId == 201
+        actual.get(1).checkedSubcategoriesId.checklistId == 203
     }
 }
 

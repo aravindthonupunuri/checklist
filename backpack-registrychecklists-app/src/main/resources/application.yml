@@ -92,6 +92,7 @@ list:
   features.dedupe: true
   features.sort-position: true
   features.fixed-default-list: false
+  default-web-store-id: 3991
 
 components:
   server:

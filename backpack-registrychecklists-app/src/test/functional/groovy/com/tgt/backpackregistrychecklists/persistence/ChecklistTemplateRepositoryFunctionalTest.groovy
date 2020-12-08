@@ -6,6 +6,7 @@ import com.tgt.backpackregistrychecklists.test.BasePersistenceFunctionalTest
 import com.tgt.backpackregistryclient.util.RegistryType
 import io.micronaut.test.annotation.MicronautTest
 import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import spock.lang.Stepwise
 import javax.inject.Inject
 import java.time.LocalDateTime
@@ -18,9 +19,11 @@ class ChecklistTemplateRepositoryFunctionalTest extends BasePersistenceFunctiona
     @Inject
     ChecklistTemplateRepository checklistTemplateRepository
 
+    Logger LOG = LoggerFactory.getLogger(ChecklistTemplateRepositoryFunctionalTest)
+
     @Override
     Logger getLogger() {
-        return null
+        return LOG
     }
 
     def "test save checklist"() {

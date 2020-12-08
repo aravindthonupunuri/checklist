@@ -7,12 +7,12 @@ micronaut:
     client.connect-ttl: 30m
     client.pool.acquire-timeout: 2000ms
     services:
-      backpack-registrychecklists-api:
+      redsky-api:
         urls:
           - http://localhost:${server-port:32000}
         pool:
           enabled: false
-      redsky-api:
+      backpack-registry-api:
         urls:
           - http://localhost:${server-port:32000}
         pool:
@@ -43,6 +43,20 @@ jdbc-stmt-timeout:
 jackson:
   property-naming-strategy: "SNAKE_CASE"
 
+api:
+  oauth:
+    filter-path: /**
+    url: http://localhost:${server-port:32000}/testserver
+    client-id: "test_ropc"
+    client-secret: "test"
+    nuid-username: "testsecret"
+    nuid-password: "MLRw04}testpwd"
+    id2-scope:
+      scopes[0]:
+        scope: "openid"
+
+api-key: "testkey"
+
 filter:
   server:
     order:
@@ -58,7 +72,7 @@ filter:
       resilience-client-filter: 800
       oauth-filter: 701
       oauth-key-filter: 700
-api-key: "testkey"
+
 logging:
   mdc:
     enabled: true
@@ -99,6 +113,8 @@ list:
   features.dedupe: true
   features.sort-position: true
   features.fixed-default-list: false
+  default-web-store-id: 3991
+
 components:
   server:
     list-authorization-filter:
@@ -129,4 +145,4 @@ msgbus:
     dlq-max-event-retry-count: 2
     dlq-consumer-batch-size: 10
 mockfilter:
-  paths: /zipkin,/testserver/auth/oauth/v2/token,/
+  paths: /zipkin,/testserver/auth/oauth/v2/token,/,/redsky_aggregations/v1.*,/registries/v2.*

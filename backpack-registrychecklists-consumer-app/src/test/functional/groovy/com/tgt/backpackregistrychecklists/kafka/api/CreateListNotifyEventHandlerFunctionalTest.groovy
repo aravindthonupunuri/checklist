@@ -23,6 +23,7 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 import spock.util.concurrent.PollingConditions
 import javax.inject.Inject
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.stream.Collectors
 
@@ -85,7 +86,7 @@ class CreateListNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalTest
         registryId = UUID.randomUUID()
         guestId = UUID.randomUUID().toString()
 
-        def createListNotifyEvent = new CreateListNotifyEvent(guestId, registryId, listType, registryType, registryTitle, channel, subChannel, LIST_STATE.INACTIVE, null, null, null)
+        def createListNotifyEvent = new CreateListNotifyEvent(guestId, registryId, listType, registryType, registryTitle, channel, subChannel, LIST_STATE.INACTIVE, null, LocalDate.now(), null)
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 101)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", true, 1, "categoryId", "categoryName",
@@ -127,7 +128,7 @@ class CreateListNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalTest
         registryId = UUID.randomUUID()
         guestId = UUID.randomUUID().toString()
 
-        def createListNotifyEvent = new CreateListNotifyEvent(guestId, registryId, listType, registryType, registryTitle, channel, subChannel, LIST_STATE.INACTIVE, null, null, null)
+        def createListNotifyEvent = new CreateListNotifyEvent(guestId, registryId, listType, registryType, registryTitle, channel, subChannel, LIST_STATE.INACTIVE, null, LocalDate.now(), null)
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 3)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", false, 1, "categoryId", "categoryName",

@@ -624,7 +624,7 @@ definitions:
     properties:
       checklist_id:
         type: integer
-      subcategory_id:
+      subcategory_child_ids:
         type: string
       subcategory_name:
         type: string

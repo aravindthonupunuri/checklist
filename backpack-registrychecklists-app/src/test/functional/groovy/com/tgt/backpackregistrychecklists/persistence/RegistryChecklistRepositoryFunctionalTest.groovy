@@ -13,9 +13,9 @@ import java.time.LocalDateTime
 
 @MicronautTest
 @Stepwise
-class RegistryChecklistRepositoryFunctionalTest extends BasePersistenceFunctionalTest {
+class RegistryChecklistRepositoryFunctionalTest extends BasePersistenceFunctionalTest{
 
-    Logger LOG = LoggerFactory.getLogger(CheckedSubCategoriesRepositoryFunctionalTest)
+    Logger LOG = LoggerFactory.getLogger(RegistryChecklistRepositoryFunctionalTest)
 
     @Override
     Logger getLogger() {
