@@ -105,7 +105,7 @@ tracing:
       url: http://localhost:9411/zipkin
 
 list:
-  list-type: SHOPPING
+  list-type: REGISTRY
   max-count: 50
   max-pending-item-count: 100
   max-completed-items-count: 100

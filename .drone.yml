@@ -31,20 +31,20 @@ pipeline:
       - cache_s3_secret_key
       - cache_s3_ca_cert
 
-#  publish-config-backpack-registrychecklists-dev:
-#    when:
-#      event: [push]
-#      branch: master
-#    image: 'docker.target.com/app/lists/alpine-bash-curl-ssl:1.0.5'
-#    environment:
-#      CICD_MODE: 'true'
-#    secrets:
-#      - TAP_API_TOKEN
-#      - backpack_registrychecklists_app_private_key_dev
-#      - backpack_registrychecklists_consumer_app_private_key_dev
-#    commands:
-#      - 'tap_api_token=$TAP_API_TOKEN app_private_key=$BACKPACK_REGISTRYCHECKLISTS_APP_PRIVATE_KEY_DEV ./backpack-registrychecklists-app/scripts/config_deploy_manager.sh conf.dev.0.0'
-#      - 'tap_api_token=$TAP_API_TOKEN app_private_key=$BACKPACK_REGISTRYCHECKLISTS_CONSUMER_APP_PRIVATE_KEY_DEV ./backpack-registrychecklists-consumer-app/scripts/config_deploy_manager.sh conf.dev.0.0'
+  publish-config-backpack-registrychecklists-dev:
+    when:
+      event: [push]
+      branch: master
+    image: 'docker.target.com/app/lists/alpine-bash-curl-ssl:1.0.5'
+    environment:
+      CICD_MODE: 'true'
+    secrets:
+      - TAP_API_TOKEN
+      - backpackregistrychecklists_app_private_key_dev
+      - backpackregistrychecklistsconsumer_app_private_key_dev
+    commands:
+      - 'tap_api_token=$TAP_API_TOKEN app_private_key=$BACKPACKREGISTRYCHECKLISTS_APP_PRIVATE_KEY_DEV ./backpack-registrychecklists-app/scripts/config_deploy_manager.sh conf.dev.0.0'
+      - 'tap_api_token=$TAP_API_TOKEN app_private_key=$BACKPACKREGISTRYCHECKLISTSCONSUMER_APP_PRIVATE_KEY_DEV ./backpack-registrychecklists-consumer-app/scripts/config_deploy_manager.sh conf.dev.0.0'
 
   publish-config-backpack-registrychecklists-stage:
     when:
@@ -187,11 +187,11 @@ secrets:
     path: secret/shared/drone/prod-secrets/cache_s3_secret_key
   cache_s3_ca_cert:
     path: secret/shared/drone/prod-secrets/cache_s3_ca_cert
-  backpack_registry_app_private_key_dev:
+  backpackregistrychecklists_app_private_key_dev:
     path: secret/repo/Registry-Modernization/backpack-registrychecklists/backpackregistrychecklists-privkey-dev
   backpack_registry_app_private_key_stage:
     path: secret/repo/Registry-Modernization/backpack-registrychecklists/backpackregistrychecklists-privkey-stage
-  backpack_registry_consumer_app_private_key_dev:
+  backpackregistrychecklistsconsumer_app_private_key_dev:
     path: secret/repo/Registry-Modernization/backpack-registrychecklists/backpackregistrychecklistsconsumer-privkey-dev
   backpack_registry_consumer_app_private_key_stage:
     path: secret/repo/Registry-Modernization/backpack-registrychecklists/backpackregistrychecklistsconsumer-privkey-stage

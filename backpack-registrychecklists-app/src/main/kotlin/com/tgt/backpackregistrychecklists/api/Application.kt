@@ -1,4 +1,4 @@
-package com.tgt.backpackregistry.api
+package com.tgt.backpackregistrychecklists.api
 
 import com.target.platform.connector.micronaut.PlatformPropertySource
 import com.tgt.lists.common.components.tap.TAPEnvironmentLoader
