@@ -241,7 +241,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
 
         result != null
         result.registryId == registryId
-        result.registryItemCount == 1
+        result.registryItemCount == 0
         result.categories.size() == 2
         result.component3().get(0).categoryId == "963003"
         result.component3().get(0).subcategories.size() == 1
@@ -276,7 +276,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
 
         result != null
         result.registryId == registryId
-        result.registryItemCount == 1
+        result.registryItemCount == 0
         result.categories.size() == 2
         result.component3().get(0).categoryId == "963003"
         result.component3().get(0).subcategories.size() == 1

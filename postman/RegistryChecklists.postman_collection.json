@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "58736741-9248-4d41-b6c3-c3d1cafbffdf",
+		"_postman_id": "dcabe647-0520-4e23-b187-046622383690",
 		"name": "RegistryChecklists",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -99,6 +99,235 @@
 							"value": "{{template_id}}"
 						}
 					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MarkChecklist",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"template_id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/registry_checklists/v1/{{registry_id}}/checklists/{{checklist_id}}?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"registry_checklists",
+						"v1",
+						"{{registry_id}}",
+						"checklists",
+						"{{checklist_id}}"
+					],
+					"query": [
+						{
+							"key": "channel",
+							"value": "{{channel}}"
+						},
+						{
+							"key": "sub_channel",
+							"value": "{{sub_channel}}"
+						},
+						{
+							"key": "location_id",
+							"value": "{{location_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unmark Checklist",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{key}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/registry_checklists/v1/{{registry_id}}/checklists/{{checklist_id}}?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}&template_id=1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"registry_checklists",
+						"v1",
+						"{{registry_id}}",
+						"checklists",
+						"{{checklist_id}}"
+					],
+					"query": [
+						{
+							"key": "channel",
+							"value": "{{channel}}"
+						},
+						{
+							"key": "sub_channel",
+							"value": "{{sub_channel}}"
+						},
+						{
+							"key": "location_id",
+							"value": "{{location_id}}"
+						},
+						{
+							"key": "template_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetChecklistTemplates",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{key}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/registry_checklists/v1/checklists?registry_type=wedding&channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"registry_checklists",
+						"v1",
+						"checklists"
+					],
+					"query": [
+						{
+							"key": "registry_type",
+							"value": "wedding"
+						},
+						{
+							"key": "channel",
+							"value": "{{channel}}"
+						},
+						{
+							"key": "sub_channel",
+							"value": "{{sub_channel}}"
+						},
+						{
+							"key": "location_id",
+							"value": "{{location_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get checklists for registry",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{key}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/registry_checklists/v1/{{registry_id}}/checklists?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"registry_checklists",
+						"v1",
+						"{{registry_id}}",
+						"checklists"
+					],
+					"query": [
+						{
+							"key": "channel",
+							"value": "{{channel}}"
+						},
+						{
+							"key": "sub_channel",
+							"value": "{{sub_channel}}"
+						},
+						{
+							"key": "location_id",
+							"value": "{{location_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update default template",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
 				}
 			},
 			"response": []

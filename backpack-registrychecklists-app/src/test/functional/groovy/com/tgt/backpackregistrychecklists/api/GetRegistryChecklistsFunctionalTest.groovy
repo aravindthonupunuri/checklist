@@ -186,6 +186,49 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         1 * mockServer.get({ path -> path.contains("/redsky_aggregations/v1/registry_services/get_registry_checklist_v1?tcin=33333") }, _) >> [status: 200, body: redskyResponseTO5]
     }
 
+    def "test get checklist info - if redsky response is null"() {
+        def guestId = "1234"
+        def registryId = UUID.randomUUID()
+        def uri = "/registry_checklists/v1/"+registryId+"/checklists?channel=WEB&sub_channel=KIOSK"
+        def getRegistryDetailsUri = "/registries/v2/"+registryId+"/get_details"
+
+        def items = [
+            new RegistryItemsTO(registryId, "44444", null, 2, 0, "itemTitle4", null, null),
+            new RegistryItemsTO(registryId, "33333", null, 2, 0, "itemTitle5", null, null)
+        ]
+
+        def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", null, items, null,
+            null, null, null, LocalDate.now())
+
+        RedskyResponseTO redskyResponseTO4 = new RedskyResponseTO(null, null)
+        RedskyResponseTO redskyResponseTO5 = new RedskyResponseTO(null, null)
+
+        def checkedSubcategories1 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 201), LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)
+        def checkedSubcategories2 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 202), LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)
+
+
+        registryChecklistRepository.save(new RegistryChecklist(registryId, 1, LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)).block()
+        registryChecklistSubCategoryRepository.save(checkedSubcategories1).block()
+        registryChecklistSubCategoryRepository.save(checkedSubcategories2).block()
+
+        when:
+        HttpResponse<ChecklistResponseTO> getChecklistsResponse =
+            client.toBlocking().exchange(HttpRequest.GET(uri).headers(DataProvider.getHeaders(guestId)), ChecklistResponseTO)
+
+        def actualStatus = getChecklistsResponse.status()
+        def result = getChecklistsResponse.body()
+
+        then:
+        actualStatus == HttpStatus.OK
+        result != null
+        result.component3().get(0).subcategories.get(1).lastUpdatedItem == null
+
+        1 * mockServer.get({ path -> path.contains(getRegistryDetailsUri)},*_) >> [status: 200, body: getRegistryDetailsResponse]
+        1 * mockServer.get({ path -> path.contains("/redsky_aggregations/v1/registry_services/get_registry_checklist_v1?tcin=44444") }, _) >> [status: 200, body: redskyResponseTO4]
+        1 * mockServer.get({ path -> path.contains("/redsky_aggregations/v1/registry_services/get_registry_checklist_v1?tcin=33333") }, _) >> [status: 200, body: redskyResponseTO5]
+
+    }
+
     def "test get checklist info - if there are no items in the registry"() {
         def guestId = "1234"
         def uri = "/registry_checklists/v1/"+registryId+"/checklists?channel=WEB&sub_channel=KIOSK"

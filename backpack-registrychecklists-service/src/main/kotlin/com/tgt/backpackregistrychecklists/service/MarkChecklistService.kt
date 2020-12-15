@@ -37,17 +37,14 @@ class MarkChecklistService(
                 if (it.templateId == registryChecklistRequest.templateId) {
                     checklistTemplateRepository.findByTemplateIdAndChecklistId(registryChecklistRequest.templateId, checklistId)
                         .switchIfEmpty {
-                            throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("No checklistId found for the given templateId")))
+                            throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("Not a valid checklistId - templateId combination")))
                         }
                         .flatMap { checklistTemplate ->
-                            if (checklistTemplate.checklistTemplatePK.checklistId == checklistId) {
-                                checkedSubCategoriesRepository.save(CheckedSubCategories(CheckedSubCategoriesId(registryId = registryId, templateId = registryChecklistRequest.templateId, checklistId = checklistId),
-                                    createdUser = subChannel.value, updatedUser = subChannel.value))
-                                    .map {
-                                        RegistryChecklistResponseTO(registryId = registryId, checked = true, checklistId = checklistId, templateId = registryChecklistRequest.templateId)
-                                    }
-                            } else
-                                throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("Not a valid templateId - checklistId combination")))
+                            checkedSubCategoriesRepository.save(CheckedSubCategories(CheckedSubCategoriesId(registryId = registryId, templateId = registryChecklistRequest.templateId, checklistId = checklistId),
+                                createdUser = subChannel.value, updatedUser = subChannel.value))
+                            .map {
+                                RegistryChecklistResponseTO(registryId = registryId, checked = true, checklistId = checklistId, templateId = registryChecklistRequest.templateId)
+                            }
                         }
                 } else {
                     throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("Not a valid registryId - templateId combination")))

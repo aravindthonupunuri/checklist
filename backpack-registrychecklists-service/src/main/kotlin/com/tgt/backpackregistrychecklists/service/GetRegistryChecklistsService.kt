@@ -65,11 +65,11 @@ class GetRegistryChecklistsService(
                         getDetailsResponse(registryId, guestId, channel, subChannel)
                             .flatMap {
                                 if (it?.registryItems.isNullOrEmpty())
-                                    Mono.just(listOf(ChecklistItemTO()))
+                                    Mono.just(emptyList())
                                 else
                                     it?.registryItems?.let { it1 -> getItemDetailsFromRedsky(it1) }
                             }.switchIfEmpty {
-                                Mono.just(listOf(ChecklistItemTO()))
+                                Mono.just(emptyList())
                             }
                     }
                     .flatMap {
@@ -78,6 +78,7 @@ class GetRegistryChecklistsService(
                             .flatMap {
                                 markSubcategories(registryId, templateId, it)
                                     .map { categoryList ->
+                                        logger.info { "categoryList - $categoryList" }
                                         ChecklistResponseTO(registryId = registryId, registryItemCount = itemDetails.size.toLong(),
                                             categories = categoryList)
                                     }

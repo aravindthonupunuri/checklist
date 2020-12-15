@@ -73,25 +73,6 @@ class MarkChecklistServiceTest extends Specification {
         error.message.contains("No templateId found for the given registryId")
     }
 
-    def "test markChecklistId - No checklistId found for given templateId"() {
-        def registryId = UUID.randomUUID()
-        def checklistId = 201
-        def templateId = 2
-        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
-        RegistryChecklist registryChecklist = new RegistryChecklist(registryId, templateId, null, RegistrySubChannel.KIOSK.value,
-            null, RegistrySubChannel.KIOSK.value)
-
-        when:
-        markChecklistService.markChecklistId(registryId, checklistId, registryChecklistRequest, RegistrySubChannel.KIOSK).block()
-
-        then:
-        1 * registryChecklistRepository.find(registryId) >> Mono.just(registryChecklist)
-        1 * checklistTemplateRepository.findByTemplateIdAndChecklistId(templateId, checklistId) >> Mono.empty()
-
-        def error = thrown(BadRequestException)
-        error.message.contains("No checklistId found for the given templateId")
-    }
-
     def "test markChecklistId - Provided RegistryId - TemplateId combination is not valid"() {
         def registryId = UUID.randomUUID()
         def checklistId = 201
@@ -127,10 +108,10 @@ class MarkChecklistServiceTest extends Specification {
 
         then:
         1 * registryChecklistRepository.find(registryId) >> Mono.just(registryChecklist)
-        1 * checklistTemplateRepository.findByTemplateIdAndChecklistId(templateId, checklistId) >> Mono.just(checklistTemplate)
+        1 * checklistTemplateRepository.findByTemplateIdAndChecklistId(templateId, checklistId) >> Mono.empty()
 
         def error = thrown(BadRequestException)
-        error.message.contains("Not a valid templateId - checklistId combination")
+        error.message.contains("Not a valid checklistId - templateId combination")
     }
 
     def "test markChecklistId - Exception from database"() {
