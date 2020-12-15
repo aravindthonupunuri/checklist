@@ -98,7 +98,7 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
         def actualStatus = response.status()
 
         then:
-        actualStatus == HttpStatus.CREATED
+        actualStatus == HttpStatus.NO_CONTENT
     }
 
     def "test create checklist checklisttemplate table already have that templateid"() {
@@ -123,7 +123,7 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
         def actualStatus = response.status()
 
         then:
-        actualStatus == HttpStatus.CREATED
+        actualStatus == HttpStatus.NO_CONTENT
     }
 
     def "test create checklist checklisttemplate table  already have that registryType"() {
@@ -148,7 +148,7 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
         def actualStatus = response.status()
 
         then:
-        actualStatus == HttpStatus.CREATED
+        actualStatus == HttpStatus.NO_CONTENT
     }
 
     def "test create checklist checklisttemplate table  already have that checklist name for the templateId which we are going to update"() {
@@ -173,7 +173,7 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
         def actualStatus = response.status()
 
         then:
-        actualStatus == HttpStatus.CREATED
+        actualStatus == HttpStatus.NO_CONTENT
     }
 
     def "test create checklist checklisttemplate table  already have that checklist name for a different"() {

@@ -30,7 +30,7 @@ class RegistryChecklistController(
     private val updateDefaultTemplateService: UpdateDefaultTemplateService
 ) {
     @Post(value = "/checklists", consumes = [MediaType.MULTIPART_FORM_DATA])
-    @Status(HttpStatus.CREATED)
+    @Status(HttpStatus.NO_CONTENT)
     @Throws(XMLStreamException::class, IOException::class)
     fun createChecklist(
         @Header("profile_id") guestId: String,

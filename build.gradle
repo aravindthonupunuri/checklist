@@ -122,7 +122,7 @@ allprojects {
         }
         testImplementation "org.codehaus.groovy:groovy-json:3.0.5"
         testImplementation "io.micronaut.test:micronaut-test-spock"
-        testImplementation "com.tgt.swaggerlib:swagger-sync:1.210.10"
+        testImplementation "com.tgt.swaggerlib:swagger-sync:1.210.16"
         testImplementation "com.tgt.lists.micronaut:micronaut-test:2.201.0"
         testImplementation("org.objenesis:objenesis:2.6")
         testImplementation 'io.micronaut.micrometer:micronaut-micrometer-registry-prometheus'
