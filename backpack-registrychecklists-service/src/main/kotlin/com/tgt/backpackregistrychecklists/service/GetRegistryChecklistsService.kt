@@ -87,7 +87,7 @@ class GetRegistryChecklistsService(
             }
     }
 
-    fun updateSubcategories(
+    private fun updateSubcategories(
         categoryMap: HashMap<String, ChecklistCategoryTO>,
         registryDetails: List<ChecklistItemTO>?
     ): Flux<ChecklistCategoryTO> {
@@ -122,7 +122,7 @@ class GetRegistryChecklistsService(
         return categoryList.toFlux()
     }
 
-    fun isLatestItem(
+    private fun isLatestItem(
         checklistItemDetails: ChecklistItemTO,
         lastUpdatedItem: ItemDetailsTO?
     ): Boolean {
@@ -143,7 +143,7 @@ class GetRegistryChecklistsService(
         }
     }
 
-    fun markSubcategories(
+    private fun markSubcategories(
         registryId: UUID,
         templateId: Int,
         categoryList: List<ChecklistCategoryTO>
@@ -160,7 +160,7 @@ class GetRegistryChecklistsService(
             }
     }
 
-    fun getDetailsResponse(
+    private fun getDetailsResponse(
         registryId: UUID,
         guestId: String,
         channel: RegistryChannel,
@@ -176,7 +176,7 @@ class GetRegistryChecklistsService(
             }
     }
 
-    fun getItemDetailsFromRedsky(
+    private fun getItemDetailsFromRedsky(
         registryDetails: List<RegistryItemsTO>
     ): Mono<List<ChecklistItemTO>> {
         // Make call to Redsky and get ItemDetails

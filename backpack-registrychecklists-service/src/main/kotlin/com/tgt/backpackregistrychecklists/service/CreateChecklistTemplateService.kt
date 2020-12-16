@@ -29,7 +29,7 @@ class CreateChecklistTemplateService(
             .flatMap { default ->
             checklist.categories!!.toFlux()
                     .flatMap {
-                        val checklistTemplate = formChecklistDTO(registryType, it, default, templateId, checklistName)
+                        val checklistTemplate = formChecklistEntity(registryType, it, default, templateId, checklistName)
                         checklistTemplateRepository.save(checklistTemplate)
                     }.collectList()
             }
@@ -39,36 +39,41 @@ class CreateChecklistTemplateService(
             .then()
     }
 
-    fun checkIfRegistryTypeIsDefault(registryType: RegistryType): Mono<Boolean> {
+    private fun checkIfRegistryTypeIsDefault(registryType: RegistryType): Mono<Boolean> {
         return checklistTemplateRepository.countByRegistryType(registryType).map {
             it == 0L
         }
     }
 
-    fun deleteDuplicateChecklistIfExists(templateId: Int, checklistName: String): Mono<Boolean> {
+    private fun deleteDuplicateChecklistIfExists(templateId: Int, checklistName: String): Mono<Int> {
         return checklistTemplateRepository.findByTemplateId(templateId).collectList().map {
             val checklistNameList = it.map { checklistTemplate ->
                 checklistTemplate.checklistName
             }
             checklistNameList.contains(checklistName)
-        }.map {
+        }.flatMap {
             if (it == true) {
                 checklistTemplateRepository.deleteByTemplateId(templateId)
-                return@map true
+            } else {
+                checkIfChecklistNameIsUnique(checklistName).flatMap {
+                    checklistTemplateRepository.countByTemplateId(templateId).flatMap { count ->
+                        if (count != 0L)
+                            checklistTemplateRepository.deleteByTemplateId(templateId)
+                        else Mono.just(0)
+                    }
+                }
             }
-            checkIfChecklistNameIsUnique(checklistName)
-                if (checklistTemplateRepository.countByTemplateId(templateId).block() != 0L)
-                    checklistTemplateRepository.deleteByTemplateId(templateId)
-            true
         }
     }
 
-    fun checkIfChecklistNameIsUnique(checklistName: String) {
-        if (checklistTemplateRepository.countByChecklistName(checklistName).block() != 0L)
-            throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("The checklist name already exists enter a new checklist name")))
+    private fun checkIfChecklistNameIsUnique(checklistName: String): Mono<Unit> {
+        return checklistTemplateRepository.countByChecklistName(checklistName).map {
+            if (it != 0L)
+                throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("The checklist name already exists enter a new checklist name")))
+        }
     }
 
-    fun formChecklistDTO(
+    private fun formChecklistEntity(
         registryType: RegistryType,
         category: Category,
         default: Boolean,

@@ -9,11 +9,14 @@ import com.tgt.backpackregistryclient.util.RegistryType
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
-import io.micronaut.http.multipart.CompletedFileUpload
+import io.micronaut.http.multipart.StreamingFileUpload
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toMono
+import java.io.File
+import java.io.FileInputStream
 import java.io.IOException
 import java.util.*
 import javax.xml.stream.XMLInputFactory
@@ -40,15 +43,20 @@ class RegistryChecklistController(
         @QueryValue("registry_type") registryType: RegistryType,
         @QueryValue("template_id") templateId: Int,
         @QueryValue("checklist_name") checklistName: String,
-        @Body("file") requestBody: CompletedFileUpload
+        @Body("file") requestBody: StreamingFileUpload
     ): Mono<Void> {
-        val resourceAsStream = this.javaClass.classLoader.getResourceAsStream(requestBody.filename)
-        val inputFactory = XMLInputFactory.newInstance()
-        val xmlStreamReader = inputFactory.createXMLStreamReader(resourceAsStream)
-        val mapper = XmlMapper()
-        val checklist: Checklist = mapper.readValue(xmlStreamReader, Checklist::class.java)
+        val tempFile = File.createTempFile(requestBody.filename, "temp")
+        val uploadPublisher = requestBody.transferTo(tempFile)
 
-        return createChecklistTemplateService.uploadChecklistToDatabase(registryType, checklist, templateId, checklistName)
+        return uploadPublisher.toMono()
+            .flatMap {
+                val resourceAsStream = FileInputStream(tempFile)
+                val inputFactory = XMLInputFactory.newInstance()
+                val xmlStreamReader = inputFactory.createXMLStreamReader(resourceAsStream)
+                val mapper = XmlMapper()
+                val checklist: Checklist = mapper.readValue(xmlStreamReader, Checklist::class.java)
+                createChecklistTemplateService.uploadChecklistToDatabase(registryType, checklist, templateId, checklistName)
+            }.then()
     }
 
     @Get("/checklists")
