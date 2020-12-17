@@ -80,7 +80,7 @@ class GetRegistryChecklistsService(
                                     .map { categoryList ->
                                         logger.info { "categoryList - $categoryList" }
                                         ChecklistResponseTO(registryId = registryId, registryItemCount = itemDetails.size.toLong(),
-                                            categories = categoryList)
+                                            templateId = templateId, categories = categoryList)
                                     }
                             }
                     }

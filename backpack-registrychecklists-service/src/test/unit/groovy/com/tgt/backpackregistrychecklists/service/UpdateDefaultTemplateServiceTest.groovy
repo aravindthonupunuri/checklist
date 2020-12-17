@@ -36,7 +36,7 @@ class UpdateDefaultTemplateServiceTest extends Specification {
         def registryChecklist1 = new RegistryChecklist(registryId, 1, LocalDate.now(), RegistrySubChannel.KIOSK.value, LocalDate.now(), RegistrySubChannel.KIOSK.value)
         def registryChecklist = new RegistryChecklist(registryId, templateId, LocalDate.now(), RegistrySubChannel.KIOSK.value, LocalDate.now(), RegistrySubChannel.KIOSK.value)
 
-        def responseTO = new ChecklistResponseTO(registryId, 1, [new ChecklistCategoryTO("963002", "strollers and car seats", 1,
+        def responseTO = new ChecklistResponseTO(registryId, 1, templateId, [new ChecklistCategoryTO("963002", "strollers and car seats", 1,
             "category.image.url", [new SubcategoryTO(201, "5xtjw", "travel system", 1, "subcategory.image.url",
             "reg_type=baby", 1, true, new ItemDetailsTO("12954094", "Item Title", "primary.image.url", LocalDate.now(), LocalDate.now()))])])
 
@@ -53,12 +53,16 @@ class UpdateDefaultTemplateServiceTest extends Specification {
         result.registryId == registryId
         result.registryItemCount == 1
         result.categories.size() == 1
-        result.component3().get(0).categoryId == "963002"
-        result.component3().get(0).subcategories.size() == 1
-        result.component3().get(0).subcategories.get(0).checklistId == 201
-        result.component3().get(0).subcategories.get(0).subcategoryChildIds == "5xtjw"
-        result.component3().get(0).subcategories.get(0).itemCount == 1
-        result.component3().get(0).subcategories.get(0).lastUpdatedItem.tcin == "12954094"
+        result.categories.findAll( category ->
+            category.categoryId == "963002" &&
+                category.subcategories.size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 201 &&
+                        subcategory.subcategoryChildIds == "5xtjw" &&
+                        subcategory.itemCount == 1 &&
+                        subcategory.lastUpdatedItem.tcin == "12954094"
+                ).size() == 1
+        ).size() == 1
     }
 
     def "test update default template - multiple categories"() {
@@ -70,7 +74,7 @@ class UpdateDefaultTemplateServiceTest extends Specification {
         def registryChecklist1 = new RegistryChecklist(registryId, 1, LocalDate.now(), RegistrySubChannel.KIOSK.value, LocalDate.now(), RegistrySubChannel.KIOSK.value)
         def registryChecklist = new RegistryChecklist(registryId, templateId, LocalDate.now(), RegistrySubChannel.KIOSK.value, LocalDate.now(), RegistrySubChannel.KIOSK.value)
 
-        def responseTO = new ChecklistResponseTO(registryId, 1, [new ChecklistCategoryTO("963002", "strollers and car seats", 1,
+        def responseTO = new ChecklistResponseTO(registryId, 1, templateId, [new ChecklistCategoryTO("963002", "strollers and car seats", 1,
             "category.image.url", [new SubcategoryTO(201, "5xtjw", "travel system", 1, "subcategory.image.url",
             "reg_type=baby", 1, true, new ItemDetailsTO("12954094", "Item Title", "primary.image.url", LocalDate.now(), LocalDate.now()))]),
              new ChecklistCategoryTO("29504", "gear &amp; activity", 1,
@@ -90,18 +94,27 @@ class UpdateDefaultTemplateServiceTest extends Specification {
         result.registryId == registryId
         result.registryItemCount == 1
         result.categories.size() == 2
-        result.component3().get(0).categoryId == "963002"
-        result.component3().get(0).subcategories.size() == 1
-        result.component3().get(0).subcategories.get(0).checklistId == 201
-        result.component3().get(0).subcategories.get(0).subcategoryChildIds == "5xtjw"
-        result.component3().get(0).subcategories.get(0).itemCount == 1
-        result.component3().get(0).subcategories.get(0).lastUpdatedItem.tcin == "12954094"
-        result.component3().get(1).categoryId == "29504"
-        result.component3().get(1).subcategories.size() == 1
-        result.component3().get(1).subcategories.get(0).checklistId == 208
-        result.component3().get(1).subcategories.get(0).subcategoryChildIds == "5q0eu"
-        result.component3().get(1).subcategories.get(0).itemCount == 0
-        result.component3().get(1).subcategories.get(0).lastUpdatedItem == null
+        result.categories.findAll( category ->
+            category.categoryId == "963002" &&
+                category.subcategories.size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 201 &&
+                        subcategory.subcategoryChildIds == "5xtjw" &&
+                        subcategory.itemCount == 1 &&
+                        subcategory.lastUpdatedItem.tcin == "12954094"
+                ).size() == 1
+        ).size() == 1
+
+        result.categories.findAll( category ->
+            category.categoryId == "29504" &&
+                category.subcategories.size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 208 &&
+                        subcategory.subcategoryChildIds == "5q0eu" &&
+                        subcategory.itemCount == 0 &&
+                        subcategory.lastUpdatedItem == null
+                ).size() == 1
+        ).size() == 1
     }
 
     def "test update default template - multiple subcategory childIds"() {
@@ -113,7 +126,7 @@ class UpdateDefaultTemplateServiceTest extends Specification {
         def registryChecklist = new RegistryChecklist(registryId, templateId, LocalDate.now(), RegistrySubChannel.KIOSK.value, LocalDate.now(), RegistrySubChannel.KIOSK.value)
         def registryChecklist1 = new RegistryChecklist(registryId, 1, LocalDate.now(), RegistrySubChannel.KIOSK.value, LocalDate.now(), RegistrySubChannel.KIOSK.value)
 
-        def responseTO = new ChecklistResponseTO(registryId, 1, [new ChecklistCategoryTO("963002", "strollers and car seats", 1,
+        def responseTO = new ChecklistResponseTO(registryId, 1, templateId, [new ChecklistCategoryTO("963002", "strollers and car seats", 1,
             "category.image.url", [new SubcategoryTO(201, "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "stroller", 1, "subcategory.image.url",
             "reg_type=baby", 1, true, new ItemDetailsTO("12954094", "Item Title", "primary.image.url", LocalDate.now(), LocalDate.now()))]),
              new ChecklistCategoryTO("29504", "gear &amp; activity", 1,
@@ -133,18 +146,27 @@ class UpdateDefaultTemplateServiceTest extends Specification {
         result.registryId == registryId
         result.registryItemCount == 1
         result.categories.size() == 2
-        result.component3().get(0).categoryId == "963002"
-        result.component3().get(0).subcategories.size() == 1
-        result.component3().get(0).subcategories.get(0).checklistId == 201
-        result.component3().get(0).subcategories.get(0).subcategoryChildIds == "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u"
-        result.component3().get(0).subcategories.get(0).itemCount == 1
-        result.component3().get(0).subcategories.get(0).lastUpdatedItem.tcin == "12954094"
-        result.component3().get(1).categoryId == "29504"
-        result.component3().get(1).subcategories.size() == 1
-        result.component3().get(1).subcategories.get(0).checklistId == 208
-        result.component3().get(1).subcategories.get(0).subcategoryChildIds == "5q0eu"
-        result.component3().get(1).subcategories.get(0).itemCount == 0
-        result.component3().get(1).subcategories.get(0).lastUpdatedItem == null
+        result.categories.findAll( category ->
+            category.categoryId == "963002" &&
+                category.subcategories.size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 201 &&
+                        subcategory.subcategoryChildIds == "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u" &&
+                        subcategory.itemCount == 1 &&
+                        subcategory.lastUpdatedItem.tcin == "12954094"
+                ).size() == 1
+        ).size() == 1
+
+        result.categories.findAll( category ->
+            category.categoryId == "29504" &&
+                category.subcategories.size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 208 &&
+                        subcategory.subcategoryChildIds == "5q0eu" &&
+                        subcategory.itemCount == 0 &&
+                        subcategory.lastUpdatedItem == null
+                ).size() == 1
+        ).size() == 1
     }
 
     def "test update default template - no checklist exists for the given templateId"() {

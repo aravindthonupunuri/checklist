@@ -624,6 +624,8 @@ definitions:
       registry_item_count:
         type: integer
         format: int32
+      template_id:
+        type: integer
       categories:
         type: array
         items:

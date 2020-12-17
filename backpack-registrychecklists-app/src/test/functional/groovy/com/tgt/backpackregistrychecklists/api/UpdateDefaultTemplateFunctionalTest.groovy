@@ -94,12 +94,16 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
         result.registryId == registryId
         result.registryItemCount == 1
         result.categories.size() == 1
-        result.component3().get(0).categoryId == "963002"
-        result.component3().get(0).subcategories.size() == 1
-        result.component3().get(0).subcategories.get(0).checklistId == 201
-        result.component3().get(0).subcategories.get(0).subcategoryChildIds == "5xtjw"
-        result.component3().get(0).subcategories.get(0).itemCount == 1
-        result.component3().get(0).subcategories.get(0).lastUpdatedItem.tcin == "12954094"
+        result.categories.findAll( category ->
+            category.categoryId == "963002" &&
+                category.subcategories.size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 201 &&
+                        subcategory.subcategoryChildIds == "5xtjw" &&
+                        subcategory.itemCount == 1 &&
+                        subcategory.lastUpdatedItem.tcin == "12954094"
+                ).size() == 1
+        ).size() == 1
 
         1 * mockServer.get({ path -> path.contains(getRegistryDetailsUri)},*_) >> [status: 200, body: getRegistryDetailsResponse]
         1 * mockServer.get({ path -> path.contains("/redsky_aggregations/v1/registry_services/get_registry_checklist_v1?tcin=12954094") }, _) >> [status: 200, body: redskyResponseTO1]
@@ -139,12 +143,16 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
         result.registryId == registryId
         result.registryItemCount == 1
         result.categories.size() == 1
-        result.component3().get(0).categoryId == "963003"
-        result.component3().get(0).subcategories.size() == 1
-        result.component3().get(0).subcategories.get(0).checklistId == 203
-        result.component3().get(0).subcategories.get(0).subcategoryChildIds == "5q0ev"
-        result.component3().get(0).subcategories.get(0).itemCount == 0
-        result.component3().get(0).subcategories.get(0).lastUpdatedItem == null
+        result.categories.findAll( category ->
+            category.categoryId == "963003" &&
+                category.subcategories.size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 203 &&
+                        subcategory.subcategoryChildIds == "5q0ev" &&
+                        subcategory.itemCount == 0 &&
+                        subcategory.lastUpdatedItem == null
+                ).size() == 1
+        ).size() == 1
 
         1 * mockServer.get({ path -> path.contains(getRegistryDetailsUri)},*_) >> [status: 200, body: getRegistryDetailsResponse]
         1 * mockServer.get({ path -> path.contains("/redsky_aggregations/v1/registry_services/get_registry_checklist_v1?tcin=12954094") }, _) >> [status: 200, body: redskyResponseTO1]
@@ -184,12 +192,16 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
         result.registryId == registryId
         result.registryItemCount == 1
         result.categories.size() == 1
-        result.component3().get(0).categoryId == "963003"
-        result.component3().get(0).subcategories.size() == 1
-        result.component3().get(0).subcategories.get(0).checklistId == 204
-        result.component3().get(0).subcategories.get(0).subcategoryChildIds == "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u"
-        result.component3().get(0).subcategories.get(0).itemCount == 1
-        result.component3().get(0).subcategories.get(0).lastUpdatedItem.tcin == "12954094"
+        result.categories.findAll( category ->
+            category.categoryId == "963003" &&
+                category.subcategories.size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 204 &&
+                        subcategory.subcategoryChildIds == "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u" &&
+                        subcategory.itemCount == 1 &&
+                        subcategory.lastUpdatedItem.tcin == "12954094"
+                ).size() == 1
+        ).size() == 1
 
         1 * mockServer.get({ path -> path.contains(getRegistryDetailsUri)},*_) >> [status: 200, body: getRegistryDetailsResponse]
         1 * mockServer.get({ path -> path.contains("/redsky_aggregations/v1/registry_services/get_registry_checklist_v1?tcin=12954094") }, _) >> [status: 200, body: redskyResponseTO1]

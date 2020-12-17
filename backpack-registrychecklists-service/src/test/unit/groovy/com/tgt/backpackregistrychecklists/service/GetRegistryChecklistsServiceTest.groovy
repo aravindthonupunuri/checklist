@@ -126,17 +126,25 @@ class GetRegistryChecklistsServiceTest extends Specification{
         result.registryId == registryId
         result.registryItemCount == 3
         result.categories.size() == 1
-        result.component3().get(0).categoryId == "963002"
-        result.component3().get(0).subcategories.size() == 3
-        result.component3().get(0).subcategories.get(0).checklistId == 201
-        result.component3().get(0).subcategories.get(0).subcategoryChildIds == "5xtjw"
-        result.component3().get(0).subcategories.get(0).itemCount == 2
-        result.component3().get(0).subcategories.get(0).lastUpdatedItem.tcin == "12954094"
-        result.component3().get(0).subcategories.get(1).checklistId == 202
-        result.component3().get(0).subcategories.get(2).checklistId == 203
-        result.component3().get(0).subcategories.get(2).subcategoryChildIds == "5q0ev"
-        result.component3().get(0).subcategories.get(2).itemCount == 1
-        result.component3().get(0).subcategories.get(2).lastUpdatedItem.tcin == "55555"
+        result.categories.findAll( category ->
+            category.categoryId == "963002" &&
+                category.subcategories.size() == 3 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 201 &&
+                        subcategory.subcategoryChildIds == "5xtjw" &&
+                        subcategory.itemCount == 2 &&
+                        subcategory.lastUpdatedItem.tcin == "12954094"
+                ).size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 202
+                ).size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 203 &&
+                        subcategory.subcategoryChildIds == "5q0ev" &&
+                        subcategory.itemCount == 1 &&
+                        subcategory.lastUpdatedItem.tcin == "55555"
+                ).size() == 1
+        ).size() == 1
     }
 
     def "test get checklist info - multiple categories"() {
@@ -163,19 +171,31 @@ class GetRegistryChecklistsServiceTest extends Specification{
         result.registryId == registryId
         result.registryItemCount == 3
         result.categories.size() == 2
-        result.component3().get(0).categoryId == "963003"
-        result.component3().get(0).subcategories.size() == 1
-        result.component3().get(1).subcategories.size() == 2
-        result.component3().get(1).subcategories.get(0).checklistId == 201
-        result.component3().get(1).subcategories.get(0).subcategoryChildIds == "5xtjw"
-        result.component3().get(1).subcategories.get(0).itemCount == 2
-        result.component3().get(1).subcategories.get(0).lastUpdatedItem.tcin == "12954094"
-        result.component3().get(1).subcategories.get(1).checklistId == 202
-        !result.component3().get(1).subcategories.get(1).checked
-        result.component3().get(0).subcategories.get(0).checklistId == 203
-        result.component3().get(0).subcategories.get(0).subcategoryChildIds == "5q0ev"
-        result.component3().get(0).subcategories.get(0).itemCount == 1
-        result.component3().get(0).subcategories.get(0).lastUpdatedItem.tcin == "55555"
+        result.categories.findAll( category ->
+            category.categoryId == "963003" &&
+                category.subcategories.size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 203 &&
+                        subcategory.subcategoryChildIds == "5q0ev" &&
+                        subcategory.itemCount == 1 &&
+                        subcategory.lastUpdatedItem.tcin == "55555"
+                ).size() == 1
+        ).size() == 1
+
+        result.categories.findAll( category ->
+            category.categoryId == "963002" &&
+                category.subcategories.size() == 2 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 201 &&
+                        subcategory.subcategoryChildIds == "5xtjw" &&
+                        subcategory.itemCount == 2 &&
+                        subcategory.lastUpdatedItem.tcin == "12954094"
+                ).size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 202 &&
+                        !subcategory.checked
+                ).size() == 1
+        ).size() == 1
     }
 
     def "test get checklist info - if subcategoryChildIds is a list"() {
@@ -209,18 +229,29 @@ class GetRegistryChecklistsServiceTest extends Specification{
         result.registryId == registryId
         result.registryItemCount == 4
         result.categories.size() == 2
-        result.component3().get(0).categoryId == "963003"
-        result.component3().get(0).subcategories.size() == 1
-        result.component3().get(1).subcategories.size() == 1
-        result.component3().get(1).subcategories.get(0).checklistId == 201
-        result.component3().get(1).subcategories.get(0).subcategoryChildIds == "5xtjw"
-        result.component3().get(1).subcategories.get(0).itemCount == 2
-        result.component3().get(1).subcategories.get(0).lastUpdatedItem.tcin == "12954094"
-        result.component3().get(0).subcategories.get(0).checklistId == 202
-        result.component3().get(1).subcategories.get(0).checked
-        result.component3().get(0).subcategories.get(0).subcategoryChildIds == "5xtk7, 5q0ev"
-        result.component3().get(0).subcategories.get(0).itemCount == 2
-        result.component3().get(0).subcategories.get(0).lastUpdatedItem.tcin == "55555"
+
+        result.categories.findAll( category ->
+            category.categoryId == "963003" &&
+                category.subcategories.size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 202 &&
+                        subcategory.subcategoryChildIds == "5xtk7, 5q0ev" &&
+                        subcategory.itemCount == 2 &&
+                        subcategory.lastUpdatedItem.tcin == "55555"
+                ).size() == 1
+        ).size() == 1
+
+        result.categories.findAll( category ->
+            category.categoryId == "963002" &&
+                category.subcategories.size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 201 &&
+                        subcategory.subcategoryChildIds == "5xtjw" &&
+                        subcategory.itemCount == 2 &&
+                        subcategory.lastUpdatedItem.tcin == "12954094" &&
+                        subcategory.checked
+                ).size() == 1
+        ).size() == 1
     }
 
     def "test get checklist info - if registry details response is empty"() {
@@ -243,16 +274,28 @@ class GetRegistryChecklistsServiceTest extends Specification{
         result.registryId == registryId
         result.registryItemCount == 0
         result.categories.size() == 2
-        result.component3().get(0).categoryId == "963003"
-        result.component3().get(0).subcategories.size() == 1
-        result.component3().get(1).subcategories.size() == 1
-        result.component3().get(1).subcategories.get(0).checklistId == 201
-        result.component3().get(1).subcategories.get(0).subcategoryChildIds == "5xtjw"
-        result.component3().get(1).subcategories.get(0).itemCount == 0
-        result.component3().get(0).subcategories.get(0).checklistId == 202
-        result.component3().get(1).subcategories.get(0).checked
-        result.component3().get(0).subcategories.get(0).subcategoryChildIds == "5xtk7, 5q0ev"
-        result.component3().get(0).subcategories.get(0).itemCount == 0
+        result.categories.findAll( category ->
+            category.categoryId == "963003" &&
+                category.subcategories.size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 202 &&
+                        subcategory.subcategoryChildIds == "5xtk7, 5q0ev" &&
+                        subcategory.itemCount == 0 &&
+                        subcategory.lastUpdatedItem == null
+                ).size() == 1
+        ).size() == 1
+
+        result.categories.findAll( category ->
+            category.categoryId == "963002" &&
+                category.subcategories.size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 201 &&
+                        subcategory.subcategoryChildIds == "5xtjw" &&
+                        subcategory.itemCount == 0 &&
+                        subcategory.lastUpdatedItem == null &&
+                        subcategory.checked
+                ).size() == 1
+        ).size() == 1
     }
 
     def "test get checklist info - if there are no items in the registry"() {
@@ -278,16 +321,28 @@ class GetRegistryChecklistsServiceTest extends Specification{
         result.registryId == registryId
         result.registryItemCount == 0
         result.categories.size() == 2
-        result.component3().get(0).categoryId == "963003"
-        result.component3().get(0).subcategories.size() == 1
-        result.component3().get(1).subcategories.size() == 1
-        result.component3().get(1).subcategories.get(0).checklistId == 201
-        result.component3().get(1).subcategories.get(0).subcategoryChildIds == "5xtjw"
-        result.component3().get(1).subcategories.get(0).itemCount == 0
-        result.component3().get(0).subcategories.get(0).checklistId == 202
-        result.component3().get(1).subcategories.get(0).checked
-        result.component3().get(0).subcategories.get(0).subcategoryChildIds == "5xtk7, 5q0ev"
-        result.component3().get(0).subcategories.get(0).itemCount == 0
+        result.categories.findAll( category ->
+            category.categoryId == "963003" &&
+                category.subcategories.size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 202 &&
+                        subcategory.subcategoryChildIds == "5xtk7, 5q0ev" &&
+                        subcategory.itemCount == 0 &&
+                        subcategory.lastUpdatedItem == null
+                ).size() == 1
+        ).size() == 1
+
+        result.categories.findAll( category ->
+            category.categoryId == "963002" &&
+                category.subcategories.size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 201 &&
+                        subcategory.subcategoryChildIds == "5xtjw" &&
+                        subcategory.itemCount == 0 &&
+                        subcategory.lastUpdatedItem == null &&
+                        subcategory.checked
+                ).size() == 1
+        ).size() == 1
     }
 
     def "test get checklist info - if no checklist exists for the given templateId"() {
@@ -348,16 +403,24 @@ class GetRegistryChecklistsServiceTest extends Specification{
         result.registryId == registryId
         result.registryItemCount == 3
         result.categories.size() == 1
-        result.component3().get(0).categoryId == "963002"
-        result.component3().get(0).subcategories.size() == 3
-        result.component3().get(0).subcategories.get(0).checklistId == 201
-        result.component3().get(0).subcategories.get(0).subcategoryChildIds == "5xtjw"
-        result.component3().get(0).subcategories.get(0).itemCount == 2
-        result.component3().get(0).subcategories.get(0).lastUpdatedItem.tcin == "12954094"
-        result.component3().get(0).subcategories.get(1).checklistId == 202
-        result.component3().get(0).subcategories.get(2).checklistId == 203
-        result.component3().get(0).subcategories.get(2).subcategoryChildIds == "5q0ev"
-        result.component3().get(0).subcategories.get(2).itemCount == 1
-        result.component3().get(0).subcategories.get(2).lastUpdatedItem.tcin == "55555"
+        result.categories.findAll( category ->
+            category.categoryId == "963002" &&
+                category.subcategories.size() == 3 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 201 &&
+                        subcategory.subcategoryChildIds == "5xtjw" &&
+                        subcategory.itemCount == 2 &&
+                        subcategory.lastUpdatedItem.tcin == "12954094"
+                ).size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 202
+                ).size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 203 &&
+                        subcategory.subcategoryChildIds == "5q0ev" &&
+                        subcategory.itemCount == 1 &&
+                        subcategory.lastUpdatedItem.tcin == "55555"
+                ).size() == 1
+        ).size() == 1
     }
 }
