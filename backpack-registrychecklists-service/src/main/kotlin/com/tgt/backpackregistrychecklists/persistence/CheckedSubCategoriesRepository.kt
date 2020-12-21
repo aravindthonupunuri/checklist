@@ -14,6 +14,4 @@ interface CheckedSubCategoriesRepository {
     fun deleteByTemplateId(templateId: Int): Mono<Int>
     fun find(@Id checkedSubcategoriesId: CheckedSubCategoriesId): Mono<CheckedSubCategories>
     fun findByRegistryIdAndTemplateId(registryId: UUID, templateId: Int): Flux<CheckedSubCategories>
-//    @Query("SELECT * FROM CHECKED_SUBCATEGORIES WHERE registry_id = :registryId and checklist_id = :checklistId and template_id = :templateId", nativeQuery = true)
-//    fun findWithNative(registryId: UUID, checklistId: String, templateId: Int): Mono<RegistryChecklistSubCategory>
 }

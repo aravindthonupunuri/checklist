@@ -29,7 +29,7 @@ class CreateChecklistTemplateService(
         return deleteDuplicateChecklistIfExists(templateId, checklistName)
             .flatMap {
                 // check if the provided templateId can be default for the provided registryType
-                checklistTemplateRepository.countByRegistryType(registryType)
+                checklistTemplateRepository.countByRegistryTypeAndDefaultChecklist(registryType)
                     .map { it == 0L }
             }
             .flatMap { default ->

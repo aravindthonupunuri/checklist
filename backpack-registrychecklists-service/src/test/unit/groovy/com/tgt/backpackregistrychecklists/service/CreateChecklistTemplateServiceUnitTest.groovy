@@ -40,7 +40,7 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         def result = createChecklistTemplateService.uploadChecklistToDatabase(RegistryType.BABY, checklist, 1, "checklistName").block()
 
         then:
-        1 * checklistTemplateRepository.countByRegistryType(RegistryType.BABY) >> Mono.just(0L)
+        1 * checklistTemplateRepository.countByRegistryTypeAndDefaultChecklist(RegistryType.BABY, true) >> Mono.just(0L)
         1 * checklistTemplateRepository.findByTemplateId(1) >> Flux.empty()
         1 * checklistTemplateRepository.deleteByTemplateId(1) >> Mono.just(0)
         1 * checklistTemplateRepository.countByChecklistName("checklistName") >> Mono.just(0L)
@@ -66,7 +66,7 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         def result = createChecklistTemplateService.uploadChecklistToDatabase(RegistryType.BABY, checklist, 1, "checklistName").block()
 
         then:
-        1 * checklistTemplateRepository.countByRegistryType(RegistryType.BABY) >> Mono.just(0L)
+        1 * checklistTemplateRepository.countByRegistryTypeAndDefaultChecklist(RegistryType.BABY, true) >> Mono.just(0L)
         1 * checklistTemplateRepository.deleteByTemplateId(1) >> Mono.just(1)
         1 * checklistTemplateRepository.findByTemplateId(1) >> Flux.just(checklistTemplate)
         1 * checklistTemplateRepository.countByChecklistName("checklistName") >> Mono.just(0L)
@@ -91,7 +91,7 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         def result = createChecklistTemplateService.uploadChecklistToDatabase(RegistryType.BABY, checklist, 1, "checklistName").block()
 
         then:
-        1 * checklistTemplateRepository.countByRegistryType(RegistryType.BABY) >> Mono.just(1L)
+        1 * checklistTemplateRepository.countByRegistryTypeAndDefaultChecklist(RegistryType.BABY, true) >> Mono.just(1L)
         1 * checklistTemplateRepository.findByTemplateId(1) >> Flux.empty()
         1 * checklistTemplateRepository.deleteByTemplateId(1) >> Mono.just(0)
         1 * checklistTemplateRepository.countByChecklistName("checklistName") >> Mono.just(0L)
@@ -116,7 +116,7 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         def result = createChecklistTemplateService.uploadChecklistToDatabase(RegistryType.BABY, checklist, 1, "checklistName").block()
 
         then:
-        1 * checklistTemplateRepository.countByRegistryType(RegistryType.BABY) >> Mono.just(0L)
+        1 * checklistTemplateRepository.countByRegistryTypeAndDefaultChecklist(RegistryType.BABY, true) >> Mono.just(0L)
         1 * checklistTemplateRepository.deleteByTemplateId(1) >> Mono.just(1)
         1 * checklistTemplateRepository.findByTemplateId(1) >> Flux.just(checklistTemplate)
         0 * checklistTemplateRepository.countByChecklistName("checklistName") >> Mono.just(0L)
@@ -141,7 +141,7 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         def result = createChecklistTemplateService.uploadChecklistToDatabase(RegistryType.BABY, checklist, 1, "checklistName").block()
 
         then:
-        0 * checklistTemplateRepository.countByRegistryType(RegistryType.BABY) >> Mono.just(0L)
+        0 * checklistTemplateRepository.countByRegistryTypeAndDefaultChecklist(RegistryType.BABY, true) >> Mono.just(0L)
         0 * checklistTemplateRepository.deleteByTemplateId(1) >> Mono.just(1)
         1 * checklistTemplateRepository.findByTemplateId(1) >> Flux.just(checklistTemplate)
         1 * checklistTemplateRepository.countByChecklistName("checklistName") >> Mono.just(1L)
@@ -168,7 +168,7 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         def result = createChecklistTemplateService.uploadChecklistToDatabase(RegistryType.BABY, checklist, 1, "checklistName").block()
 
         then:
-        1 * checklistTemplateRepository.countByRegistryType(RegistryType.BABY) >> Mono.just(1L)
+        1 * checklistTemplateRepository.countByRegistryTypeAndDefaultChecklist(RegistryType.BABY, true) >> Mono.just(1L)
         1 * checklistTemplateRepository.findByTemplateId(1) >> Flux.empty()
         1 * checklistTemplateRepository.deleteByTemplateId(1) >> Mono.just(0)
         1 * checklistTemplateRepository.countByChecklistName("checklistName") >> Mono.just(0L)

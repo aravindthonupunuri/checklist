@@ -37,7 +37,7 @@ class ChecklistTemplateRepositoryFunctionalTest extends BasePersistenceFunctiona
         def checklistTemplate1 = new ChecklistTemplate(checklistTemplatePk1, RegistryType.WEDDING, "Wedding1", true, 2, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
         def checklistTemplate2 = new ChecklistTemplate(checklistTemplatePk2, RegistryType.WEDDING, "Wedding2", true, 3, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
         def checklistTemplate3 = new ChecklistTemplate(checklistTemplatePk3, RegistryType.BABY, "Baby2", true, 4, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
-        def checklistTemplate4 = new ChecklistTemplate(checklistTemplatePk4, RegistryType.BABY, "Baby3", true, 5, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
+        def checklistTemplate4 = new ChecklistTemplate(checklistTemplatePk4, RegistryType.BABY, "Baby3", false, 5, "categoryId", "name", "name", "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
 
         when:
         def result = checklistTemplateRepository.save(checklistTemplate).block()
@@ -57,12 +57,14 @@ class ChecklistTemplateRepositoryFunctionalTest extends BasePersistenceFunctiona
     def "test find checklist"() {
 
         when:
-        def result = checklistTemplateRepository.countByRegistryType(RegistryType.WEDDING).block()
-        def result1 = checklistTemplateRepository.countByRegistryType(RegistryType.BABY).block()
+        def result = checklistTemplateRepository.countByRegistryTypeAndDefaultChecklist(RegistryType.WEDDING, true).block()
+        def result1 = checklistTemplateRepository.countByRegistryTypeAndDefaultChecklist(RegistryType.BABY, true).block()
+        def result2 = checklistTemplateRepository.countByRegistryTypeAndDefaultChecklist(RegistryType.BABY, false).block()
 
         then:
         result == 2
         result1 != null
+        result2 == 1
     }
 
     def "test find by default checklist"() {
@@ -72,8 +74,8 @@ class ChecklistTemplateRepositoryFunctionalTest extends BasePersistenceFunctiona
         def result1 = checklistTemplateRepository.findByDefaultChecklistAndRegistryType(false, RegistryType.BABY).collect(Collectors.toList()).block().size()
 
         then:
-        result == 3
-        result1 == 0
+        result == 2
+        result1 == 1
     }
 
     def "test countByChecklistName"() {
