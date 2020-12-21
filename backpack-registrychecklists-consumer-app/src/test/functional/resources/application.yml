@@ -27,7 +27,7 @@ lists:
       http:
         enabled: true # we are using our own binder via our custom micronaut-metrics lib
 
-jdbc-stmt-timeout:
+jdbc-stmt:
   serverStatementTimeoutMillis: 250  # for server side statement timeout
   statementQueryTimeoutSeconds: 1    # for client side statement timeout
 

@@ -26,9 +26,8 @@ class DefaultChecklistService(
             .switchIfEmpty {
                 throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("no subcategory with default value of true is found")))
             }.collectList().flatMap {
-            val registryChecklist = RegistryChecklist(registryId, it.first().checklistTemplatePK.templateId, LocalDate.now(), subChannel, null, null)
-            registryChecklistRepository.save(registryChecklist)
-            Mono.just(true)
-        }
+            val registryChecklist = RegistryChecklist(registryId, it.first().checklistTemplatePK.templateId, LocalDate.now(), subChannel, LocalDate.now(), subChannel)
+            registryChecklistRepository.save(registryChecklist).map { true }
+            }
     }
 }

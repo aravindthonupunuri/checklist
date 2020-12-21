@@ -26,10 +26,12 @@ class ChecklistService(
                 logger.debug("From processDeleteRegistryState(), starting processing")
 
                 registryChecklistRepository.deleteByTemplateId(templateId).map { retryState.deleteChecklistTemplateFromChecklistRepository = true }
-                    .map {
+                    .flatMap {
                         checkedSubCategoriesRepository.deleteByTemplateId(templateId)
-                        retryState.deleteChecklistTemplateFromCheckedSubCategoriesRepository = true
-                        retryState
+                            .map {
+                                retryState.deleteChecklistTemplateFromCheckedSubCategoriesRepository = true
+                                retryState
+                            }
                     }
                     .onErrorResume { Mono.just(retryState) }
                     .switchIfEmpty {

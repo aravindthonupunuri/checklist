@@ -42,7 +42,7 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         then:
         1 * checklistTemplateRepository.countByRegistryType(RegistryType.BABY) >> Mono.just(0L)
         1 * checklistTemplateRepository.findByTemplateId(1) >> Flux.empty()
-        1 * checklistTemplateRepository.countByTemplateId(1) >> Mono.just(0L)
+        1 * checklistTemplateRepository.deleteByTemplateId(1) >> Mono.just(0)
         1 * checklistTemplateRepository.countByChecklistName("checklistName") >> Mono.just(0L)
         2 * checklistTemplateRepository.save(_) >> Mono.just(checklistTemplate)
     }
@@ -69,7 +69,6 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         1 * checklistTemplateRepository.countByRegistryType(RegistryType.BABY) >> Mono.just(0L)
         1 * checklistTemplateRepository.deleteByTemplateId(1) >> Mono.just(1)
         1 * checklistTemplateRepository.findByTemplateId(1) >> Flux.just(checklistTemplate)
-        1 * checklistTemplateRepository.countByTemplateId(1) >> Mono.just(1L)
         1 * checklistTemplateRepository.countByChecklistName("checklistName") >> Mono.just(0L)
         2 * checklistTemplateRepository.save(_) >> Mono.just(checklistTemplate)
     }
@@ -94,7 +93,7 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         then:
         1 * checklistTemplateRepository.countByRegistryType(RegistryType.BABY) >> Mono.just(1L)
         1 * checklistTemplateRepository.findByTemplateId(1) >> Flux.empty()
-        1 * checklistTemplateRepository.countByTemplateId(1) >> Mono.just(0L)
+        1 * checklistTemplateRepository.deleteByTemplateId(1) >> Mono.just(0)
         1 * checklistTemplateRepository.countByChecklistName("checklistName") >> Mono.just(0L)
         2 * checklistTemplateRepository.save(_) >> Mono.just(checklistTemplate)
     }
@@ -120,7 +119,6 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         1 * checklistTemplateRepository.countByRegistryType(RegistryType.BABY) >> Mono.just(0L)
         1 * checklistTemplateRepository.deleteByTemplateId(1) >> Mono.just(1)
         1 * checklistTemplateRepository.findByTemplateId(1) >> Flux.just(checklistTemplate)
-        0 * checklistTemplateRepository.countByTemplateId(1) >> Mono.just(1L)
         0 * checklistTemplateRepository.countByChecklistName("checklistName") >> Mono.just(0L)
         2 * checklistTemplateRepository.save(_) >> Mono.just(checklistTemplate)
     }
@@ -146,7 +144,6 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         0 * checklistTemplateRepository.countByRegistryType(RegistryType.BABY) >> Mono.just(0L)
         0 * checklistTemplateRepository.deleteByTemplateId(1) >> Mono.just(1)
         1 * checklistTemplateRepository.findByTemplateId(1) >> Flux.just(checklistTemplate)
-        0 * checklistTemplateRepository.countByTemplateId(1) >> Mono.just(1L)
         1 * checklistTemplateRepository.countByChecklistName("checklistName") >> Mono.just(1L)
         0 * checklistTemplateRepository.save(_) >> Mono.just(checklistTemplate)
         thrown(com.tgt.lists.common.components.exception.BadRequestException)
@@ -173,7 +170,7 @@ class CreateChecklistTemplateServiceUnitTest extends Specification{
         then:
         1 * checklistTemplateRepository.countByRegistryType(RegistryType.BABY) >> Mono.just(1L)
         1 * checklistTemplateRepository.findByTemplateId(1) >> Flux.empty()
-        1 * checklistTemplateRepository.countByTemplateId(1) >> Mono.just(0L)
+        1 * checklistTemplateRepository.deleteByTemplateId(1) >> Mono.just(0)
         1 * checklistTemplateRepository.countByChecklistName("checklistName") >> Mono.just(0L)
         1 * checklistTemplateRepository.save(_) >> Mono.error(new com.tgt.lists.common.components.exception.BadRequestException(errorCode, null))
         thrown(com.tgt.lists.common.components.exception.BadRequestException)

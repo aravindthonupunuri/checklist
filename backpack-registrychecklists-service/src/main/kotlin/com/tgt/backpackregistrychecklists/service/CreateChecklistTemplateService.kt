@@ -9,7 +9,9 @@ import com.tgt.backpackregistryclient.util.RegistryType
 import com.tgt.lists.common.components.exception.BadRequestException
 import com.tgt.lists.common.components.exception.BaseErrorCodes.BAD_REQUEST_ERROR_CODE
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.switchIfEmpty
 import reactor.kotlin.core.publisher.toFlux
+import reactor.kotlin.core.publisher.toMono
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -25,52 +27,45 @@ class CreateChecklistTemplateService(
         checklistName: String
     ): Mono<Void> {
         return deleteDuplicateChecklistIfExists(templateId, checklistName)
-            .flatMap { checkIfRegistryTypeIsDefault(registryType) }
+            .flatMap {
+                // check if the provided templateId can be default for the provided registryType
+                checklistTemplateRepository.countByRegistryType(registryType)
+                    .map { it == 0L }
+            }
             .flatMap { default ->
             checklist.categories!!.toFlux()
                     .flatMap {
                         val checklistTemplate = formChecklistEntity(registryType, it, default, templateId, checklistName)
                         checklistTemplateRepository.save(checklistTemplate)
                     }.collectList()
-            }
-            .onErrorResume {
-                throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf(it.stackTrace.toString())))
+                .onErrorResume {
+                    throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("exception while storing the checklistTemplate to database")))
+                }
             }
             .then()
     }
 
-    private fun checkIfRegistryTypeIsDefault(registryType: RegistryType): Mono<Boolean> {
-        return checklistTemplateRepository.countByRegistryType(registryType).map {
-            it == 0L
-        }
-    }
-
     private fun deleteDuplicateChecklistIfExists(templateId: Int, checklistName: String): Mono<Int> {
-        return checklistTemplateRepository.findByTemplateId(templateId).collectList().map {
-            val checklistNameList = it.map { checklistTemplate ->
-                checklistTemplate.checklistName
+        return checklistTemplateRepository.findByTemplateId(templateId).take(1)
+            .filter {
+                // validate if the checklistName exists for the provided templateId
+                it.checklistName == checklistName
             }
-            checklistNameList.contains(checklistName)
-        }.flatMap {
-            if (it == true) {
-                checklistTemplateRepository.deleteByTemplateId(templateId)
-            } else {
-                checkIfChecklistNameIsUnique(checklistName).flatMap {
-                    checklistTemplateRepository.countByTemplateId(templateId).flatMap { count ->
-                        if (count != 0L)
-                            checklistTemplateRepository.deleteByTemplateId(templateId)
-                        else Mono.just(0)
+            .switchIfEmpty<ChecklistTemplate> {
+                // verify if the checklistName already exists for any templateId
+                checklistTemplateRepository.countByChecklistName(checklistName).map { count ->
+                    if (count != 0L)
+                        throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("The checklist name already exists enter a new checklist name")))
+                    else {
+                        // publish a dummy checklistTemplate
+                        ChecklistTemplate(checklistTemplatePK = ChecklistTemplatePK(templateId, 0), registryType = RegistryType.BABY, checklistName = "")
                     }
                 }
             }
-        }
-    }
-
-    private fun checkIfChecklistNameIsUnique(checklistName: String): Mono<Unit> {
-        return checklistTemplateRepository.countByChecklistName(checklistName).map {
-            if (it != 0L)
-                throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("The checklist name already exists enter a new checklist name")))
-        }
+            .flatMap {
+                // Delete rows which are having the provided templateId
+                checklistTemplateRepository.deleteByTemplateId(templateId)
+            }.toMono()
     }
 
     private fun formChecklistEntity(
@@ -85,7 +80,7 @@ class CreateChecklistTemplateService(
             checklistTemplatePK = checkListTemplatePK,
             registryType = registryType,
             checklistName = checklistName,
-            defaultChecklist = true,
+            defaultChecklist = default,
             categoryOrder = category.l1DisplayOrder,
             categoryId = category.l1TaxonomyId,
             categoryName = category.l1AliasName,

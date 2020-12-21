@@ -74,7 +74,7 @@ class GetRegistryChecklistsService(
                     }
                     .flatMap {
                         val itemDetails = it.t2
-                        updateSubcategories(it.t1, itemDetails).collectList()
+                        assembleSubcategories(it.t1, itemDetails).collectList()
                             .flatMap {
                                 markSubcategories(registryId, templateId, it)
                                     .map { categoryList ->
@@ -87,7 +87,7 @@ class GetRegistryChecklistsService(
             }
     }
 
-    private fun updateSubcategories(
+    private fun assembleSubcategories(
         categoryMap: HashMap<String, ChecklistCategoryTO>,
         registryDetails: List<ChecklistItemTO>?
     ): Flux<ChecklistCategoryTO> {

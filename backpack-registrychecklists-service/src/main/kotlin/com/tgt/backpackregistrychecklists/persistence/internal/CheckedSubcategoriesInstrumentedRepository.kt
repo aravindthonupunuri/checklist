@@ -1,0 +1,9 @@
+package com.tgt.backpackregistrychecklists.persistence.internal
+
+import com.tgt.backpackregistrychecklists.persistence.CheckedSubCategoriesRepository
+import com.tgt.lists.micronaut.persistence.instrumentation.InstrumentedRepository
+import io.micronaut.context.annotation.Primary
+
+@Primary // make it primary to instrument CheckedSubcategoriesCrudRepository
+@InstrumentedRepository("CheckedSubcategoriesCrudRepository")
+interface CheckedSubcategoriesInstrumentedRepository : CheckedSubCategoriesRepository

@@ -1,5 +1,8 @@
 package com.tgt.backpackregistrychecklists.kafka.api
 
+import com.tgt.backpackregistrychecklists.domain.model.CheckedSubCategories
+import com.tgt.backpackregistrychecklists.domain.model.CheckedSubCategoriesId
+import com.tgt.backpackregistrychecklists.domain.model.RegistryChecklist
 import com.tgt.backpackregistrychecklists.persistence.CheckedSubCategoriesRepository
 import com.tgt.backpackregistrychecklists.persistence.RegistryChecklistRepository
 import com.tgt.backpackregistrychecklists.service.async.ChecklistService
@@ -19,6 +22,7 @@ import spock.lang.Stepwise
 import spock.util.concurrent.PollingConditions
 
 import javax.inject.Inject
+import java.time.LocalDate
 import java.util.stream.Collectors
 
 @MicronautTest
@@ -69,6 +73,13 @@ class DeleteRegistryChecklistActionEventHandlerFunctionalTest extends BaseKafkaF
         def templateId = 1
         def guestId = "1234"
         DeleteChecklistActionEvent deleteChecklistActionEvent = new DeleteChecklistActionEvent(guestId, templateId, null)
+
+        RegistryChecklist registryChecklist = new RegistryChecklist(UUID.randomUUID(), 1, LocalDate.now(), "user", LocalDate.now(), "user")
+        registryChecklistRepository.save(registryChecklist).block()
+        CheckedSubCategoriesId checkedSubCategoriesId = new CheckedSubCategoriesId(UUID.randomUUID(), 1, 201)
+
+        CheckedSubCategories checkedSubCategories = new CheckedSubCategories(checkedSubCategoriesId, LocalDate.now(), "user", LocalDate.now(), "user")
+        checkedSubCategoriesRepository.save(checkedSubCategories).block()
 
         testEventListener.preDispatchLambda = new PreDispatchLambda() {
             @Override
