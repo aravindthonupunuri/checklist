@@ -8,7 +8,8 @@ import com.tgt.backpackregistrychecklists.transport.RegistryChecklistRequestTO
 import com.tgt.backpackregistryclient.util.RegistryChannel
 import com.tgt.backpackregistryclient.util.RegistrySubChannel
 import com.tgt.lists.common.components.exception.BadRequestException
-import com.tgt.lists.common.components.exception.BaseErrorCodes
+import com.tgt.lists.common.components.exception.BaseErrorCodes.BAD_REQUEST_ERROR_CODE
+import com.tgt.lists.common.components.exception.ErrorCode
 import mu.KotlinLogging
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.switchIfEmpty
@@ -35,11 +36,11 @@ class UpdateDefaultTemplateService(
         return checklistTemplateRepository.countByTemplateId(templateId)
         .flatMap {
             if (it < 1L)
-                throw BadRequestException(BaseErrorCodes.BAD_REQUEST_ERROR_CODE(listOf("No checklist exists for the given templateId - $templateId")))
+                throw BadRequestException(ErrorCode(BAD_REQUEST_ERROR_CODE, listOf("No checklist exists for the given templateId - $templateId")))
             else {
                 registryChecklistRepository.find(registryId)
                 .switchIfEmpty {
-                    throw BadRequestException(BaseErrorCodes.BAD_REQUEST_ERROR_CODE(listOf("RegistryId-$registryId doesn't have an active checklist")))
+                    throw BadRequestException(ErrorCode(BAD_REQUEST_ERROR_CODE, listOf("RegistryId-$registryId doesn't have an active checklist")))
                 }
                 .flatMap {
                     registryChecklistRepository.update(RegistryChecklist(registryId, templateId, LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value))

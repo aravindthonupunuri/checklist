@@ -8,6 +8,7 @@ import com.tgt.backpackregistrychecklists.transport.Checklist
 import com.tgt.backpackregistryclient.util.RegistryType
 import com.tgt.lists.common.components.exception.BadRequestException
 import com.tgt.lists.common.components.exception.BaseErrorCodes.BAD_REQUEST_ERROR_CODE
+import com.tgt.lists.common.components.exception.ErrorCode
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.switchIfEmpty
 import reactor.kotlin.core.publisher.toFlux
@@ -39,7 +40,7 @@ class CreateChecklistTemplateService(
                         checklistTemplateRepository.save(checklistTemplate)
                     }.collectList()
                 .onErrorResume {
-                    throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("exception while storing the checklistTemplate to database")))
+                    throw BadRequestException(ErrorCode(BAD_REQUEST_ERROR_CODE, listOf("exception while storing the checklistTemplate to database")))
                 }
             }
             .then()
@@ -55,7 +56,7 @@ class CreateChecklistTemplateService(
                 // verify if the checklistName already exists for any templateId
                 checklistTemplateRepository.countByChecklistName(checklistName).map { count ->
                     if (count != 0L)
-                        throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("The checklist name already exists enter a new checklist name")))
+                        throw BadRequestException(ErrorCode(BAD_REQUEST_ERROR_CODE, listOf("The checklist name already exists enter a new checklist name")))
                     else {
                         // publish a dummy checklistTemplate
                         ChecklistTemplate(checklistTemplatePK = ChecklistTemplatePK(templateId, 0), registryType = RegistryType.BABY, checklistName = "")

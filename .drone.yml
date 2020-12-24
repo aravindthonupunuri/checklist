@@ -73,6 +73,9 @@ pipeline:
       JDBC_URL: 'jdbc:postgresql://backpackregistrychecklistspostgres:5432/grws'
       KAFKA_BOOTSTRAP_SERVERS: 'kafka:9092'
     commands:
+      - 'mkdir -p masterspec'
+      - 'git clone https://git.target.com/Registry-Modernization/backpack-registrychecklists --branch master --single-branch masterspec'
+      - 'export GIT_MASTER_SPEC_PATH=`pwd`/masterspec'
       - './gradlew build distTar'
 
   rebuild_cache:

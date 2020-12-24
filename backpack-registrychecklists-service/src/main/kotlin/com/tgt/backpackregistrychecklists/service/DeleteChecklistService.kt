@@ -5,6 +5,7 @@ import com.tgt.backpackregistrychecklists.transport.kafka.model.DeleteChecklistA
 import com.tgt.backpackregistrychecklists.util.EventPublisher
 import com.tgt.lists.common.components.exception.BadRequestException
 import com.tgt.lists.common.components.exception.BaseErrorCodes.BAD_REQUEST_ERROR_CODE
+import com.tgt.lists.common.components.exception.ErrorCode
 import reactor.core.publisher.Mono
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -21,7 +22,7 @@ class DeleteChecklistService(
         return checklistTemplateRepository.deleteByTemplateId(templateId)
             .flatMap {
                 if (it == 0)
-                    throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("checklist templateId is not found to delete")))
+                    throw BadRequestException(ErrorCode(BAD_REQUEST_ERROR_CODE, listOf("checklist templateId is not found to delete")))
 
                 eventPublisher.publishEvent(
                     DeleteChecklistActionEvent.getEventType(),

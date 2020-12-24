@@ -5,6 +5,7 @@ import com.tgt.backpackregistrychecklists.persistence.CheckedSubCategoriesReposi
 import com.tgt.backpackregistrychecklists.transport.RegistryChecklistResponseTO
 import com.tgt.lists.common.components.exception.BadRequestException
 import com.tgt.lists.common.components.exception.BaseErrorCodes.BAD_REQUEST_ERROR_CODE
+import com.tgt.lists.common.components.exception.ErrorCode
 import reactor.core.publisher.Mono
 import java.util.*
 import javax.inject.Inject
@@ -24,7 +25,7 @@ class UnmarkChecklistService(
                 if (it == 1)
                     RegistryChecklistResponseTO(registryId = registryId, checked = false, checklistId = checklistId, templateId = templateId)
                 else
-                    throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("No record found in database for the provided registryId/checklistId combination")))
+                    throw BadRequestException(ErrorCode(BAD_REQUEST_ERROR_CODE, listOf("No record found in database for the provided registryId/checklistId combination")))
             }
     }
 }

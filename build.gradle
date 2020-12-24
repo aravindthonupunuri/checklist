@@ -67,16 +67,16 @@ allprojects {
         implementation "javax.annotation:javax.annotation-api"
         implementation "com.lmax:disruptor:3.4.2"
 
-        implementation("com.tgt.backpackregistry:backpack-registry-components:2.201.1") {
+        implementation("com.tgt.backpackregistry:backpack-registry-components:2.201.2") {
             exclude group: 'com.tgt.lists', module: 'lists-components'
         }
-        implementation("com.tgt.lists:atlas-client:2.201.41")
-        implementation("com.tgt.lists:lists-components:2.201.5") {
+        implementation("com.tgt.lists:atlas-client:2.201.53")
+        implementation("com.tgt.lists:lists-components:2.201.11") {
             exclude group: 'com.tgt.lists.micronaut', module: 'micronaut-resilience4j'
         }
         implementation "com.tgt.lists:lists-permissions-client:2.201.2"
 
-        implementation("com.tgt.backpackregistry:backpack-registry-client:2.201.54") {
+        implementation("com.tgt.backpackregistry:backpack-registry-client:2.201.60") {
             exclude group: 'com.tgt.lists', module: 'lists-components'
         }
         implementation "com.tgt.lists:lists-oauth:2.201.0"
@@ -92,7 +92,7 @@ allprojects {
         implementation "io.micronaut.kafka:micronaut-kafka"
         implementation 'org.apache.kafka:kafka_2.12:2.3.0'
 
-        implementation("com.tgt.backpackregistry:backpack-redsky-components:2.201.9") {
+        implementation("com.tgt.backpackregistry:backpack-redsky-components:2.201.11") {
             exclude group: 'com.tgt.backpackregistry', module: 'backpack-registry-client'
         }
         // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml
@@ -143,6 +143,10 @@ allprojects {
         exclude('**/logback*.xml')
         exclude('**/application*.yml')
         exclude('**/proxy*.yml')
+
+        from('api-specs') {
+            into 'apispec'
+        }
     }
 
     allOpen {

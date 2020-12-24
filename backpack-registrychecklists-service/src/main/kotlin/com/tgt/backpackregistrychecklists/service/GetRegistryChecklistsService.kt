@@ -12,6 +12,7 @@ import com.tgt.backpackregistryclient.util.RegistryChannel
 import com.tgt.backpackregistryclient.util.RegistrySubChannel
 import com.tgt.lists.common.components.exception.BadRequestException
 import com.tgt.lists.common.components.exception.BaseErrorCodes.BAD_REQUEST_ERROR_CODE
+import com.tgt.lists.common.components.exception.ErrorCode
 import io.micronaut.context.annotation.Value
 import mu.KotlinLogging
 import reactor.core.publisher.Flux
@@ -41,7 +42,7 @@ class GetRegistryChecklistsService(
     ): Mono<ChecklistResponseTO> {
         return registryChecklistRepository.find(registryId)
             .switchIfEmpty {
-                throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("RegistryId-$registryId doesn't have an active checklist")))
+                throw BadRequestException(ErrorCode(BAD_REQUEST_ERROR_CODE, listOf("RegistryId-$registryId doesn't have an active checklist")))
             }
             .flatMap { registryChecklist ->
                 val templateId = registryChecklist.templateId
@@ -49,7 +50,7 @@ class GetRegistryChecklistsService(
                 checklistTemplateRepository.findByTemplateId(templateId).collectList()
                     .map {
                         if (it.isNullOrEmpty())
-                            throw BadRequestException(BAD_REQUEST_ERROR_CODE(listOf("No checklist exists for the given templateId - $templateId")))
+                            throw BadRequestException(ErrorCode(BAD_REQUEST_ERROR_CODE, listOf("No checklist exists for the given templateId - $templateId")))
                         val categoryMap = hashMapOf<String, ChecklistCategoryTO>()
                         it.map { checklistTemplate ->
                             val subCategories = SubcategoryTO(checklistTemplate)
