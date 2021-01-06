@@ -10,7 +10,7 @@ import com.tgt.backpackregistrychecklists.test.util.RedskyDataProvider
 import com.tgt.backpackregistrychecklists.transport.ChecklistResponseTO
 import com.tgt.backpackregistryclient.transport.RedskyResponseTO
 import com.tgt.backpackregistryclient.transport.RegistryDetailsResponseTO
-import com.tgt.backpackregistryclient.transport.RegistryItemsTO
+import com.tgt.backpackregistryclient.transport.RegistryItemsBasicInfoTO
 import com.tgt.backpackregistryclient.util.RegistrySubChannel
 import com.tgt.backpackregistryclient.util.RegistryType
 import io.micronaut.http.HttpRequest
@@ -57,12 +57,12 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         def uri = "/registry_checklists/v1/"+registryId+"/checklists?channel=WEB&sub_channel=KIOSK"
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/get_details"
 
-        def items = [new RegistryItemsTO(registryId, "12954094", null, 2, 0, "itemTitle1", LocalDate.of(2020, Month.DECEMBER, 30), LocalDate.of(2020, Month.DECEMBER, 30)),
-                     new RegistryItemsTO(registryId, "22222", null, 2, 0, "itemTitle2", LocalDate.of(2020, Month.APRIL, 12), LocalDate.of(2020, Month.AUGUST, 30)),
-                     new RegistryItemsTO(registryId, "55555", null, 2, 0, "itemTitle3", LocalDate.of(2020, Month.DECEMBER, 12), LocalDate.of(2020, Month.DECEMBER, 30)),
-                     new RegistryItemsTO(registryId, "44444", null, 2, 0, "itemTitle4", LocalDate.of(2020, Month.MAY, 12), LocalDate.of(2020, Month.OCTOBER, 30)),
-                     new RegistryItemsTO(registryId, "33333", null, 2, 0, "itemTitle5", LocalDate.of(2020, Month.MAY, 12), LocalDate.of(2020, Month.SEPTEMBER, 30)),
-                     new RegistryItemsTO(registryId, "66666", null, 2, 0, "itemTitle6", null, null)]
+        def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", null, 2, 0, "itemTitle1", LocalDate.of(2020, Month.DECEMBER, 30), LocalDate.of(2020, Month.DECEMBER, 30)),
+                     new RegistryItemsBasicInfoTO(registryId, "22222", null, 2, 0, "itemTitle2", LocalDate.of(2020, Month.APRIL, 12), LocalDate.of(2020, Month.AUGUST, 30)),
+                     new RegistryItemsBasicInfoTO(registryId, "55555", null, 2, 0, "itemTitle3", LocalDate.of(2020, Month.DECEMBER, 12), LocalDate.of(2020, Month.DECEMBER, 30)),
+                     new RegistryItemsBasicInfoTO(registryId, "44444", null, 2, 0, "itemTitle4", LocalDate.of(2020, Month.MAY, 12), LocalDate.of(2020, Month.OCTOBER, 30)),
+                     new RegistryItemsBasicInfoTO(registryId, "33333", null, 2, 0, "itemTitle5", LocalDate.of(2020, Month.MAY, 12), LocalDate.of(2020, Month.SEPTEMBER, 30)),
+                     new RegistryItemsBasicInfoTO(registryId, "66666", null, 2, 0, "itemTitle6", null, null)]
 
 
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", null, items, null,
@@ -162,8 +162,8 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/get_details"
 
         def items = [
-            new RegistryItemsTO(registryId, "44444", null, 2, 0, "itemTitle4", null, null),
-            new RegistryItemsTO(registryId, "33333", null, 2, 0, "itemTitle5", null, null)
+            new RegistryItemsBasicInfoTO(registryId, "44444", null, 2, 0, "itemTitle4", null, null),
+            new RegistryItemsBasicInfoTO(registryId, "33333", null, 2, 0, "itemTitle5", null, null)
         ]
 
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", null, items, null,
@@ -212,8 +212,8 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/get_details"
 
         def items = [
-            new RegistryItemsTO(registryId, "44444", null, 2, 0, "itemTitle4", null, null),
-            new RegistryItemsTO(registryId, "33333", null, 2, 0, "itemTitle5", null, null)
+            new RegistryItemsBasicInfoTO(registryId, "44444", null, 2, 0, "itemTitle4", null, null),
+            new RegistryItemsBasicInfoTO(registryId, "33333", null, 2, 0, "itemTitle5", null, null)
         ]
 
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", null, items, null,

@@ -10,7 +10,7 @@ import com.tgt.backpackregistrychecklists.test.util.RedskyDataProvider
 import com.tgt.backpackregistryclient.client.BackpackRegistryClient
 import com.tgt.backpackregistryclient.transport.RedskyResponseTO
 import com.tgt.backpackregistryclient.transport.RegistryDetailsResponseTO
-import com.tgt.backpackregistryclient.transport.RegistryItemsTO
+import com.tgt.backpackregistryclient.transport.RegistryItemsBasicInfoTO
 import com.tgt.backpackregistryclient.transport.redsky.getchecklistitem.*
 import com.tgt.backpackregistryclient.util.RegistryChannel
 import com.tgt.backpackregistryclient.util.RegistrySubChannel
@@ -40,7 +40,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
     @Shared
     UUID registryId = UUID.randomUUID()
     @Shared
-    List<RegistryItemsTO> items
+    List<RegistryItemsBasicInfoTO> items
     @Shared
     RegistryChecklist registryChecklist
     @Shared
@@ -91,9 +91,9 @@ class GetRegistryChecklistsServiceTest extends Specification{
             "firstChecklistName", true, 1, "963002", "strollers and car seats", "name",
             "5q0ev", "5q0ev", "infant car seat", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
-        items = [new RegistryItemsTO(registryId, "12954094", null, 2, 0, "itemTitle1", LocalDate.of(2020, Month.DECEMBER, 30), LocalDate.of(2020, Month.DECEMBER, 30)),
-                 new RegistryItemsTO(registryId, "22222", null, 2, 0, "itemTitle2", LocalDate.of(2020, Month.DECEMBER, 12), LocalDate.of(2020, Month.DECEMBER, 30)),
-                 new RegistryItemsTO(registryId, "55555", null, 2, 0, "itemTitle3", LocalDate.of(2020, Month.DECEMBER, 12), LocalDate.of(2020, Month.DECEMBER, 30))]
+        items = [new RegistryItemsBasicInfoTO(registryId, "12954094", null, 2, 0, "itemTitle1", LocalDate.of(2020, Month.DECEMBER, 30), LocalDate.of(2020, Month.DECEMBER, 30)),
+                 new RegistryItemsBasicInfoTO(registryId, "22222", null, 2, 0, "itemTitle2", LocalDate.of(2020, Month.DECEMBER, 12), LocalDate.of(2020, Month.DECEMBER, 30)),
+                 new RegistryItemsBasicInfoTO(registryId, "55555", null, 2, 0, "itemTitle3", LocalDate.of(2020, Month.DECEMBER, 12), LocalDate.of(2020, Month.DECEMBER, 30))]
         getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", null, items, null,
             null, null, null, LocalDate.now())
 
@@ -206,7 +206,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
             "firstChecklistName", true, 1, "963003", "strollers and car seats", "name",
             "5xtk7", "5xtk7, 5q0ev", "stroller", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
-        items.add(new RegistryItemsTO(registryId, "44444", null, 2, 0, "itemTitle4", LocalDate.of(2020, Month.MAY, 30), LocalDate.of(2020, Month.APRIL, 30)))
+        items.add(new RegistryItemsBasicInfoTO(registryId, "44444", null, 2, 0, "itemTitle4", LocalDate.of(2020, Month.MAY, 30), LocalDate.of(2020, Month.APRIL, 30)))
         RegistryDetailsResponseTO getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", null, items, null,
             null, null, null, LocalDate.now())
         def redskyItemDetails4 = new RedskyResponseTO(null, new ChecklistItemDetailsVO(new ChecklistItemDetails("44444",new ItemVO(new ProductDescriptionVO("itemTitle4"),
@@ -381,9 +381,9 @@ class GetRegistryChecklistsServiceTest extends Specification{
         given:
         def guestId = "1234"
 
-        def items = [new RegistryItemsTO(registryId, "12954094", null, 2, 0, "itemTitle1", null, null),
-                     new RegistryItemsTO(registryId, "22222", null, 2, 0, "itemTitle2", null, null),
-                     new RegistryItemsTO(registryId, "55555", null, 2, 0, "itemTitle3", null, null)]
+        def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", null, 2, 0, "itemTitle1", null, null),
+                     new RegistryItemsBasicInfoTO(registryId, "22222", null, 2, 0, "itemTitle2", null, null),
+                     new RegistryItemsBasicInfoTO(registryId, "55555", null, 2, 0, "itemTitle3", null, null)]
         RegistryDetailsResponseTO getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", null, items, null,
             null, null, null, LocalDate.now())
 

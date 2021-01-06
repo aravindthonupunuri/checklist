@@ -15,7 +15,7 @@ import com.tgt.backpackregistrychecklists.transport.ChecklistResponseTO
 import com.tgt.backpackregistrychecklists.transport.RegistryChecklistRequestTO
 import com.tgt.backpackregistryclient.transport.RedskyResponseTO
 import com.tgt.backpackregistryclient.transport.RegistryDetailsResponseTO
-import com.tgt.backpackregistryclient.transport.RegistryItemsTO
+import com.tgt.backpackregistryclient.transport.RegistryItemsBasicInfoTO
 import com.tgt.backpackregistryclient.util.RegistrySubChannel
 import com.tgt.backpackregistryclient.util.RegistryType
 import io.micronaut.http.HttpRequest
@@ -69,7 +69,7 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
             "firstChecklistName", true, 1, "963002", "strollers and car seats", "name",
             "5xtjw", "5xtjw", "travel system", 1, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
-        def items = [new RegistryItemsTO(registryId, "12954094", null, 2, 0, "itemTitle1", LocalDate.of(2020, Month.DECEMBER, 30), LocalDate.of(2020, Month.DECEMBER, 30))]
+        def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", null, 2, 0, "itemTitle1", LocalDate.of(2020, Month.DECEMBER, 30), LocalDate.of(2020, Month.DECEMBER, 30))]
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", null, items, null,
             null, null, null, LocalDate.now())
 
@@ -121,7 +121,7 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
             "5q0ev", "5q0ev", "infant car seat", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
 
-        def items = [new RegistryItemsTO(registryId, "12954094", null, 2, 0, "itemTitle1", LocalDate.of(2020, Month.DECEMBER, 30), LocalDate.of(2020, Month.DECEMBER, 30))]
+        def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", null, 2, 0, "itemTitle1", LocalDate.of(2020, Month.DECEMBER, 30), LocalDate.of(2020, Month.DECEMBER, 30))]
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", null, items, null,
             null, null, null, LocalDate.now())
 
@@ -170,7 +170,7 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
             "5q0ev", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "infant car seat", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
 
-        def items = [new RegistryItemsTO(registryId, "12954094", null, 2, 0, "itemTitle1", LocalDate.of(2020, Month.DECEMBER, 30), LocalDate.of(2020, Month.DECEMBER, 30))]
+        def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", null, 2, 0, "itemTitle1", LocalDate.of(2020, Month.DECEMBER, 30), LocalDate.of(2020, Month.DECEMBER, 30))]
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", null, items, null,
             null, null, null, LocalDate.now())
 

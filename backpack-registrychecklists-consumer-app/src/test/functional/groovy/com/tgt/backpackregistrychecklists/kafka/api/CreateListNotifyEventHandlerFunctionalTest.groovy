@@ -85,7 +85,9 @@ class CreateListNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalTest
         registryId = UUID.randomUUID()
         guestId = UUID.randomUUID().toString()
 
-        def createListNotifyEvent = new CreateListNotifyEvent(guestId, registryId, listType, registryType, registryTitle, channel, subChannel, LIST_STATE.INACTIVE, null, LocalDate.now(), null)
+        def createListNotifyEvent = new CreateListNotifyEvent(guestId, registryId,
+            listType, registryType, registryTitle, channel, subChannel, LIST_STATE.INACTIVE, null,
+            LocalDate.now(), null, null, null, null, null)
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 101)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", true, 1, "categoryId", "categoryName",
@@ -127,7 +129,9 @@ class CreateListNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalTest
         registryId = UUID.randomUUID()
         guestId = UUID.randomUUID().toString()
 
-        def createListNotifyEvent = new CreateListNotifyEvent(guestId, registryId, listType, registryType, registryTitle, channel, subChannel, LIST_STATE.INACTIVE, null, LocalDate.now(), null)
+        def createListNotifyEvent = new CreateListNotifyEvent(guestId, registryId, listType, registryType,
+            registryTitle, channel, subChannel, LIST_STATE.INACTIVE, null, LocalDate.now(), null,
+        null, null, null, null)
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 3)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", false, 1, "categoryId", "categoryName",

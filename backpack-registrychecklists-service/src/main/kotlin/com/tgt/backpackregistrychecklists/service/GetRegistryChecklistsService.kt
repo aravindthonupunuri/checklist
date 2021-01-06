@@ -7,7 +7,7 @@ import com.tgt.backpackregistrychecklists.persistence.RegistryChecklistRepositor
 import com.tgt.backpackregistrychecklists.transport.*
 import com.tgt.backpackregistryclient.client.BackpackRegistryClient
 import com.tgt.backpackregistryclient.transport.RegistryDetailsResponseTO
-import com.tgt.backpackregistryclient.transport.RegistryItemsTO
+import com.tgt.backpackregistryclient.transport.RegistryItemsBasicInfoTO
 import com.tgt.backpackregistryclient.util.RegistryChannel
 import com.tgt.backpackregistryclient.util.RegistrySubChannel
 import com.tgt.lists.common.components.exception.BadRequestException
@@ -183,14 +183,14 @@ class GetRegistryChecklistsService(
     }
 
     private fun getItemDetailsFromRedsky(
-        registryDetails: List<RegistryItemsTO>
+        registryDetails: List<RegistryItemsBasicInfoTO>
     ): Mono<List<ChecklistItemTO>> {
         // Make call to Redsky to get ItemDetails
         return registryDetails.toFlux()
             .flatMap { registryItems ->
                 registryItems.tcin?.let { it1 -> redskyHydrationManager.getDetailsForChecklistItems(it1) }
                     ?.map {
-                        ChecklistItemTO(nodeId = it.taxonomy?.category?.nodeId, itemDetails = ItemDetailsTO(it.tcin, it.items?.productDescription?.title, it.items?.enrichment?.images?.primaryImageUrl,
+                        ChecklistItemTO(nodeId = it.taxonomy?.category?.nodeId, itemDetails = ItemDetailsTO(it.tcin, it.item?.productDescription?.title, it.item?.enrichment?.images?.primaryImageUrl,
                             registryItems?.addedTs, registryItems?.lastModifiedTs))
                     }
             }.collectList()
