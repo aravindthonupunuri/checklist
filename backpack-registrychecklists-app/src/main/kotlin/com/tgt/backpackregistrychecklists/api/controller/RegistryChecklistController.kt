@@ -32,6 +32,21 @@ class RegistryChecklistController(
     private val getRegistryChecklistsService: GetRegistryChecklistsService,
     private val updateDefaultTemplateService: UpdateDefaultTemplateService
 ) {
+
+    /**
+     *
+     * Upload the checklist information from xml to database
+     *
+     * @param guestId guest id
+     * @param channel channel
+     * @param subChannel sub channel
+     * @param locationId location id
+     * @param registryType registry type
+     * @param templateId template id
+     * @param checklistName checklist name
+     * @param requestBody xml file input
+     *
+     */
     @Post(value = "/checklists", consumes = [MediaType.MULTIPART_FORM_DATA])
     @Status(HttpStatus.NO_CONTENT)
     @Throws(XMLStreamException::class, IOException::class)
@@ -59,6 +74,18 @@ class RegistryChecklistController(
             }.then()
     }
 
+    /**
+     *
+     * Get all the available templateIds for the provided registry type
+     *
+     * @param guestId guest id
+     * @param channel channel
+     * @param subChannel sub channel
+     * @param locationId location id
+     * @param registryType registry type
+     * @return Registry checklist template response transfer object
+     *
+     */
     @Get("/checklists")
     @Status(HttpStatus.OK)
     @ApiResponse(
@@ -74,6 +101,18 @@ class RegistryChecklistController(
         return getCheckListTemplatesService.getTemplatesForRegistryType(registryType)
     }
 
+    /**
+     *
+     * Get all the checklist information for the provided registry id
+     *
+     * @param guestId guest id
+     * @param registryId registry id
+     * @param channel channel
+     * @param subChannel sub channel
+     * @param locationId location id
+     * @return Checklist response transfer object
+     *
+     */
     @Get("/{registry_id}/checklists")
     @Status(HttpStatus.OK)
     @ApiResponse(
@@ -89,6 +128,19 @@ class RegistryChecklistController(
         return getRegistryChecklistsService.getChecklistsForRegistryId(registryId, guestId, channel, subChannel)
     }
 
+    /**
+     *
+     * Update the templateId for the provided registry id
+     *
+     * @param guestId guest id
+     * @param registryId registry id
+     * @param channel channel
+     * @param subChannel sub channel
+     * @param locationId location id
+     * @param registryChecklistRequest Update template request body
+     * @return Checklist response transfer object
+     *
+     */
     @Put("/{registry_id}/checklists")
     @Status(HttpStatus.OK)
     @ApiResponse(
@@ -105,6 +157,20 @@ class RegistryChecklistController(
         return updateDefaultTemplateService.updateDefaultTemplateId(guestId, registryId, registryChecklistRequest, channel, subChannel)
     }
 
+    /**
+     *
+     * Mark the checklist for the provided registryId and checklistId
+     *
+     * @param guestId guest id
+     * @param registryId registry id
+     * @param checklistId checklist id
+     * @param channel channel
+     * @param subChannel sub channel
+     * @param locationId location id
+     * @param registryChecklistRequest Mark checklist request body
+     * @return Registry checklist response transfer object
+     *
+     */
     @Post("/{registry_id}/checklists/{checklist_id}")
     @Status(HttpStatus.CREATED)
     @ApiResponse(
@@ -122,6 +188,20 @@ class RegistryChecklistController(
         return markChecklistService.markChecklistId(registryId, checklistId, registryChecklistRequest, subChannel)
     }
 
+    /**
+     *
+     * Unmark the checklist for the provided registryId and checklistId
+     *
+     * @param guestId guest id
+     * @param registryId registry id
+     * @param checklistId checklist id
+     * @param templateId template id
+     * @param channel channel
+     * @param subChannel sub channel
+     * @param locationId location id
+     * @return Registry checklist response transfer object
+     *
+     */
     @Delete("/{registry_id}/checklists/{checklist_id}")
     @Status(HttpStatus.OK)
     @ApiResponse(
@@ -139,6 +219,17 @@ class RegistryChecklistController(
         return unmarkChecklistService.unmarkChecklistId(registryId, checklistId, templateId)
     }
 
+    /**
+     *
+     * Delete all the checklist information for the provided templateId in database
+     *
+     * @param guestId guest id
+     * @param channel channel
+     * @param subChannel sub channel
+     * @param locationId location id
+     * @param templateId template id
+     *
+     */
     @Delete(value = "/checklists")
     @Status(HttpStatus.NO_CONTENT)
     fun deleteChecklist(

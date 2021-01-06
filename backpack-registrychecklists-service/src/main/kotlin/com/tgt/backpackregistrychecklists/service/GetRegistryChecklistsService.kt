@@ -52,6 +52,7 @@ class GetRegistryChecklistsService(
                         if (it.isNullOrEmpty())
                             throw BadRequestException(ErrorCode(BAD_REQUEST_ERROR_CODE, listOf("No checklist exists for the given templateId - $templateId")))
                         val categoryMap = hashMapOf<String, ChecklistCategoryTO>()
+                        // Form a hashMap with key as categoryId and value as ChecklistCategoryTO
                         it.map { checklistTemplate ->
                             val subCategories = SubcategoryTO(checklistTemplate)
                             val checklistCategory = ChecklistCategoryTO(checklistTemplate, listOf(subCategories))
@@ -63,6 +64,7 @@ class GetRegistryChecklistsService(
                         categoryMap
                     }
                     .zipWhen {
+                        // Make a call to getDetails api of bp-registry
                         getDetailsResponse(registryId, guestId, channel, subChannel)
                             .flatMap {
                                 if (it?.registryItems.isNullOrEmpty())
@@ -94,13 +96,14 @@ class GetRegistryChecklistsService(
     ): Flux<ChecklistCategoryTO> {
         val categoryList = mutableListOf<ChecklistCategoryTO>()
         val itemDetailsMap = hashMapOf<String, List<ChecklistItemTO>>()
+        // Form a hashMap with key as nodeId(taxonomyId) and value as ChecklistItemTO(Item details)
         registryDetails?.map {
             if (itemDetailsMap.containsKey(it.nodeId)) {
                 val modifiedValue = itemDetailsMap[it.nodeId]?.plus(it)
                 itemDetailsMap.put(it.nodeId!!, modifiedValue!!)
             } else it.nodeId?.let { it1 -> itemDetailsMap.put(it1, listOf(it)) }
         }
-
+        // Iterating over the categoryMap and itemDetails map, if the taxonomy matches -> updating the lastUpdatedItem details
         categoryMap.forEach { (_, categoryTO) ->
             categoryTO.subcategories?.forEach {
                 val subcategoryIdList = it.subcategoryChildIds?.split(",")?.map { it.trim() }
@@ -127,6 +130,7 @@ class GetRegistryChecklistsService(
         checklistItemDetails: ChecklistItemTO,
         lastUpdatedItem: ItemDetailsTO?
     ): Boolean {
+        // Check if the item is the latest updated item by comparing lastModifiedTs or addedTs
         when (lastUpdatedItem) {
             null -> return true
             else -> {
@@ -149,6 +153,7 @@ class GetRegistryChecklistsService(
         templateId: Int,
         categoryList: List<ChecklistCategoryTO>
     ): Mono<List<ChecklistCategoryTO>> {
+        // Check if the checklist is marked manually by the guest
         return checkedSubCategoriesRepository.findByRegistryIdAndTemplateId(registryId, templateId).collectList()
             .map { checklistIdList ->
                 categoryList.map {
@@ -180,7 +185,7 @@ class GetRegistryChecklistsService(
     private fun getItemDetailsFromRedsky(
         registryDetails: List<RegistryItemsTO>
     ): Mono<List<ChecklistItemTO>> {
-        // Make call to Redsky and get ItemDetails
+        // Make call to Redsky to get ItemDetails
         return registryDetails.toFlux()
             .flatMap { registryItems ->
                 registryItems.tcin?.let { it1 -> redskyHydrationManager.getDetailsForChecklistItems(it1) }
