@@ -185,7 +185,7 @@ class RegistryChecklistController(
         @QueryValue("sub_channel") subChannel: RegistrySubChannel,
         @Body registryChecklistRequest: RegistryChecklistRequestTO
     ): Mono<RegistryChecklistResponseTO> {
-        return markChecklistService.markChecklistId(registryId, checklistId, registryChecklistRequest, subChannel)
+        return markChecklistService.markChecklistId(registryId, checklistId, registryChecklistRequest.templateId, subChannel)
     }
 
     /**

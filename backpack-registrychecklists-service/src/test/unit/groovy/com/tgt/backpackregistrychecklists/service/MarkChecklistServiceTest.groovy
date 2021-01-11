@@ -46,7 +46,7 @@ class MarkChecklistServiceTest extends Specification {
             LocalDate.now(), RegistrySubChannel.KIOSK.value, LocalDate.now(), RegistrySubChannel.KIOSK.value)
 
         when:
-        def actual = markChecklistService.markChecklistId(registryId, checklistId, registryChecklistRequest, RegistrySubChannel.KIOSK).block()
+        def actual = markChecklistService.markChecklistId(registryId, checklistId, registryChecklistRequest.templateId, RegistrySubChannel.KIOSK).block()
 
         then:
         1 * registryChecklistRepository.find(registryId) >> Mono.just(registryChecklist)
@@ -64,7 +64,7 @@ class MarkChecklistServiceTest extends Specification {
         def templateId = 2
         RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
         when:
-        markChecklistService.markChecklistId(registryId, checklistId, registryChecklistRequest, RegistrySubChannel.KIOSK).block()
+        markChecklistService.markChecklistId(registryId, checklistId, registryChecklistRequest.templateId, RegistrySubChannel.KIOSK).block()
 
         then:
         1 * registryChecklistRepository.find(registryId) >> Mono.empty()
@@ -82,7 +82,7 @@ class MarkChecklistServiceTest extends Specification {
             null, RegistrySubChannel.KIOSK.value)
 
         when:
-        markChecklistService.markChecklistId(registryId, checklistId, registryChecklistRequest, RegistrySubChannel.KIOSK).block()
+        markChecklistService.markChecklistId(registryId, checklistId, registryChecklistRequest.templateId, RegistrySubChannel.KIOSK).block()
 
         then:
         1 * registryChecklistRepository.find(registryId) >> Mono.just(registryChecklist)
@@ -104,7 +104,7 @@ class MarkChecklistServiceTest extends Specification {
             "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
 
         when:
-        markChecklistService.markChecklistId(registryId, checklistId, registryChecklistRequest, RegistrySubChannel.KIOSK).block()
+        markChecklistService.markChecklistId(registryId, checklistId, registryChecklistRequest.templateId, RegistrySubChannel.KIOSK).block()
 
         then:
         1 * registryChecklistRepository.find(registryId) >> Mono.just(registryChecklist)
@@ -121,7 +121,7 @@ class MarkChecklistServiceTest extends Specification {
         def templateId = 2
         RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
         when:
-        markChecklistService.markChecklistId(registryId, checklistId, registryChecklistRequest, RegistrySubChannel.KIOSK).block()
+        markChecklistService.markChecklistId(registryId, checklistId, registryChecklistRequest.templateId, RegistrySubChannel.KIOSK).block()
 
         then:
         1 * registryChecklistRepository.find(registryId) >> Mono.error(new RuntimeException())

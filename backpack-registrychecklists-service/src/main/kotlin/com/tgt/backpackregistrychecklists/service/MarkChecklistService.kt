@@ -5,7 +5,6 @@ import com.tgt.backpackregistrychecklists.domain.model.CheckedSubCategoriesId
 import com.tgt.backpackregistrychecklists.persistence.CheckedSubCategoriesRepository
 import com.tgt.backpackregistrychecklists.persistence.ChecklistTemplateRepository
 import com.tgt.backpackregistrychecklists.persistence.RegistryChecklistRepository
-import com.tgt.backpackregistrychecklists.transport.RegistryChecklistRequestTO
 import com.tgt.backpackregistrychecklists.transport.RegistryChecklistResponseTO
 import com.tgt.backpackregistryclient.util.RegistrySubChannel
 import com.tgt.lists.common.components.exception.BadRequestException
@@ -27,7 +26,7 @@ class MarkChecklistService(
     fun markChecklistId(
         registryId: UUID,
         checklistId: Int,
-        registryChecklistRequest: RegistryChecklistRequestTO,
+        templateId: Int,
         subChannel: RegistrySubChannel
     ): Mono<RegistryChecklistResponseTO> {
         return registryChecklistRepository.find(registryId)
@@ -35,17 +34,30 @@ class MarkChecklistService(
                 throw BadRequestException(ErrorCode(BAD_REQUEST_ERROR_CODE, listOf("No templateId found for the given registryId")))
             }
             .flatMap {
-                if (it.templateId == registryChecklistRequest.templateId) {
-                    checklistTemplateRepository.findByTemplateIdAndChecklistId(registryChecklistRequest.templateId, checklistId)
+                if (it.templateId == templateId) {
+                    checklistTemplateRepository.findByTemplateIdAndChecklistId(templateId, checklistId)
                         .switchIfEmpty {
                             throw BadRequestException(ErrorCode(BAD_REQUEST_ERROR_CODE, listOf("Not a valid checklistId - templateId combination")))
                         }
-                        .flatMap { checklistTemplate ->
-                            checkedSubCategoriesRepository.save(CheckedSubCategories(CheckedSubCategoriesId(registryId = registryId, templateId = registryChecklistRequest.templateId, checklistId = checklistId),
-                                createdUser = subChannel.value, updatedUser = subChannel.value))
-                            .map {
-                                RegistryChecklistResponseTO(registryId = registryId, checked = true, checklistId = checklistId, templateId = registryChecklistRequest.templateId)
-                            }
+                        .flatMap {
+                            checkedSubCategoriesRepository.save(
+                                CheckedSubCategories(
+                                    checkedSubcategoriesId = CheckedSubCategoriesId(
+                                        registryId = registryId,
+                                        templateId = templateId,
+                                        checklistId = checklistId
+                                    ),
+                                    createdUser = subChannel.value,
+                                    updatedUser = subChannel.value
+                                )
+                            )
+                        }.map {
+                            RegistryChecklistResponseTO(
+                                registryId = registryId,
+                                checked = true,
+                                checklistId = checklistId,
+                                templateId = templateId
+                            )
                         }
                 } else {
                     throw BadRequestException(ErrorCode(BAD_REQUEST_ERROR_CODE, listOf("Not a valid registryId - templateId combination")))
