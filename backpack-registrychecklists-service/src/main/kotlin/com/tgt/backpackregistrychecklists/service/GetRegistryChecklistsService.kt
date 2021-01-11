@@ -188,7 +188,7 @@ class GetRegistryChecklistsService(
         // Make call to Redsky to get ItemDetails
         return registryDetails.toFlux()
             .flatMap { registryItems ->
-                registryItems.tcin?.let { it1 -> redskyHydrationManager.getDetailsForChecklistItems(it1) }
+                registryItems.tcin?.let { it1 -> redskyHydrationManager.getRegistryItemTaxonomyDetails(it1) }
                     ?.map {
                         ChecklistItemTO(nodeId = it.taxonomy?.category?.nodeId, itemDetails = ItemDetailsTO(it.tcin, it.item?.productDescription?.title, it.item?.enrichment?.images?.primaryImageUrl,
                             registryItems?.addedTs, registryItems?.lastModifiedTs))

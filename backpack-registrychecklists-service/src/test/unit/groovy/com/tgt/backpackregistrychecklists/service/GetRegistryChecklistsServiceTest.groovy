@@ -11,7 +11,7 @@ import com.tgt.backpackregistryclient.client.BackpackRegistryClient
 import com.tgt.backpackregistryclient.transport.RedskyResponseTO
 import com.tgt.backpackregistryclient.transport.RegistryDetailsResponseTO
 import com.tgt.backpackregistryclient.transport.RegistryItemsBasicInfoTO
-import com.tgt.backpackregistryclient.transport.redsky.getchecklistitem.*
+import com.tgt.backpackregistryclient.transport.redsky.getitemtaxonomy.*
 import com.tgt.backpackregistryclient.util.RegistryChannel
 import com.tgt.backpackregistryclient.util.RegistrySubChannel
 import com.tgt.backpackregistryclient.util.RegistryType
@@ -117,9 +117,9 @@ class GetRegistryChecklistsServiceTest extends Specification{
         1 * registryChecklistRepository.find(registryId) >> Mono.just(registryChecklist)
         1 * checklistTemplateRepository.findByTemplateId(1) >> Flux.just(checklistTemplate1, checklistTemplate2, checklistTemplate3)
         1 * backPackRegistryClient.getRegistryDetails(*_) >> Mono.just(getRegistryDetailsResponse)
-        1 * redSkyClient.getRegistryChecklistItem("12954094") >> Mono.just(redskyItemDetails1)
-        1 * redSkyClient.getRegistryChecklistItem("22222") >> Mono.just(redskyItemDetails2)
-        1 * redSkyClient.getRegistryChecklistItem("55555") >> Mono.just(redskyItemDetails3)
+        1 * redSkyClient.getRegistryItemTaxonomyDetails("12954094", _) >> Mono.just(redskyItemDetails1)
+        1 * redSkyClient.getRegistryItemTaxonomyDetails("22222", _) >> Mono.just(redskyItemDetails2)
+        1 * redSkyClient.getRegistryItemTaxonomyDetails("55555", _) >> Mono.just(redskyItemDetails3)
         1 * registryChecklistSubCategoryRepository.findByRegistryIdAndTemplateId(registryId, 1) >> Flux.just(checkedSubcategories1, checkedSubcategories2)
 
         result != null
@@ -161,9 +161,9 @@ class GetRegistryChecklistsServiceTest extends Specification{
         then:
         1 * registryChecklistRepository.find(registryId) >> Mono.just(registryChecklist)
         1 * backPackRegistryClient.getRegistryDetails(*_) >> Mono.just(getRegistryDetailsResponse)
-        1 * redSkyClient.getRegistryChecklistItem("12954094") >> Mono.just(redskyItemDetails1)
-        1 * redSkyClient.getRegistryChecklistItem("22222") >> Mono.just(redskyItemDetails2)
-        1 * redSkyClient.getRegistryChecklistItem("55555") >> Mono.just(redskyItemDetails3)
+        1 * redSkyClient.getRegistryItemTaxonomyDetails("12954094", _) >> Mono.just(redskyItemDetails1)
+        1 * redSkyClient.getRegistryItemTaxonomyDetails("22222", _) >> Mono.just(redskyItemDetails2)
+        1 * redSkyClient.getRegistryItemTaxonomyDetails("55555", _) >> Mono.just(redskyItemDetails3)
         1 * checklistTemplateRepository.findByTemplateId(1) >> Flux.just(checklistTemplate1, checklistTemplate2, checklistTemplate4)
         1 * registryChecklistSubCategoryRepository.findByRegistryIdAndTemplateId(registryId, 1) >> Flux.just(checkedSubcategories1)
 
@@ -209,8 +209,8 @@ class GetRegistryChecklistsServiceTest extends Specification{
         items.add(new RegistryItemsBasicInfoTO(registryId, "44444", null, 2, 0, "itemTitle4", LocalDate.of(2020, Month.MAY, 30), LocalDate.of(2020, Month.APRIL, 30)))
         RegistryDetailsResponseTO getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", null, items, null,
             null, null, null, LocalDate.now())
-        def redskyItemDetails4 = new RedskyResponseTO(null, new ChecklistItemDetailsVO(new ChecklistItemDetails("44444",new ItemVO(new ProductDescriptionVO("itemTitle4"),
-            new Enrichment(new ImageVO("primary.image.url"))), new TaxonomyVO(new Category("5xtk7")))))
+        def redskyItemDetails4 = new RedskyResponseTO(null, new ItemAndTaxonomyDetailsVO(new ItemTaxonomyDetails("44444",new ItemVO(new ProductDescriptionVO("itemTitle4"),
+            new Enrichment(new ImageVO("primary.image.url"))), new TaxonomyVO(new Category("name", "5xtk7")))))
 
         when:
         def result = getRegistryChecklistsService.getChecklistsForRegistryId(registryId, guestId, channel, subChannel).block()
@@ -219,10 +219,10 @@ class GetRegistryChecklistsServiceTest extends Specification{
         1 * registryChecklistRepository.find(registryId) >> Mono.just(registryChecklist)
         1 * checklistTemplateRepository.findByTemplateId(1) >> Flux.just(checklistTemplate1, checklistTemplate2)
         1 * backPackRegistryClient.getRegistryDetails(*_) >> Mono.just(getRegistryDetailsResponse)
-        1 * redSkyClient.getRegistryChecklistItem("12954094") >> Mono.just(redskyItemDetails1)
-        1 * redSkyClient.getRegistryChecklistItem("22222") >> Mono.just(redskyItemDetails2)
-        1 * redSkyClient.getRegistryChecklistItem("55555") >> Mono.just(redskyItemDetails3)
-        1 * redSkyClient.getRegistryChecklistItem("44444") >> Mono.just(redskyItemDetails4)
+        1 * redSkyClient.getRegistryItemTaxonomyDetails("12954094", _) >> Mono.just(redskyItemDetails1)
+        1 * redSkyClient.getRegistryItemTaxonomyDetails("22222", _) >> Mono.just(redskyItemDetails2)
+        1 * redSkyClient.getRegistryItemTaxonomyDetails("55555", _) >> Mono.just(redskyItemDetails3)
+        1 * redSkyClient.getRegistryItemTaxonomyDetails("44444", _) >> Mono.just(redskyItemDetails4)
         1 * registryChecklistSubCategoryRepository.findByRegistryIdAndTemplateId(registryId, 1) >> Flux.empty()
 
         result != null
@@ -394,9 +394,9 @@ class GetRegistryChecklistsServiceTest extends Specification{
         1 * registryChecklistRepository.find(registryId) >> Mono.just(registryChecklist)
         1 * checklistTemplateRepository.findByTemplateId(1) >> Flux.just(checklistTemplate1, checklistTemplate2, checklistTemplate3)
         1 * backPackRegistryClient.getRegistryDetails(*_) >> Mono.just(getRegistryDetailsResponse)
-        1 * redSkyClient.getRegistryChecklistItem("12954094") >> Mono.just(redskyItemDetails1)
-        1 * redSkyClient.getRegistryChecklistItem("22222") >> Mono.just(redskyItemDetails2)
-        1 * redSkyClient.getRegistryChecklistItem("55555") >> Mono.just(redskyItemDetails3)
+        1 * redSkyClient.getRegistryItemTaxonomyDetails("12954094", _) >> Mono.just(redskyItemDetails1)
+        1 * redSkyClient.getRegistryItemTaxonomyDetails("22222", _) >> Mono.just(redskyItemDetails2)
+        1 * redSkyClient.getRegistryItemTaxonomyDetails("55555", _) >> Mono.just(redskyItemDetails3)
         1 * registryChecklistSubCategoryRepository.findByRegistryIdAndTemplateId(registryId, 1) >> Flux.just(checkedSubcategories1, checkedSubcategories2)
 
         result != null
