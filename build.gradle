@@ -70,13 +70,13 @@ allprojects {
         implementation("com.tgt.backpackregistry:backpack-registry-components:2.201.2") {
             exclude group: 'com.tgt.lists', module: 'lists-components'
         }
-        implementation("com.tgt.lists:atlas-client:2.201.57")
+        implementation("com.tgt.lists:atlas-client:2.201.62")
         implementation("com.tgt.lists:lists-components:2.201.11") {
             exclude group: 'com.tgt.lists.micronaut', module: 'micronaut-resilience4j'
         }
         implementation "com.tgt.lists:lists-permissions-client:2.201.2"
 
-        implementation("com.tgt.backpackregistry:backpack-registry-client:2.201.72") {
+        implementation("com.tgt.backpackregistry:backpack-registry-client:2.201.73") {
             exclude group: 'com.tgt.lists', module: 'lists-components'
         }
         implementation "com.tgt.lists:lists-oauth:2.201.0"
