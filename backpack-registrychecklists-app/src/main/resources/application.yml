@@ -123,6 +123,12 @@ components:
     list-authorization-filter:
       enabled: false
       base-uri: /registry_checklists/v1
+    id2-custom-scopes:
+      names: 
+        - axiom.user
+        - axiom.admin
+        - axiom.leader
+      profile-header: member_id
     registry-channel-subchannel-filter:
       base-uri: /registry_checklists/v1
     sanitizing-filter:
