@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.0.0
+  version: 1.0.1
   title: backpack_registrychecklists-v1
   description: Api to get list of checklist items for a given registry type
 host: api.target.com
@@ -12,6 +12,7 @@ produces:
 consumes:
   - application/json
 x-api-definition:
+  dependencies: []
   api_name: registry_checklists-v1
   personnel:
     portfolio: Digital
@@ -46,7 +47,7 @@ x-api-definition:
       proxy_pattern: side-car
   notification_ids:
     - description: ShuttleIO
-      id: 'null'
+      id: b071dbd9261f4d9b80972b607467b689
     - description: slack
       id: GQ10ZD7UZ
   slack_channel_id: GQ10ZD7UZ
