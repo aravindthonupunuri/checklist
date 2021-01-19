@@ -36,34 +36,36 @@ jackson:
   property-naming-strategy: "SNAKE_CASE"
 
 kafka:
+  bootstrap:
+    servers: ${kafka-vip}
   consumers:
-    lists-msg-bus-kafkapp-consumer:
+    backpack-registrychecklists-migration-consumer:
       key:
         deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value:
         deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
-    lists-dlq-kafkapp-consumer:
+    backpack-registrychecklists-migration-dlq-consumer:
       key:
         deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value:
         deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
-  producers:
-    # default is a Jackson based JSON serializer for key/value
-    lists-msg-bus-producer:
-      retries: 3
-      retry:
-        backoff:
-          ms: 1_000
-      max:
-        in:
-          flight:
-            requests:
-              per:
-                connection: 1
-        block:
-          ms: 2_000
-  embedded:
-    enabled: false
+    producers:
+      # default is a Jackson based JSON serializer for key/value
+      backpack-registrychecklists-migration-producer:
+        retries: 3
+        retry:
+          backoff:
+            ms: 1000
+        max:
+          in:
+            flight:
+              requests:
+                per:
+                  connection: 1
+          block:
+            ms: 2000
+    embedded:
+      enabled: false
 
 filter:
   server:
@@ -78,12 +80,16 @@ filter:
       resilience-client-filter: 800
       oauth-filter: 701
       oauth-key-filter: 700
-api-key: "testkey"
+
+api-key: ${api-key}
+
 logging:
   mdc:
     enabled: true
     keys:
-      - test
+      - profile_id
+      - x-api-id
+
 resilience4j:
   circuitbreaker:
     failure-rate-threshold: 50            # failure rate threshold in percentage (default: 50)
@@ -92,14 +98,15 @@ resilience4j:
     sliding-window-size: 100               # seconds for TIME_BASED, request-count for COUNT_BASED (default: 100)
     minimum-number-of-calls: 10            # min calls required (per sliding window period) before cb calculates error rate (default: 10)
     permitted-number-of-calls-in-half-open-state: 10  # min calls permitted when circuit breaker is half open
+
 tracing:
   zipkin:
-    enabled: true
+    enabled: false
     excluded-paths: /health
-    sampler:
-      probability: 1
+    b3-propagation-suppress: true
+    sample-rate-percent: 0.5
     http:
-      url: http://localhost:9411/zipkin
+      url: "https://zipkinserver.dev.target.com"
 
 list:
   list-type: REGISTRY
@@ -111,6 +118,7 @@ list:
   features.dedupe: true
   features.sort-position: true
   features.fixed-default-list: false
+
 components:
   server:
     list-authorization-filter:
@@ -119,9 +127,10 @@ components:
       enabled: false
     registry-channel-subchannel-filter:
       enabled: false
+
 msgbus:
   source: backpack-registrychecklists
-  dlq-source: backpackregistrychecklists-dlq
+  dlq-source: backpackregistrychecklists-migration-dlq
   kafka:
     consumer:
       enabled: true
@@ -131,17 +140,16 @@ msgbus:
       enabled: true
     dlqproducer:
       enabled: true
-    topic: lists-msg-bus
-    consumer-group: lists-msg-bus-kafkapp-consumer
+    topic: registry-internal-data-bus-stage
+    consumer-group: backpack-registrychecklists-migration-consumer
     consumer-batch-size: 10
-    dlq-topic: lists-dlq
-    dlq-consumer-group: lists-dlq-kafkapp-consumer
+    dlq-topic: registry-internal-data-bus-stage-dlq
+    dlq-consumer-group: backpack-registrychecklists-migration-dlq-consumer
     dlq-event-retry-interval-secs: 1
     dlq-max-event-retry-count: 3
     dlq-consumer-batch-size: 10
-mockfilter:
-  paths: /zipkin,/testserver/auth/oauth/v2/token,/
 
 kafka-sources:
   allow:
-    -
+    - migration-GRWS
+    - backpackregistrychecklists-migration-dlq

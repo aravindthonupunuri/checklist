@@ -63,11 +63,10 @@ check_environment "$envname"
 app_private_key="$app_private_key_file" tap_api_token="$tap_api_token" $scriptDir/deploy_tap_config.sh "$envname" secrets "$secret_resources_location"/secret-${envname}.yml false
 
 # deploy Base64 encoded client.truststore.jks
-app_private_key="$app_private_key_file" tap_api_token="$tap_api_token" $scriptDir/deploy_tap_config.sh "$envname" secrets "$secret_resources_location"/client-truststore-base64-${envname}.jks true
+app_private_key="$app_private_key_file" tap_api_token="$tap_api_token" $scriptDir/deploy_tap_config.sh "$envname" secrets "$secret_resources_location"/grsclient-truststore-base64-${envname}.jks true
 
 # deploy Base64 encoded lists-bus.target ssl cert
-app_private_key="$app_private_key_file" tap_api_token="$tap_api_token" $scriptDir/deploy_tap_config.sh "$envname" secrets "$secret_resources_location"/lists-bus-keystore-base64-${envname}.jks true
-
+app_private_key="$app_private_key_file" tap_api_token="$tap_api_token" $scriptDir/deploy_tap_config.sh "$envname" secrets "$secret_resources_location"/backpack-registry-keystore-base64-${envname}.jks true
 
 #### Configuration deployment section ####
 

@@ -93,7 +93,7 @@ class CheckListMarkNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalT
 
     @Override
     Map<String, String> getAdditionalProperties() {
-        return ["jdbc-stmt-timeout.serverStatementTimeoutMillis": "50"]
+        return ["jdbc-stmt.serverStatementTimeoutMillis": "50"]
     }
 
     def "test checkListMarkNotifyEvent as marked integrity"() {
@@ -207,13 +207,13 @@ class CheckListMarkNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalT
                 if (eventHeaders.eventType == CheckListMarkNotifyEvent.getEventType()) {
                     def event = CheckListMarkNotifyEvent.deserialize(data)
                     if (event.listId.toString() == checkListMarkNotifyEvent.listId.toString()) {
-                        if (eventHeaders.source == "backpackregistrychecklists-dlq") {
+                        if (eventHeaders.source == "backpackregistrychecklists-migration-dlq") {
                             executeTimeout = false
                             registryChecklistRepository.save(registryChecklist).block()
                             checklistTemplateRepository.save(checklistTemplate).block()
                             return true
                         }
-                        if (eventHeaders.source == "backpack-registrychecklists") {
+                        if (eventHeaders.source == "migration-GRWS") {
                             return true
                         }
                     }
@@ -235,9 +235,9 @@ class CheckListMarkNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalT
                 assert completedEvents.any{
                     it.success
                 } // after the first time failure , message from dlq will be processed and completed
-                assert ((TestEventListener.Result) producerEvents[0]).topic == "lists-msg-bus"
+                assert ((TestEventListener.Result) producerEvents[0]).topic == "registry-internal-data-bus-stage"
                 // first message sendMessage when its called
-                assert ((TestEventListener.Result) producerEvents[1]).topic == "lists-dlq"
+                assert ((TestEventListener.Result) producerEvents[1]).topic == "registry-internal-data-bus-stage-dlq"
                 // on failure putting it to dlq
             }
         }
