@@ -2,26 +2,13 @@ micronaut:
   application:
     name: backpack-registrychecklists-consumer-app
   server:
-    host: localhost
+    host: ${backpack-registrychecklists-consumer-host:localhost}
     port: 8080
-    idle-timeout: 2000ms
-  http:
-    client.connect-ttl: 30m
-    client.pool.acquire-timeout: 2000ms
-    services:
-      redsky-api:
-        urls:
-          - "https://redsky-stage.perf.target.com"
-        connect-timeout: 1500ms
-        read-timeout: 1500ms
-        pool:
-          enabled: true
-          max-connections: 128
-          max-pending-acquires: 50
   metrics:
     binders:
       web:
         enabled: false # we are using our own binder via our custom micronaut-metrics lib
+
 lists:
   metrics:
     binders:
@@ -78,12 +65,25 @@ filter:
       resilience-client-filter: 800
       oauth-filter: 701
       oauth-key-filter: 700
-api-key: "testkey"
+
+api-key: ${api-key}
+
 logging:
   mdc:
     enabled: true
     keys:
-      - test
+      - profile_id
+      - x-api-id
+
+api:
+  oauth:
+    url: https://oauth.iam.perf.target.com
+    client-id: ${id2-client-id}
+    client-secret: ${id2-client-secret}
+    nuid-username: ${id2-nuid-username}
+    nuid-password: ${id2-nuid-password}
+    id2-refresh-mins: ${id2-refresh-minutes}
+
 resilience4j:
   circuitbreaker:
     failure-rate-threshold: 50            # failure rate threshold in percentage (default: 50)
@@ -92,6 +92,7 @@ resilience4j:
     sliding-window-size: 100               # seconds for TIME_BASED, request-count for COUNT_BASED (default: 100)
     minimum-number-of-calls: 10            # min calls required (per sliding window period) before cb calculates error rate (default: 10)
     permitted-number-of-calls-in-half-open-state: 10  # min calls permitted when circuit breaker is half open
+
 tracing:
   zipkin:
     enabled: true
@@ -108,9 +109,8 @@ list:
   max-completed-items-count: 100
   abandon-after-duration-in-days: 730 # It is two years duration
   redsky-batch-size: 28
-  features.dedupe: true
   features.sort-position: true
-  features.fixed-default-list: false
+
 components:
   server:
     list-authorization-filter:
@@ -119,6 +119,7 @@ components:
       enabled: false
     registry-channel-subchannel-filter:
       enabled: false
+
 msgbus:
   source: backpack-registrychecklists
   dlq-source: backpackregistrychecklists-dlq
@@ -131,16 +132,14 @@ msgbus:
       enabled: true
     dlqproducer:
       enabled: true
-    topic: lists-msg-bus
-    consumer-group: lists-msg-bus-kafkapp-consumer
+    topic: ${kafka-msgbus-topic}
+    consumer-group: backpack-registrychecklists-msg-bus-consumer
     consumer-batch-size: 10
     dlq-topic: lists-dlq
-    dlq-consumer-group: lists-dlq-kafkapp-consumer
+    dlq-consumer-group: backpack-registrychecklists-dlq-consumer
     dlq-event-retry-interval-secs: 1
     dlq-max-event-retry-count: 3
     dlq-consumer-batch-size: 10
-mockfilter:
-  paths: /zipkin,/testserver/auth/oauth/v2/token,/
 
 kafka-sources:
   allow:
