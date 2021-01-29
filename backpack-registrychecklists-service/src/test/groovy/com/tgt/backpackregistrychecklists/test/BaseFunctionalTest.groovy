@@ -80,7 +80,8 @@ abstract class BaseFunctionalTest extends Specification implements TestPropertyP
                                            @Nullable byte[] correlationId, @Nullable byte[] timestamp,
                                            @Nullable byte[] errorCode, @Nullable byte[] errorMessage,
                                            @Nullable byte[] retryCount, @Nullable byte[] retryTimestamp, @Nullable byte[] maxRetryCount,
-                                           @Nullable byte[] source, @Nullable byte[] traceHeader, @Nullable byte[] mdcHeader) {
+                                           @Nullable byte[] source, @Nullable byte[] traceHeader, @Nullable byte[] mdcHeader,
+                                           @Nullable byte[] testMode) {
                 def metadata = new RecordMetadata(new TopicPartition("dummy", 1), 1, 1, System.currentTimeMillis(),
                     1, 1, 1)
                 return Mono.just(metadata)

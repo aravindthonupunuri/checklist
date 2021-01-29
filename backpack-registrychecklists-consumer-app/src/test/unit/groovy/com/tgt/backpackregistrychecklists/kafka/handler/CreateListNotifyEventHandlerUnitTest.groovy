@@ -6,7 +6,6 @@ import com.tgt.backpackregistrychecklists.domain.model.RegistryChecklist
 import com.tgt.backpackregistrychecklists.persistence.ChecklistTemplateRepository
 import com.tgt.backpackregistrychecklists.persistence.RegistryChecklistRepository
 import com.tgt.backpackregistrychecklists.service.async.DefaultChecklistService
-import com.tgt.backpackregistryclient.util.RegistryChannel
 import com.tgt.backpackregistryclient.util.RegistrySubChannel
 import com.tgt.backpackregistryclient.util.RegistryType
 import reactor.core.publisher.Flux

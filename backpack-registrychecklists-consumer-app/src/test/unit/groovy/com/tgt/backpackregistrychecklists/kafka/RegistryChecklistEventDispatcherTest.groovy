@@ -40,6 +40,7 @@ class RegistryChecklistEventDispatcherTest extends Specification {
             100L,
             100L,
             "Invalid Source",
+            false,
             false
         )
 
@@ -64,6 +65,7 @@ class RegistryChecklistEventDispatcherTest extends Specification {
             100L,
             100L,
             "Invalid Source",
+            false,
             false
         )
 

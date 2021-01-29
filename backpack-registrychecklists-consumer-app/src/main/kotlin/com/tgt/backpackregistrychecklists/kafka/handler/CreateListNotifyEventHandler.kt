@@ -2,6 +2,7 @@ package com.tgt.backpackregistrychecklists.kafka.handler
 
 import com.tgt.backpackregistrychecklists.service.async.DefaultChecklistService
 import com.tgt.lists.atlas.kafka.model.CreateListNotifyEvent
+import com.tgt.lists.common.components.exception.BadRequestException
 import com.tgt.lists.msgbus.event.EventHeaderFactory
 import com.tgt.lists.msgbus.event.EventHeaders
 import com.tgt.lists.msgbus.event.EventProcessingResult
@@ -31,11 +32,13 @@ class CreateListNotifyEventHandler(
                 EventProcessingResult(true, eventHeaders, createListNotifyEvent)
             }
             .onErrorResume {
-                logger.debug("CreateListNotifyEvent didn't complete, adding it to DLQ for retry")
                 val message = "Error from handleCreateRegistryNotifyEvent() for guest: " +
                     "${createListNotifyEvent.guestId} with registryId: ${createListNotifyEvent.listId}"
-                val retryHeader = eventHeaderFactory.nextRetryHeaders(eventHeaders = eventHeaders,
-                    errorCode = 500, errorMsg = message)
+                val retryHeader = if (it is BadRequestException)
+                    eventHeaderFactory.nextRetryHeaders(eventHeaders = eventHeaders, errorCode = 400, errorMsg = message)
+                else {
+                    logger.debug("CreateListNotifyEvent didn't complete, adding it to DLQ for retry")
+                    eventHeaderFactory.nextRetryHeaders(eventHeaders = eventHeaders, errorCode = 500, errorMsg = message) }
                 Mono.just(EventProcessingResult(false, retryHeader, createListNotifyEvent))
             }
     }

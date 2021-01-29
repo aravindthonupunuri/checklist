@@ -129,7 +129,7 @@ class CreateListNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalTest
         registryId = UUID.randomUUID()
         guestId = UUID.randomUUID().toString()
 
-        def createListNotifyEvent = new CreateListNotifyEvent(guestId, registryId, listType, registryType,
+        def createListNotifyEvent = new CreateListNotifyEvent(guestId, registryId, listType, RegistryType.WEDDING.name(),
             registryTitle, channel, subChannel, LIST_STATE.INACTIVE, null, LocalDate.now(), null,
         null, null, null, null)
 
@@ -161,9 +161,9 @@ class CreateListNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalTest
             conditions.eventually {
                 def completedEvents = consumerEvents.stream().filter {
                     def result = (TestEventListener.Result) it
-                    (!result.preDispatch && result.success)
+                    (!result.preDispatch && !result.success && result.eventHeaders.errorCode == 400)
                 }.collect(Collectors.toList())
-                assert completedEvents.size() == 0
+                assert completedEvents.size() == 1
             }
         }
     }

@@ -32,6 +32,7 @@ class DeleteChecklistActionEventHandlerUnitTest extends Specification {
             100L,
             100L,
             "Valid Source",
+            false,
             false
         )
 

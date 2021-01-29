@@ -1,5 +1,6 @@
 package com.tgt.backpackregistrychecklists.util
 
+import com.tgt.lists.common.components.util.TestListEvaluator
 import com.tgt.lists.msgbus.EventType
 import com.tgt.lists.msgbus.ListsDlqProducer
 import com.tgt.lists.msgbus.ListsMessageBusProducer
@@ -27,7 +28,7 @@ class EventPublisher(
         partitionKey: String
     ): Mono<RecordMetadata> {
         // Exception publishing item completion kafka event, so sending it to DLQ topic for retry
-        val headers = eventHeaderFactory.nextRetryHeaders(eventHeaders = eventHeaderFactory.newEventHeaders(eventType),
+        val headers = eventHeaderFactory.nextRetryHeaders(eventHeaders = eventHeaderFactory.newEventHeaders(eventType, testMode = TestListEvaluator.evaluate()),
             errorCode = 500,
             errorMsg = "Failure publishing item completion kafka event with " +
                 "message with message $message to message bus kafka topic, so publishing it to DLQ topic")

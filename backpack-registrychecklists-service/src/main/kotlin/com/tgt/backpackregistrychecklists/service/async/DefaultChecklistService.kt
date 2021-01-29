@@ -1,5 +1,6 @@
 package com.tgt.backpackregistrychecklists.service.async
 
+import com.tgt.backpackregistrychecklists.domain.model.ChecklistTemplate
 import com.tgt.backpackregistrychecklists.domain.model.RegistryChecklist
 import com.tgt.backpackregistrychecklists.persistence.ChecklistTemplateRepository
 import com.tgt.backpackregistrychecklists.persistence.RegistryChecklistRepository
@@ -8,6 +9,7 @@ import com.tgt.lists.common.components.exception.BadRequestException
 import com.tgt.lists.common.components.exception.BaseErrorCodes.BAD_REQUEST_ERROR_CODE
 import com.tgt.lists.common.components.exception.ErrorCode
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.switchIfEmpty
 import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
@@ -24,7 +26,7 @@ class DefaultChecklistService(
         subChannel: String
     ): Mono<Boolean> {
         return checklistTemplateRepository.findByDefaultChecklistAndRegistryType(true, RegistryType.toRegistryType(listSubType))
-            .switchIfEmpty {
+            .switchIfEmpty<ChecklistTemplate> {
                 throw BadRequestException(ErrorCode(BAD_REQUEST_ERROR_CODE, listOf("no subcategory with default value of true is found")))
             }.collectList().flatMap {
             val registryChecklist = RegistryChecklist(registryId, it.first().checklistTemplatePK.templateId, LocalDate.now(), subChannel, LocalDate.now(), subChannel)
