@@ -81,6 +81,7 @@ logging:
       - x-api-id
     filter:
       path: /lists/**
+
 resilience4j:
   circuitbreaker:
     failure-rate-threshold: 50            # failure rate threshold in percentage (default: 50)
@@ -89,6 +90,7 @@ resilience4j:
     sliding-window-size: 100               # seconds for TIME_BASED, request-count for COUNT_BASED (default: 100)
     minimum-number-of-calls: 10            # min calls required (per sliding window period) before cb calculates error rate (default: 10)
     permitted-number-of-calls-in-half-open-state: 10  # min calls permitted when circuit breaker is half open
+
 tracing:
   zipkin:
     enabled: false
@@ -124,6 +126,7 @@ components:
       base-uri: /registry_checklists/v1
     sanitizing-filter:
       enabled: true
+
 msgbus:
   source: backpack-registrychecklists
   dlq-source: backpackregistrychecklists-dlq
@@ -136,13 +139,14 @@ msgbus:
       enabled: false
     dlqproducer:
       enabled: true
-    topic: lists-msg-bus
+    topic: registry-internal-data-bus-stage
     consumer-group: backpack-registrychecklists-msg-bus-consumer
     consumer-batch-size: 10
-    dlq-topic: lists-dlq
+    dlq-topic: registry-internal-data-bus-stage-dlq
     dlq-consumer-group: backpack-registrychecklists-dlq-consumer
     dlq-event-retry-interval-secs: 1
     dlq-max-event-retry-count: 2
     dlq-consumer-batch-size: 10
+
 mockfilter:
   paths: /zipkin,/testserver/auth/oauth/v2/token,/,/redsky_aggregations/v1.*,/registries/v2.*
