@@ -50,7 +50,7 @@ class MarkChecklistFunctionalTest extends BasePersistenceFunctionalTest {
         def templateId = 2
 
         RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
-        def uri = "/registry_checklists/v1/"+registryId+"/checklists/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
+        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
 
         RegistryChecklist registryChecklist = new RegistryChecklist(registryId, templateId, LocalDate.now(), RegistrySubChannel.KIOSK.value,
             LocalDate.now(), RegistrySubChannel.KIOSK.value)
@@ -84,7 +84,7 @@ class MarkChecklistFunctionalTest extends BasePersistenceFunctionalTest {
         def templateId = 2
 
         RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
-        def uri = "/registry_checklists/v1/"+registryId+"/checklists/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
+        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
 
         when:
         client.toBlocking().exchange(HttpRequest.POST(uri, registryChecklistRequest).headers(DataProvider.getHeaders(guestId)), RegistryChecklistResponseTO)
@@ -102,7 +102,7 @@ class MarkChecklistFunctionalTest extends BasePersistenceFunctionalTest {
         def templateId = 3
 
         RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
-        def uri = "/registry_checklists/v1/"+registryId+"/checklists/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
+        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
 
         RegistryChecklist registryChecklist = new RegistryChecklist(registryId, templateId, LocalDate.now(), RegistrySubChannel.KIOSK.value,
             LocalDate.now(), RegistrySubChannel.KIOSK.value)
@@ -125,7 +125,7 @@ class MarkChecklistFunctionalTest extends BasePersistenceFunctionalTest {
         def templateId = 2
 
         RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
-        def uri = "/registry_checklists/v1/"+registryId+"/checklists/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
+        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
 
         RegistryChecklist registryChecklist = new RegistryChecklist(registryId, 4, LocalDate.now(), RegistrySubChannel.KIOSK.value,
             LocalDate.now(), RegistrySubChannel.KIOSK.value)
@@ -147,7 +147,7 @@ class MarkChecklistFunctionalTest extends BasePersistenceFunctionalTest {
         def templateId = 1
 
         RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
-        def uri = "/registry_checklists/v1/"+registryId+"/checklists/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
+        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
 
         RegistryChecklist registryChecklist = new RegistryChecklist(registryId, templateId, LocalDate.now(), RegistrySubChannel.KIOSK.value,
             LocalDate.now(), RegistrySubChannel.KIOSK.value)

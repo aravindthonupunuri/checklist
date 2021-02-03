@@ -80,7 +80,7 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
     def "test create checklist integrity"() {
         given:
         String guestId = "1236"
-        String uri = "registry_checklists/v1/checklists?registry_type=BABY&template_id=1&channel=web&sub_channel=kiosk&checklist_name=checklistname1"
+        String uri = "registry_checklists/v1/checklist_templates?registry_type=BABY&template_id=1&channel=web&sub_channel=kiosk&checklist_name=checklistname1"
 
         MultipartBody multipartBody = MultipartBody
             .builder()
@@ -98,13 +98,13 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
         def actualStatus = response.status()
 
         then:
-        actualStatus == HttpStatus.NO_CONTENT
+        actualStatus == HttpStatus.CREATED
     }
 
     def "test create checklist checklisttemplate table already have that templateid"() {
         given:
         String guestId = "1236"
-        String uri = "registry_checklists/v1/checklists?registry_type=WEDDING&template_id=91&channel=web&sub_channel=kiosk&checklist_name=checklistname12"
+        String uri = "registry_checklists/v1/checklist_templates?registry_type=WEDDING&template_id=91&channel=web&sub_channel=kiosk&checklist_name=checklistname12"
 
         MultipartBody multipartBody = MultipartBody
             .builder()
@@ -123,13 +123,13 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
         def actualStatus = response.status()
 
         then:
-        actualStatus == HttpStatus.NO_CONTENT
+        actualStatus == HttpStatus.CREATED
     }
 
     def "test create checklist checklisttemplate table  already have that registryType"() {
         given:
         String guestId = "1236"
-        String uri = "registry_checklists/v1/checklists?registry_type=BABY&template_id=2&channel=web&sub_channel=kiosk&checklist_name=checklistname13"
+        String uri = "registry_checklists/v1/checklist_templates?registry_type=BABY&template_id=2&channel=web&sub_channel=kiosk&checklist_name=checklistname13"
 
         MultipartBody multipartBody = MultipartBody
             .builder()
@@ -148,13 +148,13 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
         def actualStatus = response.status()
 
         then:
-        actualStatus == HttpStatus.NO_CONTENT
+        actualStatus == HttpStatus.CREATED
     }
 
     def "test create checklist checklisttemplate table  already have that checklist name for the templateId which we are going to update"() {
         given:
         String guestId = "1236"
-        String uri = "registry_checklists/v1/checklists?registry_type=BABY&template_id=7&channel=web&sub_channel=kiosk&checklist_name=checklistName"
+        String uri = "registry_checklists/v1/checklist_templates?registry_type=BABY&template_id=7&channel=web&sub_channel=kiosk&checklist_name=checklistName"
 
         MultipartBody multipartBody = MultipartBody
             .builder()
@@ -173,13 +173,13 @@ class CreateChecklistTemplateFunctionalTest extends BasePersistenceFunctionalTes
         def actualStatus = response.status()
 
         then:
-        actualStatus == HttpStatus.NO_CONTENT
+        actualStatus == HttpStatus.CREATED
     }
 
     def "test create checklist checklisttemplate table  already have that checklist name for a different"() {
         given:
         String guestId = "1236"
-        String uri = "registry_checklists/v1/checklists?registry_type=BABY&template_id=6&channel=web&sub_channel=kiosk&checklist_name=checklistName"
+        String uri = "registry_checklists/v1/checklist_templates?registry_type=BABY&template_id=6&channel=web&sub_channel=kiosk&checklist_name=checklistName"
 
         MultipartBody multipartBody = MultipartBody
             .builder()

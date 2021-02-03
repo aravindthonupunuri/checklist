@@ -12,7 +12,6 @@ import com.tgt.backpackregistrychecklists.test.BasePersistenceFunctionalTest
 import com.tgt.backpackregistrychecklists.test.DataProvider
 import com.tgt.backpackregistrychecklists.test.util.RedskyDataProvider
 import com.tgt.backpackregistrychecklists.transport.ChecklistResponseTO
-import com.tgt.backpackregistrychecklists.transport.RegistryChecklistRequestTO
 import com.tgt.backpackregistryclient.transport.RedskyResponseTO
 import com.tgt.backpackregistryclient.transport.RegistryDetailsResponseTO
 import com.tgt.backpackregistryclient.transport.RegistryItemsBasicInfoTO
@@ -61,10 +60,9 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
     def "test update default template - integrity"() {
         def guestId = "1234"
         def templateId = 2
-        def uri = "/registry_checklists/v1/"+registryId+"/checklists?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
+        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+templateId+"?channel=WEB&sub_channel=KIOSK"
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/get_details"
 
-        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
         def checklistTemplate1 = new ChecklistTemplate(new ChecklistTemplatePK(2, 201), RegistryType.BABY,
             "firstChecklistName", true, 1, "963002", "strollers and car seats", "name",
             "5xtjw", "5xtjw", "travel system", 1, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
@@ -81,7 +79,7 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
         registryChecklistRepository.save(new RegistryChecklist(registryId, 1, LocalDate.now(), RegistrySubChannel.KIOSK.value, LocalDate.now(), RegistrySubChannel.KIOSK.value)).block()
         when:
         HttpResponse<ChecklistResponseTO> updateDefaultTemplateResponse =
-            client.toBlocking().exchange(HttpRequest.PUT(uri, registryChecklistRequest).headers(DataProvider.getHeaders(guestId)), ChecklistResponseTO)
+            client.toBlocking().exchange(HttpRequest.PUT(uri, "").headers(DataProvider.getHeaders(guestId)), ChecklistResponseTO)
 
         def actualStatus = updateDefaultTemplateResponse.status()
         def result = updateDefaultTemplateResponse.body()
@@ -112,10 +110,9 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
     def "test update default template - multiple categories"() {
         def guestId = "1234"
         def templateId = 3
-        def uri = "/registry_checklists/v1/"+registryId+"/checklists?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
+        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+templateId+"?channel=WEB&sub_channel=KIOSK"
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/get_details"
 
-        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
         def checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK(3, 203), RegistryType.BABY,
             "firstChecklistName", true, 1, "963003", "strollers and car seats", "name",
             "5q0ev", "5q0ev", "infant car seat", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
@@ -130,7 +127,7 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
         checklistTemplateRepository.save(checklistTemplate2).block()
         when:
         HttpResponse<ChecklistResponseTO> updateDefaultTemplateResponse =
-            client.toBlocking().exchange(HttpRequest.PUT(uri, registryChecklistRequest).headers(DataProvider.getHeaders(guestId)), ChecklistResponseTO)
+            client.toBlocking().exchange(HttpRequest.PUT(uri, "").headers(DataProvider.getHeaders(guestId)), ChecklistResponseTO)
 
         def actualStatus = updateDefaultTemplateResponse.status()
         def result = updateDefaultTemplateResponse.body()
@@ -161,10 +158,9 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
     def "test update default template - multiple subcategory childIds"() {
         def guestId = "1234"
         def templateId = 4
-        def uri = "/registry_checklists/v1/"+registryId+"/checklists?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
+        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+templateId+"?channel=WEB&sub_channel=KIOSK"
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/get_details"
 
-        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
         def checklistTemplate3 = new ChecklistTemplate(new ChecklistTemplatePK(4, 204), RegistryType.BABY,
             "firstChecklistName", true, 1, "963003", "strollers and car seats", "name",
             "5q0ev", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "infant car seat", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
@@ -179,7 +175,7 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
         checklistTemplateRepository.save(checklistTemplate3).block()
         when:
         HttpResponse<ChecklistResponseTO> updateDefaultTemplateResponse =
-            client.toBlocking().exchange(HttpRequest.PUT(uri, registryChecklistRequest).headers(DataProvider.getHeaders(guestId)), ChecklistResponseTO)
+            client.toBlocking().exchange(HttpRequest.PUT(uri, "").headers(DataProvider.getHeaders(guestId)), ChecklistResponseTO)
 
         def actualStatus = updateDefaultTemplateResponse.status()
         def result = updateDefaultTemplateResponse.body()
@@ -210,13 +206,11 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
     def "test update default template - no checklist exists for the given templateId"() {
         def guestId = "1234"
         def templateId = 33
-        def uri = "/registry_checklists/v1/"+registryId+"/checklists?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
+        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+templateId+"?channel=WEB&sub_channel=KIOSK"
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/get_details"
 
-        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
-
         when:
-        client.toBlocking().exchange(HttpRequest.PUT(uri, registryChecklistRequest).headers(DataProvider.getHeaders(guestId)), ChecklistResponseTO)
+        client.toBlocking().exchange(HttpRequest.PUT(uri, "").headers(DataProvider.getHeaders(guestId)), ChecklistResponseTO)
 
         then:
         def error = thrown(HttpClientResponseException)
@@ -230,13 +224,11 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
         def guestId = "1234"
         def templateId = 4
         def registryId = UUID.randomUUID()
-        def uri = "/registry_checklists/v1/"+registryId+"/checklists?template_id="+templateId+"&channel=WEB&sub_channel=KIOSK"
+        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+templateId+"?channel=WEB&sub_channel=KIOSK"
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/get_details"
 
-        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
-
         when:
-        client.toBlocking().exchange(HttpRequest.PUT(uri, registryChecklistRequest).headers(DataProvider.getHeaders(guestId)), ChecklistResponseTO)
+        client.toBlocking().exchange(HttpRequest.PUT(uri, "").headers(DataProvider.getHeaders(guestId)), ChecklistResponseTO)
 
         then:
         def error = thrown(HttpClientResponseException)

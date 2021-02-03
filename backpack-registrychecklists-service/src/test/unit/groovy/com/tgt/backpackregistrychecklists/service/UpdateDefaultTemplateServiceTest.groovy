@@ -32,7 +32,6 @@ class UpdateDefaultTemplateServiceTest extends Specification {
         def registryId = UUID.randomUUID()
         def templateId = 2
 
-        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
         def registryChecklist1 = new RegistryChecklist(registryId, 1, LocalDate.now(), RegistrySubChannel.KIOSK.value, LocalDate.now(), RegistrySubChannel.KIOSK.value)
         def registryChecklist = new RegistryChecklist(registryId, templateId, LocalDate.now(), RegistrySubChannel.KIOSK.value, LocalDate.now(), RegistrySubChannel.KIOSK.value)
 
@@ -41,7 +40,7 @@ class UpdateDefaultTemplateServiceTest extends Specification {
             "reg_type=baby", 1, true, new ItemDetailsTO("12954094", "Item Title", "primary.image.url", LocalDate.now(), LocalDate.now()))])])
 
         when:
-        def result = updateDefaultTemplateService.updateDefaultTemplateId(guestId, registryId, registryChecklistRequest, RegistryChannel.WEB, RegistrySubChannel.KIOSK).block()
+        def result = updateDefaultTemplateService.updateDefaultTemplateId(guestId, registryId, templateId, RegistryChannel.WEB, RegistrySubChannel.KIOSK).block()
 
         then:
         1 * checklistTemplateRepository.countByTemplateId(_) >> Mono.just(1L)
@@ -70,7 +69,6 @@ class UpdateDefaultTemplateServiceTest extends Specification {
         def registryId = UUID.randomUUID()
         def templateId = 2
 
-        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
         def registryChecklist1 = new RegistryChecklist(registryId, 1, LocalDate.now(), RegistrySubChannel.KIOSK.value, LocalDate.now(), RegistrySubChannel.KIOSK.value)
         def registryChecklist = new RegistryChecklist(registryId, templateId, LocalDate.now(), RegistrySubChannel.KIOSK.value, LocalDate.now(), RegistrySubChannel.KIOSK.value)
 
@@ -82,7 +80,7 @@ class UpdateDefaultTemplateServiceTest extends Specification {
                  "reg_type=baby", 0, true, null)])])
 
         when:
-        def result = updateDefaultTemplateService.updateDefaultTemplateId(guestId, registryId, registryChecklistRequest, RegistryChannel.WEB, RegistrySubChannel.KIOSK).block()
+        def result = updateDefaultTemplateService.updateDefaultTemplateId(guestId, registryId, templateId, RegistryChannel.WEB, RegistrySubChannel.KIOSK).block()
 
         then:
         1 * checklistTemplateRepository.countByTemplateId(_) >> Mono.just(1L)
@@ -122,7 +120,6 @@ class UpdateDefaultTemplateServiceTest extends Specification {
         def registryId = UUID.randomUUID()
         def templateId = 2
 
-        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
         def registryChecklist = new RegistryChecklist(registryId, templateId, LocalDate.now(), RegistrySubChannel.KIOSK.value, LocalDate.now(), RegistrySubChannel.KIOSK.value)
         def registryChecklist1 = new RegistryChecklist(registryId, 1, LocalDate.now(), RegistrySubChannel.KIOSK.value, LocalDate.now(), RegistrySubChannel.KIOSK.value)
 
@@ -134,7 +131,7 @@ class UpdateDefaultTemplateServiceTest extends Specification {
                  "reg_type=baby", 0, true, null)])])
 
         when:
-        def result = updateDefaultTemplateService.updateDefaultTemplateId(guestId, registryId, registryChecklistRequest, RegistryChannel.WEB, RegistrySubChannel.KIOSK).block()
+        def result = updateDefaultTemplateService.updateDefaultTemplateId(guestId, registryId, templateId, RegistryChannel.WEB, RegistrySubChannel.KIOSK).block()
 
         then:
         1 * checklistTemplateRepository.countByTemplateId(_) >> Mono.just(1L)
@@ -175,10 +172,8 @@ class UpdateDefaultTemplateServiceTest extends Specification {
         def registryId = UUID.randomUUID()
         def templateId = 2
 
-        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
-
         when:
-        updateDefaultTemplateService.updateDefaultTemplateId(guestId, registryId, registryChecklistRequest, RegistryChannel.WEB, RegistrySubChannel.KIOSK).block()
+        updateDefaultTemplateService.updateDefaultTemplateId(guestId, registryId, templateId, RegistryChannel.WEB, RegistrySubChannel.KIOSK).block()
 
         then:
         1 * checklistTemplateRepository.countByTemplateId(_) >> Mono.just(0L)
@@ -193,10 +188,8 @@ class UpdateDefaultTemplateServiceTest extends Specification {
         def registryId = UUID.randomUUID()
         def templateId = 2
 
-        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
-
         when:
-        updateDefaultTemplateService.updateDefaultTemplateId(guestId, registryId, registryChecklistRequest, RegistryChannel.WEB, RegistrySubChannel.KIOSK).block()
+        updateDefaultTemplateService.updateDefaultTemplateId(guestId, registryId, templateId, RegistryChannel.WEB, RegistrySubChannel.KIOSK).block()
 
         then:
         1 * checklistTemplateRepository.countByTemplateId(_) >> Mono.just(1L)
@@ -212,10 +205,8 @@ class UpdateDefaultTemplateServiceTest extends Specification {
         def registryId = UUID.randomUUID()
         def templateId = 2
 
-        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
-
         when:
-        updateDefaultTemplateService.updateDefaultTemplateId(guestId, registryId, registryChecklistRequest, RegistryChannel.WEB, RegistrySubChannel.KIOSK).block()
+        updateDefaultTemplateService.updateDefaultTemplateId(guestId, registryId, templateId, RegistryChannel.WEB, RegistrySubChannel.KIOSK).block()
 
         then:
         1 * checklistTemplateRepository.countByTemplateId(_) >> Mono.error(new RuntimeException())

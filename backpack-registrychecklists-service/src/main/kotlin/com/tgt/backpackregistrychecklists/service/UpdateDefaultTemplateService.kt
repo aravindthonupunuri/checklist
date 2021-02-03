@@ -4,7 +4,6 @@ import com.tgt.backpackregistrychecklists.domain.model.RegistryChecklist
 import com.tgt.backpackregistrychecklists.persistence.ChecklistTemplateRepository
 import com.tgt.backpackregistrychecklists.persistence.RegistryChecklistRepository
 import com.tgt.backpackregistrychecklists.transport.ChecklistResponseTO
-import com.tgt.backpackregistrychecklists.transport.RegistryChecklistRequestTO
 import com.tgt.backpackregistryclient.util.RegistryChannel
 import com.tgt.backpackregistryclient.util.RegistrySubChannel
 import com.tgt.lists.common.components.exception.BadRequestException
@@ -28,11 +27,10 @@ class UpdateDefaultTemplateService(
     fun updateDefaultTemplateId(
         guestId: String,
         registryId: UUID,
-        registryChecklistRequest: RegistryChecklistRequestTO,
+        templateId: Int,
         channel: RegistryChannel,
         subChannel: RegistrySubChannel
     ): Mono<ChecklistResponseTO> {
-        val templateId = registryChecklistRequest.templateId
         return checklistTemplateRepository.countByTemplateId(templateId)
         .flatMap {
             if (it < 1L)

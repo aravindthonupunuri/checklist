@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
-  version: 1.0.2
-  title: backpack_registrychecklists-v1
+  version: 1.0.3
+  title: registries_checklists-v1
   description: Api to get list of checklist items for a given registry type
 host: api.target.com
 schemes:
@@ -51,7 +51,7 @@ x-api-definition:
     - description: slack
       id: GQ10ZD7UZ
   slack_channel_id: GQ10ZD7UZ
-  nuid_ad_groups: null
+  nuid_ad_groups: APP-BACKPACK-REGISTRY-PROD-READ
   risk_rating: MEDIUM
   last_pentest_date: null
   links:
@@ -87,7 +87,7 @@ securityDefinitions:
     flow: implicit
     scopes: {}
 paths:
-  '/checklists':
+  '/checklist_templates':
     x-data_classification: PUBLIC
     post:
       x-incident_priority: P4
@@ -305,7 +305,7 @@ paths:
           description: Not found
           schema:
             $ref: '#/definitions/Error404'
-  '/{registry_id}/checklists':
+  '/{registry_id}/checklist_templates':
     x-data_classification: PUBLIC
     get:
       x-incident_priority: P4
@@ -374,6 +374,8 @@ paths:
           description: Not found
           schema:
             $ref: '#/definitions/Error404'
+
+  '/{registry_id}/checklist_templates/{template_id}':
     put:
       x-incident_priority: P4
       x-response_time_sla: 800ms
@@ -407,7 +409,7 @@ paths:
           description: registry subchannel
           required: true
           type: string
-          enum: [ "KIOSK", "SCANNER", "TGTWEB", "GRIPHAPP", "GRANDAPP", "SPARTA" ]
+          enum: [ "KIOSK", "SCANNER", "TGTWEB", "GRIPHAPP", "GRANDAPP","SPARTA" ]
         - name: location_id
           in: query
           description: The store id
@@ -420,11 +422,29 @@ paths:
           required: true
           type: string
           format: uuid
+        - name: template_id
+          in: path
+          description: template id
+          required: true
+          type: integer
+          format: int32
         - name: checklist_request
           in: body
-          description: registry checklist update request  body
+          description: registry checklist request  body
+          type: object
+          required: true
           schema:
-            $ref: '#/definitions/RegistryChecklistRequestTO'
+            type: object
+            properties:
+              registryId:
+                type: string
+                description: registry id
+                format: uuid
+                nullable: false
+              templateId:
+                type: integer
+                format: int32
+                nullable: false
       responses:
         '200':
           description: registry checklist transfer object
@@ -447,8 +467,7 @@ paths:
           schema:
             $ref: '#/definitions/Error404'
 
-  '/{registry_id}/checklists/{checklist_id}':
-    x-data_classification: PUBLIC
+  '/{registry_id}/checklist_templates/{checklist_id}':
     post:
       x-incident_priority: P4
       x-response_time_sla: 800ms
@@ -527,6 +546,7 @@ paths:
           schema:
             $ref: '#/definitions/Error404'
 
+  '/{registry_id}/checklist_templates/{checklist_id}/{template_id}':
     delete:
       x-incident_priority: P4
       x-response_time_sla: 800ms
@@ -556,10 +576,11 @@ paths:
           required: true
           type: string
         - name: template_id
-          in: query
+          in: path
           description: template id
           required: true
-          type: string
+          type: integer
+          format: int32
         - name: key
           in: query
           description: The consumer's valid API key.

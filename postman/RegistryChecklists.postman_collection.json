@@ -98,14 +98,14 @@
 					}
 				],
 				"url": {
-					"raw": "{{host}}/registry_checklists/v1/checklists?channel={{channel}}&sub_channel={{sub_channel}}&template_id={{template_id}}&location_id={{location_id}}",
+					"raw": "{{host}}/registry_checklists/v1/checklist_templates?channel={{channel}}&sub_channel={{sub_channel}}&template_id={{template_id}}&location_id={{location_id}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"registry_checklists",
 						"v1",
-						"checklists"
+						"checklist_templates"
 					],
 					"query": [
 						{
@@ -160,7 +160,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/registry_checklists/v1/{{registry_id}}/checklists/{{checklist_id}}?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
+					"raw": "{{host}}/registry_checklists/v1/{{registry_id}}/checklist_templates/{{checklist_id}}?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
 					"host": [
 						"{{host}}"
 					],
@@ -168,7 +168,7 @@
 						"registry_checklists",
 						"v1",
 						"{{registry_id}}",
-						"checklists",
+						"checklist_templates",
 						"{{checklist_id}}"
 					],
 					"query": [
@@ -211,7 +211,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{host}}/registry_checklists/v1/{{registry_id}}/checklists/{{checklist_id}}?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}&template_id={{template_id}}",
+					"raw": "{{host}}/registry_checklists/v1/{{registry_id}}/checklist_templates/{{checklist_id}}/{{template_id}}?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
 					"host": [
 						"{{host}}"
 					],
@@ -219,8 +219,9 @@
 						"registry_checklists",
 						"v1",
 						"{{registry_id}}",
-						"checklists",
-						"{{checklist_id}}"
+						"checklist_templates",
+						"{{checklist_id}}",
+                        "{{template_id}}"
 					],
 					"query": [
 						{
@@ -234,10 +235,6 @@
 						{
 							"key": "location_id",
 							"value": "{{location_id}}"
-						},
-						{
-							"key": "template_id",
-							"value": "{{template_id}}"
 						}
 					]
 				}
@@ -266,14 +263,14 @@
 					}
 				],
 				"url": {
-					"raw": "{{host}}/registry_checklists/v1/checklists?registry_type={{registry_type}}&channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
+					"raw": "{{host}}/registry_checklists/v1/checklist_templates?registry_type={{registry_type}}&channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"registry_checklists",
 						"v1",
-						"checklists"
+						"checklist_templates"
 					],
 					"query": [
 						{
@@ -319,7 +316,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{host}}/registry_checklists/v1/{{registry_id}}/checklists?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
+					"raw": "{{host}}/registry_checklists/v1/{{registry_id}}/checklist_templates?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
 					"host": [
 						"{{host}}"
 					],
@@ -327,7 +324,7 @@
 						"registry_checklists",
 						"v1",
 						"{{registry_id}}",
-						"checklists"
+						"checklist_templates"
 					],
 					"query": [
 						{
@@ -368,17 +365,8 @@
 						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n \"template_id\": 2\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "{{host}}/registry_checklists/v1/{{registry_id}}/checklists?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
+					"raw": "{{host}}/registry_checklists/v1/{{registry_id}}/checklist_templates?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
 					"host": [
 						"{{host}}"
 					],
@@ -386,7 +374,8 @@
 						"registry_checklists",
 						"v1",
 						"{{registry_id}}",
-						"checklists"
+                        "{{template_id}}",
+						"checklist_templates"
 					],
 					"query": [
 						{

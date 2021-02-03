@@ -47,8 +47,8 @@ class RegistryChecklistController(
      * @param requestBody xml file input
      *
      */
-    @Post(value = "/checklists", consumes = [MediaType.MULTIPART_FORM_DATA])
-    @Status(HttpStatus.NO_CONTENT)
+    @Post(value = "/checklist_templates", consumes = [MediaType.MULTIPART_FORM_DATA])
+    @Status(HttpStatus.CREATED)
     @Throws(XMLStreamException::class, IOException::class)
     fun createChecklist(
         @Header("profile_id") guestId: String,
@@ -86,7 +86,7 @@ class RegistryChecklistController(
      * @return Registry checklist template response transfer object
      *
      */
-    @Get("/checklists")
+    @Get("/checklist_templates")
     @Status(HttpStatus.OK)
     @ApiResponse(
         content = [Content(mediaType = "application/json", schema = Schema(implementation = RegistryChecklistTemplateResponseTO::class))]
@@ -113,7 +113,7 @@ class RegistryChecklistController(
      * @return Checklist response transfer object
      *
      */
-    @Get("/{registry_id}/checklists")
+    @Get("/{registry_id}/checklist_templates")
     @Status(HttpStatus.OK)
     @ApiResponse(
         content = [Content(mediaType = "application/json", schema = Schema(implementation = ChecklistResponseTO::class))]
@@ -141,7 +141,7 @@ class RegistryChecklistController(
      * @return Checklist response transfer object
      *
      */
-    @Put("/{registry_id}/checklists")
+    @Put("/{registry_id}/checklist_templates/{template_id}")
     @Status(HttpStatus.OK)
     @ApiResponse(
         content = [Content(mediaType = "application/json", schema = Schema(implementation = ChecklistResponseTO::class))]
@@ -149,12 +149,12 @@ class RegistryChecklistController(
     fun updateDefaultTemplate(
         @Header("profile_id") guestId: String,
         @PathVariable("registry_id") registryId: UUID,
+        @PathVariable("template_id") templateId: Int,
         @QueryValue("location_id") locationId: Long?,
         @QueryValue("channel") channel: RegistryChannel,
-        @QueryValue("sub_channel") subChannel: RegistrySubChannel,
-        @Body registryChecklistRequest: RegistryChecklistRequestTO
+        @QueryValue("sub_channel") subChannel: RegistrySubChannel
     ): Mono<ChecklistResponseTO> {
-        return updateDefaultTemplateService.updateDefaultTemplateId(guestId, registryId, registryChecklistRequest, channel, subChannel)
+        return updateDefaultTemplateService.updateDefaultTemplateId(guestId, registryId, templateId, channel, subChannel)
     }
 
     /**
@@ -171,7 +171,7 @@ class RegistryChecklistController(
      * @return Registry checklist response transfer object
      *
      */
-    @Post("/{registry_id}/checklists/{checklist_id}")
+    @Post("/{registry_id}/checklist_templates/{checklist_id}")
     @Status(HttpStatus.CREATED)
     @ApiResponse(
         content = [Content(mediaType = "application/json", schema = Schema(implementation = RegistryChecklistResponseTO::class))]
@@ -202,7 +202,7 @@ class RegistryChecklistController(
      * @return Registry checklist response transfer object
      *
      */
-    @Delete("/{registry_id}/checklists/{checklist_id}")
+    @Delete("/{registry_id}/checklist_templates/{checklist_id}/{template_id}")
     @Status(HttpStatus.OK)
     @ApiResponse(
         content = [Content(mediaType = "application/json", schema = Schema(implementation = RegistryChecklistResponseTO::class))]
@@ -211,7 +211,7 @@ class RegistryChecklistController(
         @Header("profile_id") guestId: String,
         @PathVariable("registry_id") registryId: UUID,
         @PathVariable("checklist_id") checklistId: Int,
-        @QueryValue("template_id") templateId: Int,
+        @PathVariable("template_id") templateId: Int,
         @QueryValue("location_id") locationId: Long?,
         @QueryValue("channel") channel: RegistryChannel,
         @QueryValue("sub_channel") subChannel: RegistrySubChannel
@@ -230,7 +230,7 @@ class RegistryChecklistController(
      * @param templateId template id
      *
      */
-    @Delete(value = "/checklists")
+    @Delete(value = "/checklist_templates")
     @Status(HttpStatus.NO_CONTENT)
     fun deleteChecklist(
         @Header("profile_id") guestId: String,
