@@ -7,7 +7,9 @@ data class ChecklistCategoryTO(
     val categoryName: String?,
     val categoryDisplayOrder: Int?,
     val categoryImageUrl: String?,
-    var subcategories: List<SubcategoryTO>?
+    var subcategories: List<SubcategoryTO>?,
+    var categoryCheckedCount: Int = 0,
+    var categoryTotalCount: Int = 0
 ) {
     constructor(
         checklistTemplate: ChecklistTemplate,

@@ -38,7 +38,7 @@ class UnmarkChecklistFunctionalTest extends BasePersistenceFunctionalTest{
         def checklistId = 201
         def templateId = 2
 
-        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+checklistId+"/"+templateId+"?channel=WEB&sub_channel=KIOSK"
+        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+checklistId+"/"+templateId+"?channel=WEB&sub_channel=TGTWEB"
 
         registryChecklistSubCategoryRepository.save(new CheckedSubCategories(new CheckedSubCategoriesId(registryId, templateId, checklistId),
             LocalDate.now(), RegistrySubChannel.KIOSK.value, LocalDate.now(), RegistrySubChannel.KIOSK.value)).block()
@@ -64,7 +64,7 @@ class UnmarkChecklistFunctionalTest extends BasePersistenceFunctionalTest{
         def checklistId = 201
         def templateId = 2
 
-        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+checklistId+"/"+templateId+"?channel=WEB&sub_channel=KIOSK"
+        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+checklistId+"/"+templateId+"?channel=WEB&sub_channel=TGTWEB"
 
         when:
         client.toBlocking().exchange(HttpRequest.DELETE(uri).headers(DataProvider.getHeaders(guestId)), RegistryChecklistResponseTO)

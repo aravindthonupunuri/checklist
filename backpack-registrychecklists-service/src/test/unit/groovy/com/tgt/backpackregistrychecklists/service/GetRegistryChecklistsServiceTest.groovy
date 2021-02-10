@@ -126,12 +126,16 @@ class GetRegistryChecklistsServiceTest extends Specification{
         result.registryId == registryId
         result.registryItemCount == 3
         result.categories.size() == 1
+        result.checklistCheckedCount == 3
+        result.checklistTotalCount == 3
         result.categories.findAll( category ->
             category.categoryId == "963002" &&
+                category.categoryTotalCount == 3 &&
+                category.categoryCheckedCount == 3 &&
                 category.subcategories.size() == 3 &&
                 category.subcategories.findAll( subcategory ->
                     subcategory.checklistId == 201 &&
-                        subcategory.subcategoryChildIds == "5xtjw" &&
+                        subcategory.subcategoryTaxonomyIds == "5xtjw" &&
                         subcategory.itemCount == 2 &&
                         subcategory.lastUpdatedItem.tcin == "12954094"
                 ).size() == 1 &&
@@ -140,7 +144,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
                 ).size() == 1 &&
                 category.subcategories.findAll( subcategory ->
                     subcategory.checklistId == 203 &&
-                        subcategory.subcategoryChildIds == "5q0ev" &&
+                        subcategory.subcategoryTaxonomyIds == "5q0ev" &&
                         subcategory.itemCount == 1 &&
                         subcategory.lastUpdatedItem.tcin == "55555"
                 ).size() == 1
@@ -171,12 +175,16 @@ class GetRegistryChecklistsServiceTest extends Specification{
         result.registryId == registryId
         result.registryItemCount == 3
         result.categories.size() == 2
+        result.checklistCheckedCount == 2
+        result.checklistTotalCount == 3
         result.categories.findAll( category ->
             category.categoryId == "963003" &&
+                category.categoryTotalCount == 1 &&
+                category.categoryCheckedCount == 1 &&
                 category.subcategories.size() == 1 &&
                 category.subcategories.findAll( subcategory ->
                     subcategory.checklistId == 203 &&
-                        subcategory.subcategoryChildIds == "5q0ev" &&
+                        subcategory.subcategoryTaxonomyIds == "5q0ev" &&
                         subcategory.itemCount == 1 &&
                         subcategory.lastUpdatedItem.tcin == "55555"
                 ).size() == 1
@@ -184,10 +192,12 @@ class GetRegistryChecklistsServiceTest extends Specification{
 
         result.categories.findAll( category ->
             category.categoryId == "963002" &&
+                category.categoryTotalCount == 2 &&
+                category.categoryCheckedCount == 1 &&
                 category.subcategories.size() == 2 &&
                 category.subcategories.findAll( subcategory ->
                     subcategory.checklistId == 201 &&
-                        subcategory.subcategoryChildIds == "5xtjw" &&
+                        subcategory.subcategoryTaxonomyIds == "5xtjw" &&
                         subcategory.itemCount == 2 &&
                         subcategory.lastUpdatedItem.tcin == "12954094"
                 ).size() == 1 &&
@@ -210,7 +220,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
         RegistryDetailsResponseTO getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", null, items, null,
             null, null, null, LocalDate.now())
         def redskyItemDetails4 = new RedskyResponseTO(null, new ItemAndTaxonomyDetailsVO(new ItemTaxonomyDetails("44444",new ItemVO(new ProductDescriptionVO("itemTitle4"),
-            new Enrichment(new ImageVO("primary.image.url"))), new TaxonomyVO(new Category("name", "5xtk7")))))
+            new Enrichment(new ImageVO("primary.image.url", []))), new TaxonomyVO(new Category("name", "5xtk7")))))
 
         when:
         def result = getRegistryChecklistsService.getChecklistsForRegistryId(registryId, guestId, channel, subChannel).block()
@@ -229,13 +239,16 @@ class GetRegistryChecklistsServiceTest extends Specification{
         result.registryId == registryId
         result.registryItemCount == 4
         result.categories.size() == 2
-
+        result.checklistCheckedCount == 2
+        result.checklistTotalCount == 2
         result.categories.findAll( category ->
             category.categoryId == "963003" &&
+                category.categoryTotalCount == 1 &&
+                category.categoryCheckedCount == 1 &&
                 category.subcategories.size() == 1 &&
                 category.subcategories.findAll( subcategory ->
                     subcategory.checklistId == 202 &&
-                        subcategory.subcategoryChildIds == "5xtk7, 5q0ev" &&
+                        subcategory.subcategoryTaxonomyIds == "5xtk7, 5q0ev" &&
                         subcategory.itemCount == 2 &&
                         subcategory.lastUpdatedItem.tcin == "55555"
                 ).size() == 1
@@ -243,10 +256,12 @@ class GetRegistryChecklistsServiceTest extends Specification{
 
         result.categories.findAll( category ->
             category.categoryId == "963002" &&
+                category.categoryTotalCount == 1 &&
+                category.categoryCheckedCount == 1 &&
                 category.subcategories.size() == 1 &&
                 category.subcategories.findAll( subcategory ->
                     subcategory.checklistId == 201 &&
-                        subcategory.subcategoryChildIds == "5xtjw" &&
+                        subcategory.subcategoryTaxonomyIds == "5xtjw" &&
                         subcategory.itemCount == 2 &&
                         subcategory.lastUpdatedItem.tcin == "12954094" &&
                         subcategory.checked
@@ -274,12 +289,16 @@ class GetRegistryChecklistsServiceTest extends Specification{
         result.registryId == registryId
         result.registryItemCount == 0
         result.categories.size() == 2
+        result.checklistCheckedCount == 1
+        result.checklistTotalCount == 2
         result.categories.findAll( category ->
             category.categoryId == "963003" &&
+                category.categoryTotalCount == 1 &&
+                category.categoryCheckedCount == 0 &&
                 category.subcategories.size() == 1 &&
                 category.subcategories.findAll( subcategory ->
                     subcategory.checklistId == 202 &&
-                        subcategory.subcategoryChildIds == "5xtk7, 5q0ev" &&
+                        subcategory.subcategoryTaxonomyIds == "5xtk7, 5q0ev" &&
                         subcategory.itemCount == 0 &&
                         subcategory.lastUpdatedItem == null
                 ).size() == 1
@@ -287,10 +306,12 @@ class GetRegistryChecklistsServiceTest extends Specification{
 
         result.categories.findAll( category ->
             category.categoryId == "963002" &&
+                category.categoryTotalCount == 1 &&
+                category.categoryCheckedCount == 1 &&
                 category.subcategories.size() == 1 &&
                 category.subcategories.findAll( subcategory ->
                     subcategory.checklistId == 201 &&
-                        subcategory.subcategoryChildIds == "5xtjw" &&
+                        subcategory.subcategoryTaxonomyIds == "5xtjw" &&
                         subcategory.itemCount == 0 &&
                         subcategory.lastUpdatedItem == null &&
                         subcategory.checked
@@ -321,12 +342,16 @@ class GetRegistryChecklistsServiceTest extends Specification{
         result.registryId == registryId
         result.registryItemCount == 0
         result.categories.size() == 2
+        result.checklistCheckedCount == 1
+        result.checklistTotalCount == 2
         result.categories.findAll( category ->
             category.categoryId == "963003" &&
+                category.categoryTotalCount == 1 &&
+                category.categoryCheckedCount == 0 &&
                 category.subcategories.size() == 1 &&
                 category.subcategories.findAll( subcategory ->
                     subcategory.checklistId == 202 &&
-                        subcategory.subcategoryChildIds == "5xtk7, 5q0ev" &&
+                        subcategory.subcategoryTaxonomyIds == "5xtk7, 5q0ev" &&
                         subcategory.itemCount == 0 &&
                         subcategory.lastUpdatedItem == null
                 ).size() == 1
@@ -334,10 +359,12 @@ class GetRegistryChecklistsServiceTest extends Specification{
 
         result.categories.findAll( category ->
             category.categoryId == "963002" &&
+                category.categoryTotalCount == 1 &&
+                category.categoryCheckedCount == 1 &&
                 category.subcategories.size() == 1 &&
                 category.subcategories.findAll( subcategory ->
                     subcategory.checklistId == 201 &&
-                        subcategory.subcategoryChildIds == "5xtjw" &&
+                        subcategory.subcategoryTaxonomyIds == "5xtjw" &&
                         subcategory.itemCount == 0 &&
                         subcategory.lastUpdatedItem == null &&
                         subcategory.checked
@@ -408,7 +435,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
                 category.subcategories.size() == 3 &&
                 category.subcategories.findAll( subcategory ->
                     subcategory.checklistId == 201 &&
-                        subcategory.subcategoryChildIds == "5xtjw" &&
+                        subcategory.subcategoryTaxonomyIds == "5xtjw" &&
                         subcategory.itemCount == 2 &&
                         subcategory.lastUpdatedItem.tcin == "12954094"
                 ).size() == 1 &&
@@ -417,7 +444,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
                 ).size() == 1 &&
                 category.subcategories.findAll( subcategory ->
                     subcategory.checklistId == 203 &&
-                        subcategory.subcategoryChildIds == "5q0ev" &&
+                        subcategory.subcategoryTaxonomyIds == "5q0ev" &&
                         subcategory.itemCount == 1 &&
                         subcategory.lastUpdatedItem.tcin == "55555"
                 ).size() == 1

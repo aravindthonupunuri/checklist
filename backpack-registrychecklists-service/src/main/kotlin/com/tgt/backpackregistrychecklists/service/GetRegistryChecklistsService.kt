@@ -33,6 +33,8 @@ class GetRegistryChecklistsService(
 ) {
     private val logger = KotlinLogging.logger { GetRegistryChecklistsService::class.java.name }
     @Value("\${list.default-web-store-id}") private val storeId: Long = 3991
+    private var checklistTotalCount: Int = 0
+    private var checklistCheckedCount: Int = 0
 
     fun getChecklistsForRegistryId(
         registryId: UUID,
@@ -46,7 +48,7 @@ class GetRegistryChecklistsService(
             }
             .flatMap { registryChecklist ->
                 val templateId = registryChecklist.templateId
-                // TO-DO Check against cache, if exists, else, populate cache
+                // TODO Check against cache, if exists, else, populate cache
                 checklistTemplateRepository.findByTemplateId(templateId).collectList()
                     .map {
                         if (it.isNullOrEmpty())
@@ -81,9 +83,9 @@ class GetRegistryChecklistsService(
                             .flatMap {
                                 markSubcategories(registryId, templateId, it)
                                     .map { categoryList ->
-                                        logger.info { "categoryList - $categoryList" }
+                                        logger.info { "checkedCount - $checklistCheckedCount, totalCount = $checklistTotalCount, categoryList - $categoryList" }
                                         ChecklistResponseTO(registryId = registryId, registryItemCount = itemDetails.size.toLong(),
-                                            templateId = templateId, categories = categoryList)
+                                            templateId = templateId, categories = categoryList, checklistCheckedCount = checklistCheckedCount, checklistTotalCount = checklistTotalCount)
                                     }
                             }
                     }
@@ -106,21 +108,26 @@ class GetRegistryChecklistsService(
         // Iterating over the categoryMap and itemDetails map, if the taxonomy matches -> updating the lastUpdatedItem details
         categoryMap.forEach { (_, categoryTO) ->
             categoryTO.subcategories?.forEach {
-                val subcategoryIdList = it.subcategoryChildIds?.split(",")?.map { it.trim() }
+                val subcategoryIdList = it.subcategoryTaxonomyIds?.split(",")?.map { it.trim() }
                 subcategoryIdList?.forEach { subcategoryId ->
                     if (itemDetailsMap.containsKey(subcategoryId)) {
                         itemDetailsMap[subcategoryId]?.forEach { checklistItemDetails ->
                             val lastUpdatedItem = it.lastUpdatedItem
                             if (isLatestItem(checklistItemDetails, lastUpdatedItem)) {
                                 it.lastUpdatedItem = ItemDetailsTO(checklistItemDetails.itemDetails?.tcin, checklistItemDetails.itemDetails?.description,
-                                    checklistItemDetails.itemDetails?.imageUrl, checklistItemDetails.itemDetails?.addedTs, checklistItemDetails.itemDetails?.lastModifiedTs)
+                                    checklistItemDetails.itemDetails?.imageUrl, checklistItemDetails.itemDetails?.alternateImageUrls, checklistItemDetails.itemDetails?.addedTs,
+                                    checklistItemDetails.itemDetails?.lastModifiedTs)
                             }
-                            it.itemCount = it.itemCount?.inc()
+                            it.itemCount += 1
                         }
                         it.checked = true
                     }
                 }
+                if (it.checked) categoryTO.categoryCheckedCount += 1
             }
+            categoryTO.categoryTotalCount = categoryTO.subcategories?.size ?: 0
+            checklistCheckedCount += categoryTO.categoryCheckedCount
+            checklistTotalCount += categoryTO.categoryTotalCount
             categoryList.add(categoryTO)
         }
         return categoryList.toFlux()
@@ -157,10 +164,15 @@ class GetRegistryChecklistsService(
         return checkedSubCategoriesRepository.findByRegistryIdAndTemplateId(registryId, templateId).collectList()
             .map { checklistIdList ->
                 categoryList.map {
+                    var categoryCheckedCount = 0
                     it.subcategories?.map { subCategory ->
-                        if (checklistIdList.map { it.checkedSubcategoriesId.checklistId }.contains(subCategory.checklistId))
+                        if (checklistIdList.map { it.checkedSubcategoriesId.checklistId }.contains(subCategory.checklistId) && !subCategory.checked) {
                             subCategory.checked = true
+                            categoryCheckedCount++
+                        }
                     }
+                    it.categoryCheckedCount += categoryCheckedCount
+                    checklistCheckedCount += categoryCheckedCount
                 }
                 categoryList
             }
@@ -191,7 +203,7 @@ class GetRegistryChecklistsService(
                 registryItems.tcin?.let { it1 -> redskyHydrationManager.getRegistryItemTaxonomyDetails(it1) }
                     ?.map {
                         ChecklistItemTO(nodeId = it.taxonomy?.category?.nodeId, itemDetails = ItemDetailsTO(it.tcin, it.item?.productDescription?.title, it.item?.enrichment?.images?.primaryImageUrl,
-                            registryItems?.addedTs, registryItems?.lastModifiedTs))
+                            it.item?.enrichment?.images?.alternateImageUrls, registryItems?.addedTs, registryItems?.lastModifiedTs))
                     }
             }.collectList()
     }

@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.0.3
+  version: 1.0.4
   title: registries_checklists-v1
   description: Api to get list of checklist items for a given registry type
 host: api.target.com
@@ -124,13 +124,13 @@ paths:
           description: registry channel
           required: true
           type: string
-          enum: [ "WEB", "MOBILE", "STORE" ]
+          enum: [ "WEB", "MOBILE", "STORE", "ADMIN", "EXTERNAL" ]
         - name: sub_channel
           in: query
           description: registry subchannel
           required: true
           type: string
-          enum: [ "KIOSK", "SCANNER", "TGTWEB", "GRIPHAPP", "GRANDAPP", "SPARTA" ]
+          enum: [ "KIOSK", "SCANNER", "TGTWEB", "IOS", "ANDROID", "SPARTAG", "CC", "POS", "GOM", "SPARTAR", "EGIFT", "XO" ]
         - name: location_id
           in: query
           description: The store id
@@ -203,13 +203,13 @@ paths:
           description: registry channel
           required: true
           type: string
-          enum: [ "WEB", "MOBILE", "STORE" ]
+          enum: [ "WEB", "MOBILE", "STORE", "ADMIN", "EXTERNAL" ]
         - name: sub_channel
           in: query
           description: registry subchannel
           required: true
           type: string
-          enum: [ "KIOSK", "SCANNER", "TGTWEB", "GRIPHAPP", "GRANDAPP", "SPARTA" ]
+          enum: [ "KIOSK", "SCANNER", "TGTWEB", "IOS", "ANDROID", "SPARTAG", "CC", "POS", "GOM", "SPARTAR", "EGIFT", "XO" ]
         - name: location_id
           in: query
           description: The store id
@@ -271,13 +271,13 @@ paths:
           description: registry channel
           required: true
           type: string
-          enum: [ "WEB", "MOBILE", "STORE" ]
+          enum: [ "WEB", "MOBILE", "STORE", "ADMIN", "EXTERNAL" ]
         - name: sub_channel
           in: query
           description: registry subchannel
           required: true
           type: string
-          enum: [ "KIOSK", "SCANNER", "TGTWEB", "GRIPHAPP", "GRANDAPP", "SPARTA" ]
+          enum: [ "KIOSK", "SCANNER", "TGTWEB", "IOS", "ANDROID", "SPARTAG", "CC", "POS", "GOM", "SPARTAR", "EGIFT", "XO" ]
         - name: location_id
           in: query
           description: The store id
@@ -334,13 +334,13 @@ paths:
           description: registry channel
           required: true
           type: string
-          enum: [ "WEB", "MOBILE", "STORE" ]
+          enum: [ "WEB", "MOBILE", "STORE", "ADMIN", "EXTERNAL" ]
         - name: sub_channel
           in: query
           description: registry subchannel
           required: true
           type: string
-          enum: [ "KIOSK", "SCANNER", "TGTWEB", "GRIPHAPP", "GRANDAPP", "SPARTA" ]
+          enum: [ "KIOSK", "SCANNER", "TGTWEB", "IOS", "ANDROID", "SPARTAG", "CC", "POS", "GOM", "SPARTAR", "EGIFT", "XO" ]
         - name: location_id
           in: query
           description: The store id
@@ -403,13 +403,13 @@ paths:
           description: registry channel
           required: true
           type: string
-          enum: [ "WEB", "MOBILE", "STORE" ]
+          enum: [ "WEB", "MOBILE", "STORE", "ADMIN", "EXTERNAL" ]
         - name: sub_channel
           in: query
           description: registry subchannel
           required: true
           type: string
-          enum: [ "KIOSK", "SCANNER", "TGTWEB", "GRIPHAPP", "GRANDAPP","SPARTA" ]
+          enum: [ "KIOSK", "SCANNER", "TGTWEB", "IOS", "ANDROID", "SPARTAG", "CC", "POS", "GOM", "SPARTAR", "EGIFT", "XO" ]
         - name: location_id
           in: query
           description: The store id
@@ -506,13 +506,13 @@ paths:
           description: registry channel
           required: true
           type: string
-          enum: [ "WEB", "MOBILE", "STORE" ]
+          enum: [ "WEB", "MOBILE", "STORE", "ADMIN", "EXTERNAL" ]
         - name: sub_channel
           in: query
           description: registry subchannel
           required: true
           type: string
-          enum: [ "KIOSK", "SCANNER", "TGTWEB", "GRIPHAPP", "GRANDAPP", "SPARTA" ]
+          enum: [ "KIOSK", "SCANNER", "TGTWEB", "IOS", "ANDROID", "SPARTAG", "CC", "POS", "GOM", "SPARTAR", "EGIFT", "XO" ]
         - name: location_id
           in: query
           description: The store id
@@ -591,13 +591,13 @@ paths:
           description: registry channel
           required: true
           type: string
-          enum: [ "WEB", "MOBILE", "STORE" ]
+          enum: [ "WEB", "MOBILE", "STORE", "ADMIN", "EXTERNAL" ]
         - name: sub_channel
           in: query
           description: registry subchannel
           required: true
           type: string
-          enum: [ "KIOSK", "SCANNER", "TGTWEB", "GRIPHAPP", "GRANDAPP", "SPARTA" ]
+          enum: [ "KIOSK", "SCANNER", "TGTWEB", "IOS", "ANDROID", "SPARTAG", "CC", "POS", "GOM", "SPARTAR", "EGIFT", "XO" ]
         - name: location_id
           in: query
           description: The store id
@@ -652,6 +652,12 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/ChecklistCategoryTO'
+      checklist_checked_count:
+        type: integer
+        format: int32
+      checklist_total_count:
+        type: integer
+        format: int32
 
   ChecklistCategoryTO:
     type: object
@@ -668,13 +674,19 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/SubcategoryTO'
+      category_checked_count:
+        type: integer
+        format: int32
+      category_total_count:
+        type: integer
+        format: int32
 
   SubcategoryTO:
     type: object
     properties:
       checklist_id:
         type: integer
-      subcategory_child_ids:
+      subcategory_taxonomy_ids:
         type: string
       subcategory_name:
         type: string
@@ -700,6 +712,10 @@ definitions:
         type: string
       image_url:
         type: string
+      alternate_image_urls:
+        type: array
+        items:
+          type: string
       added_ts:
         type: string
         format: date-time

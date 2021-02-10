@@ -44,7 +44,7 @@ class DeleteChecklistFunctionalTest extends BasePersistenceFunctionalTest{
 
     def "test delete checklists integrity"() {
         given:
-        String uri = "registry_checklists/v1/checklist_templates?template_id=1&channel=web&sub_channel=kiosk"
+        String uri = "registry_checklists/v1/checklist_templates?template_id=1&channel=web&sub_channel=TGTWEB"
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 401)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.WEDDING, "name", true, 1, "categoryId", "categoryName",
@@ -71,7 +71,7 @@ class DeleteChecklistFunctionalTest extends BasePersistenceFunctionalTest{
 
     def "test delete checklists - passing checklist templateId which is not a resource in the checklist template table"() {
         given:
-        String uri = "registry_checklists/v1/checklist_templates?template_id=3&channel=web&sub_channel=kiosk"
+        String uri = "registry_checklists/v1/checklist_templates?template_id=3&channel=web&sub_channel=TGTWEB"
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 401)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "name", true, 1, "categoryId", "categoryName",

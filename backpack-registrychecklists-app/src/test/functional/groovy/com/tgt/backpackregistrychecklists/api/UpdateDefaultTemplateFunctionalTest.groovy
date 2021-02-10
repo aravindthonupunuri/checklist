@@ -60,8 +60,8 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
     def "test update default template - integrity"() {
         def guestId = "1234"
         def templateId = 2
-        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+templateId+"?channel=WEB&sub_channel=KIOSK"
-        def getRegistryDetailsUri = "/registries/v2/"+registryId+"/get_details"
+        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+templateId+"?channel=WEB&sub_channel=TGTWEB"
+        def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
         def checklistTemplate1 = new ChecklistTemplate(new ChecklistTemplatePK(2, 201), RegistryType.BABY,
             "firstChecklistName", true, 1, "963002", "strollers and car seats", "name",
@@ -97,7 +97,7 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
                 category.subcategories.size() == 1 &&
                 category.subcategories.findAll( subcategory ->
                     subcategory.checklistId == 201 &&
-                        subcategory.subcategoryChildIds == "5xtjw" &&
+                        subcategory.subcategoryTaxonomyIds == "5xtjw" &&
                         subcategory.itemCount == 1 &&
                         subcategory.lastUpdatedItem.tcin == "12954094"
                 ).size() == 1
@@ -110,8 +110,8 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
     def "test update default template - multiple categories"() {
         def guestId = "1234"
         def templateId = 3
-        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+templateId+"?channel=WEB&sub_channel=KIOSK"
-        def getRegistryDetailsUri = "/registries/v2/"+registryId+"/get_details"
+        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+templateId+"?channel=WEB&sub_channel=TGTWEB"
+        def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
         def checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK(3, 203), RegistryType.BABY,
             "firstChecklistName", true, 1, "963003", "strollers and car seats", "name",
@@ -145,7 +145,7 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
                 category.subcategories.size() == 1 &&
                 category.subcategories.findAll( subcategory ->
                     subcategory.checklistId == 203 &&
-                        subcategory.subcategoryChildIds == "5q0ev" &&
+                        subcategory.subcategoryTaxonomyIds == "5q0ev" &&
                         subcategory.itemCount == 0 &&
                         subcategory.lastUpdatedItem == null
                 ).size() == 1
@@ -158,8 +158,8 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
     def "test update default template - multiple subcategory childIds"() {
         def guestId = "1234"
         def templateId = 4
-        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+templateId+"?channel=WEB&sub_channel=KIOSK"
-        def getRegistryDetailsUri = "/registries/v2/"+registryId+"/get_details"
+        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+templateId+"?channel=WEB&sub_channel=TGTWEB"
+        def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
         def checklistTemplate3 = new ChecklistTemplate(new ChecklistTemplatePK(4, 204), RegistryType.BABY,
             "firstChecklistName", true, 1, "963003", "strollers and car seats", "name",
@@ -193,7 +193,7 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
                 category.subcategories.size() == 1 &&
                 category.subcategories.findAll( subcategory ->
                     subcategory.checklistId == 204 &&
-                        subcategory.subcategoryChildIds == "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u" &&
+                        subcategory.subcategoryTaxonomyIds == "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u" &&
                         subcategory.itemCount == 1 &&
                         subcategory.lastUpdatedItem.tcin == "12954094"
                 ).size() == 1
@@ -206,8 +206,8 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
     def "test update default template - no checklist exists for the given templateId"() {
         def guestId = "1234"
         def templateId = 33
-        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+templateId+"?channel=WEB&sub_channel=KIOSK"
-        def getRegistryDetailsUri = "/registries/v2/"+registryId+"/get_details"
+        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+templateId+"?channel=WEB&sub_channel=TGTWEB"
+        def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
         when:
         client.toBlocking().exchange(HttpRequest.PUT(uri, "").headers(DataProvider.getHeaders(guestId)), ChecklistResponseTO)
@@ -224,8 +224,8 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
         def guestId = "1234"
         def templateId = 4
         def registryId = UUID.randomUUID()
-        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+templateId+"?channel=WEB&sub_channel=KIOSK"
-        def getRegistryDetailsUri = "/registries/v2/"+registryId+"/get_details"
+        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+templateId+"?channel=WEB&sub_channel=TGTWEB"
+        def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
         when:
         client.toBlocking().exchange(HttpRequest.PUT(uri, "").headers(DataProvider.getHeaders(guestId)), ChecklistResponseTO)
