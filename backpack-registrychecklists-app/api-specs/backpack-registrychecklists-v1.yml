@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.0.4
+  version: 1.0.5
   title: registries_checklists-v1
   description: Api to get list of checklist items for a given registry type
 host: api.target.com
@@ -51,7 +51,7 @@ x-api-definition:
     - description: slack
       id: GQ10ZD7UZ
   slack_channel_id: GQ10ZD7UZ
-  nuid_ad_groups: APP-BACKPACK-REGISTRY-PROD-READ
+  nuid_ad_groups: [APP-BACKPACK-REGISTRY-PROD-READ]
   risk_rating: MEDIUM
   last_pentest_date: null
   links:
