@@ -1,0 +1,154 @@
+micronaut:
+  application:
+    name: backpack-registrychecklists-migration-consumer
+  server:
+    host: ${backpack-registrychecklists-migration-consumer-host:localhost}
+    port: 8085
+    idle-timeout: 2000ms
+  http:
+    client.connect-ttl: 30m
+    client.pool.acquire-timeout: 2000ms
+    services:
+      redsky-api:
+        urls:
+          - "https://redsky-stage.perf.target.com"
+        connect-timeout: 1500ms
+        read-timeout: 1500ms
+        pool:
+          enabled: true
+          max-connections: 128
+          max-pending-acquires: 50
+  metrics:
+    binders:
+      web:
+        enabled: false # we are using our own binder via our custom micronaut-metrics lib
+lists:
+  metrics:
+    binders:
+      http:
+        enabled: true # we are using our own binder via our custom micronaut-metrics lib
+
+jdbc-stmt:
+  serverStatementTimeoutMillis: 250  # for server side statement timeout
+  statementQueryTimeoutSeconds: 1    # for client side statement timeout
+
+jackson:
+  property-naming-strategy: "SNAKE_CASE"
+
+api-key: ${api-key}
+
+kafka:
+  bootstrap:
+    servers: ${kafka-vip}
+  consumers:
+    backpack-registrychecklists-migration-consumer-stage:
+      key:
+        deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value:
+        deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+    backpack-registrychecklists-migration-dlq-consumer-stage:
+      key:
+        deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value:
+        deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+    producers:
+      # default is a Jackson based JSON serializer for key/value
+      backpack-registrychecklists-migration-producer-stage:
+        retries: 3
+        retry:
+          backoff:
+            ms: 1000
+        max:
+          in:
+            flight:
+              requests:
+                per:
+                  connection: 1
+          block:
+            ms: 2000
+    embedded:
+      enabled: false
+
+filter:
+  server:
+    order:
+      lists-brave-tracing-server-filter: 100
+      lists-traceid-filter: 101
+      list-authorization-filter: 200
+      registry-channel-subchannel-filter: 400
+  client:
+    order:
+      lists-brave-tracing-client-filter: 900
+      resilience-client-filter: 800
+      oauth-filter: 701
+      oauth-key-filter: 700
+
+logging:
+  mdc:
+    enabled: true
+    keys:
+      - profile_id
+      - x-api-id
+
+resilience4j:
+  circuit-breaker:
+    failure-rate-threshold: 50            # failure rate threshold in percentage (default: 50)
+    wait-duration-secs-in-open-state: 10  # time cb waits before transitioning from open to half-open (default: 60s)
+    sliding-window-type: TIME_BASED       # possible values TIME_BASED or COUNT_BASED (default: COUNT_BASED)
+    sliding-window-size: 100               # seconds for TIME_BASED, request-count for COUNT_BASED (default: 100)
+    minimum-number-of-calls: 10            # min calls required (per sliding window period) before cb calculates error rate (default: 10)
+    permitted-number-of-calls-in-half-open-state: 10  # min calls permitted when circuit breaker is half open
+
+tracing:
+  zipkin:
+    enabled: true
+    excluded-paths: /health
+    b3-propagation-suppress: true
+    sample-rate-percent: 0.5
+    http:
+      url: "https://zipkinserver.dev.target.com"
+
+list:
+  list-type: REGISTRY
+  max-count: 50
+  max-pending-item-count: 100
+  max-completed-items-count: 100
+  abandon-after-duration-in-days: 730 # It is two years duration
+  redsky-batch-size: 28
+  features.dedupe: true
+  features.sort-position: true
+
+components:
+  server:
+    list-authorization-filter:
+      enabled: false
+    sanitizing-filter:
+      enabled: false
+    registry-channel-subchannel-filter:
+      enabled: false
+
+msgbus:
+  source: backpackregistrychecklists-migration-stage
+  dlq-source: backpackregistrychecklists-migration-dlq-stage
+  kafka:
+    consumer:
+      enabled: true
+    producer:
+      enabled: true
+    dlqconsumer:
+      enabled: true
+    dlqproducer:
+      enabled: true
+    topic: registry-internal-data-bus-stage
+    consumer-group: backpack-registrychecklists-migration-data-bus-stage-consumer
+    consumer-batch-size: 10
+    dlq-topic: registry-internal-data-bus-stage-dlq
+    dlq-consumer-group: backpack-registrychecklists-migration-data-bus-stage-dlq-consumer
+    dlq-event-retry-interval-secs: 1
+    dlq-max-event-retry-count: 3
+    dlq-consumer-batch-size: 10
+
+kafka-sources:
+  allow:
+    - migration-GRWS
+    - backpackregistrychecklists-migration-dlq-stage
