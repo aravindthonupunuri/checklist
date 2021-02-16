@@ -11,6 +11,7 @@ import reactor.core.publisher.Mono
 import spock.lang.Specification
 
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 class UpdateDefaultTemplateServiceTest extends Specification {
 
@@ -37,7 +38,7 @@ class UpdateDefaultTemplateServiceTest extends Specification {
 
         def responseTO = new ChecklistResponseTO(registryId, 1, templateId, [new ChecklistCategoryTO("963002", "strollers and car seats", 1,
             "category.image.url", [new SubcategoryTO(201, "5xtjw", "travel system", 1, "subcategory.image.url",
-            "reg_type=baby", 1, true, new ItemDetailsTO("12954094", "Item Title", "primary.image.url", ["alternate.image.url"], LocalDate.now(), LocalDate.now()))],
+            "reg_type=baby", 1, true, new ItemDetailsTO("12954094", "Item Title", "primary.image.url", ["alternate.image.url"], LocalDateTime.now(), LocalDateTime.now()))],
             1, 1)], 1,1)
 
         when:
@@ -75,8 +76,8 @@ class UpdateDefaultTemplateServiceTest extends Specification {
 
         def responseTO = new ChecklistResponseTO(registryId, 1, templateId, [new ChecklistCategoryTO("963002", "strollers and car seats", 1,
             "category.image.url", [new SubcategoryTO(201, "5xtjw", "travel system", 1, "subcategory.image.url",
-            "reg_type=baby", 1, true, new ItemDetailsTO("12954094", "Item Title", "primary.image.url", ["alternate.image.url"], LocalDate.now(), LocalDate.now()))], 0, 0),
-             new ChecklistCategoryTO("29504", "gear &amp; activity", 1,
+            "reg_type=baby", 1, true, new ItemDetailsTO("12954094", "Item Title", "primary.image.url", ["alternate.image.url"], LocalDateTime.now(), LocalDateTime.now()))], 0, 0),
+                                                                             new ChecklistCategoryTO("29504", "gear &amp; activity", 1,
                  "category.image.url", [new SubcategoryTO(208, "5q0eu", "baby carrier", 2, "subcategory.image.url",
                  "reg_type=baby", 0, true, null)], 0, 0)], 0, 0)
 
@@ -126,8 +127,8 @@ class UpdateDefaultTemplateServiceTest extends Specification {
 
         def responseTO = new ChecklistResponseTO(registryId, 1, templateId, [new ChecklistCategoryTO("963002", "strollers and car seats", 1,
             "category.image.url", [new SubcategoryTO(201, "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "stroller", 1, "subcategory.image.url",
-            "reg_type=baby", 1, true, new ItemDetailsTO("12954094", "Item Title", "primary.image.url", ["alternate.image.url"], LocalDate.now(), LocalDate.now()))], 0, 0),
-             new ChecklistCategoryTO("29504", "gear &amp; activity", 1,
+            "reg_type=baby", 1, true, new ItemDetailsTO("12954094", "Item Title", "primary.image.url", ["alternate.image.url"], LocalDateTime.now(), LocalDateTime.now()))], 0, 0),
+                                                                             new ChecklistCategoryTO("29504", "gear &amp; activity", 1,
                  "category.image.url", [new SubcategoryTO(208, "5q0eu", "baby carrier", 2, "subcategory.image.url",
                  "reg_type=baby", 0, true, null)], 0, 0)], 0, 0)
 
