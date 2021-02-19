@@ -10,7 +10,7 @@ import com.tgt.backpackregistryclient.util.RegistryType
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
-import io.micronaut.test.annotation.MicronautTest
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 

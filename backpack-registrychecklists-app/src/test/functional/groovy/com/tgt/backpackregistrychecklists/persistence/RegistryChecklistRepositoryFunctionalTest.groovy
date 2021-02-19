@@ -3,7 +3,7 @@ package com.tgt.backpackregistrychecklists.persistence
 import com.tgt.backpackregistrychecklists.domain.model.RegistryChecklist
 import com.tgt.backpackregistrychecklists.test.BasePersistenceFunctionalTest
 import com.tgt.backpackregistryclient.util.RegistrySubChannel
-import io.micronaut.test.annotation.MicronautTest
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import spock.lang.Shared

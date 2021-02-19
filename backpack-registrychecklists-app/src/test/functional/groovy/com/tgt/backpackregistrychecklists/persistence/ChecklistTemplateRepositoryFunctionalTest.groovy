@@ -4,7 +4,7 @@ import com.tgt.backpackregistrychecklists.domain.model.ChecklistTemplate
 import com.tgt.backpackregistrychecklists.domain.model.ChecklistTemplatePK
 import com.tgt.backpackregistrychecklists.test.BasePersistenceFunctionalTest
 import com.tgt.backpackregistryclient.util.RegistryType
-import io.micronaut.test.annotation.MicronautTest
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import spock.lang.Stepwise

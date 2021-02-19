@@ -105,18 +105,6 @@ tracing:
       env: dev
       region: tdc
 
-list:
-  list-type: REGISTRY
-  max-count: 50
-  max-pending-item-count: 100
-  max-completed-items-count: 100
-  abandon-after-duration-in-days: 730 # It is two years duration
-  redsky-batch-size: 28
-  features.dedupe: true
-  features.sort-position: true
-  features.fixed-default-list: false
-  default-web-store-id: 3991
-
 components:
   server:
     list-authorization-filter:
@@ -135,10 +123,12 @@ msgbus:
       enabled: false
     producer:
       enabled: true
+      client-id: backpack-registrychecklists-msg-bus-producer
     dlqconsumer:
       enabled: false
     dlqproducer:
       enabled: true
+      client-id: backpack-registrychecklists-dlq-producer
     topic: registry-internal-data-bus-stage
     consumer-group: backpack-registrychecklists-msg-bus-consumer
     consumer-batch-size: 10
@@ -150,3 +140,6 @@ msgbus:
 
 mockfilter:
   paths: /zipkin,/testserver/auth/oauth/v2/token,/,/redsky_aggregations/v1.*,/registries/v2.*
+
+list:
+  default-web-store-id: 3991

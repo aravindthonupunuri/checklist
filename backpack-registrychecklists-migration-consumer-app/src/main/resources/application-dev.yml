@@ -22,52 +22,10 @@ micronaut:
     binders:
       web:
         enabled: false # we are using our own binder via our custom micronaut-metrics lib
-lists:
-  metrics:
-    binders:
-      http:
-        enabled: true # we are using our own binder via our custom micronaut-metrics lib
 
-jdbc-stmt:
-  serverStatementTimeoutMillis: 250  # for server side statement timeout
-  statementQueryTimeoutSeconds: 1    # for client side statement timeout
-
-jackson:
-  property-naming-strategy: "SNAKE_CASE"
-
-api-key: ${api-key}
-
-kafka:
-  bootstrap:
-    servers: ${kafka-vip}
-  consumers:
-    backpack-registrychecklists-migration-consumer:
-      key:
-        deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value:
-        deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
-    backpack-registrychecklists-migration-dlq-consumer:
-      key:
-        deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value:
-        deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
-    producers:
-      # default is a Jackson based JSON serializer for key/value
-      backpack-registrychecklists-migration-producer:
-        retries: 3
-        retry:
-          backoff:
-            ms: 1000
-        max:
-          in:
-            flight:
-              requests:
-                per:
-                  connection: 1
-          block:
-            ms: 2000
-    embedded:
-      enabled: false
+postgres:
+  max-db-pool-size: 10
+  min-db-pool-size: 5
 
 filter:
   server:
@@ -82,41 +40,6 @@ filter:
       resilience-client-filter: 800
       oauth-filter: 701
       oauth-key-filter: 700
-
-logging:
-  mdc:
-    enabled: true
-    keys:
-      - profile_id
-      - x-api-id
-
-resilience4j:
-  circuit-breaker:
-    failure-rate-threshold: 50            # failure rate threshold in percentage (default: 50)
-    wait-duration-secs-in-open-state: 10  # time cb waits before transitioning from open to half-open (default: 60s)
-    sliding-window-type: TIME_BASED       # possible values TIME_BASED or COUNT_BASED (default: COUNT_BASED)
-    sliding-window-size: 100               # seconds for TIME_BASED, request-count for COUNT_BASED (default: 100)
-    minimum-number-of-calls: 10            # min calls required (per sliding window period) before cb calculates error rate (default: 10)
-    permitted-number-of-calls-in-half-open-state: 10  # min calls permitted when circuit breaker is half open
-
-tracing:
-  zipkin:
-    enabled: false
-    excluded-paths: /health
-    b3-propagation-suppress: true
-    sample-rate-percent: 0.5
-    http:
-      url: "https://zipkinserver.dev.target.com"
-
-list:
-  list-type: REGISTRY
-  max-count: 50
-  max-pending-item-count: 100
-  max-completed-items-count: 100
-  abandon-after-duration-in-days: 730 # It is two years duration
-  redsky-batch-size: 28
-  features.dedupe: true
-  features.sort-position: true
 
 components:
   server:
@@ -135,10 +58,12 @@ msgbus:
       enabled: true
     producer:
       enabled: true
+      client-id: backpack-registrychecklists-migration-producer
     dlqconsumer:
       enabled: true
     dlqproducer:
       enabled: true
+      client-id: backpack-registrychecklists-migration-dlq-producer
     topic: registry-internal-data-bus-stage
     consumer-group: backpack-registrychecklists-migration-consumer
     consumer-batch-size: 10
@@ -152,3 +77,44 @@ kafka-sources:
   allow:
     - migration-GRWS
     - backpackregistrychecklists-migration-dlq
+
+kafka:
+  bootstrap:
+    servers: kafka-ttc-app.dev.target.com:9093
+  ssl:
+    endpoint.identification.algorithm: ""# disable karka broker cert's hostname verification
+    keystore:
+      location: /lists-bus-keystore.jks
+      password: ${kafka-secret.keystore-password}
+    truststore:
+      location: /client-truststore.jks
+      password: ${kafka-secret.truststore-password}
+      type: PKCS12
+  security:
+    protocol: ssl
+  consumers:
+    backpack-registrychecklists-migration-consumer:
+      key:
+        deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value:
+        deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+    backpack-registrychecklists-migration-dlq-consumer:
+      key:
+        deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value:
+        deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+  producers:
+    # default is a Jackson based JSON serializer for key/value
+    backpack-registrychecklists-migration-producer:
+      retries: 3
+      retry:
+        backoff:
+          ms: 1000
+      max:
+        in:
+          flight:
+            requests:
+              per:
+                connection: 1
+        block:
+          ms: 2000

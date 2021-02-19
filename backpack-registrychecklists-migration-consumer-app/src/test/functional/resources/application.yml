@@ -108,17 +108,6 @@ tracing:
     http:
       url: "https://zipkinserver.dev.target.com"
 
-list:
-  list-type: REGISTRY
-  max-count: 50
-  max-pending-item-count: 100
-  max-completed-items-count: 100
-  abandon-after-duration-in-days: 730 # It is two years duration
-  redsky-batch-size: 28
-  features.dedupe: true
-  features.sort-position: true
-  features.fixed-default-list: false
-
 components:
   server:
     list-authorization-filter:
@@ -136,10 +125,12 @@ msgbus:
       enabled: true
     producer:
       enabled: true
+      client-id: backpack-registrychecklists-migration-producer
     dlqconsumer:
       enabled: true
     dlqproducer:
       enabled: true
+      client-id: backpack-registrychecklists-migration-dlq-producer
     topic: registry-internal-data-bus-stage
     consumer-group: backpack-registrychecklists-migration-consumer
     consumer-batch-size: 10
@@ -153,3 +144,6 @@ kafka-sources:
   allow:
     - migration-GRWS
     - backpackregistrychecklists-migration-dlq
+
+list:
+  default-web-store-id: 3991

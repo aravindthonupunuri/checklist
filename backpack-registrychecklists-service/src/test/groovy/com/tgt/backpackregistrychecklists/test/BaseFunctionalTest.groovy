@@ -43,8 +43,7 @@ abstract class BaseFunctionalTest extends Specification implements TestPropertyP
 
     MockServer mockServer
 
-    @Value('${list.list-type}')
-    String listType
+    String listType = "REGISTRY"
 
     @Value("\${msgbus.dlq-source}")
     String dlqSource
@@ -68,6 +67,7 @@ abstract class BaseFunctionalTest extends Specification implements TestPropertyP
             "tracing.zipkin.enabled": true,
             "tracing.zipkin.sample-rate-percent": 100
         ]
+        System.setProperty("APP_UUID", UUID.randomUUID().toString())
         return properties
     }
 

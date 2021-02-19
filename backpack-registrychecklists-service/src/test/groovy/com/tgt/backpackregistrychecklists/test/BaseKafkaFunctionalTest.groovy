@@ -46,7 +46,7 @@ abstract class BaseKafkaFunctionalTest extends BasePersistenceFunctionalTest imp
                 baseLogger.info("starting testcontainer kafka")
                 // kafka default for auto.create.topics.enable is "true" which means topics will be auto created
                 // when a producer tries to produce to a topic that doesn't exists yet.
-                kafkaContainer = new KafkaContainer("4.1.2")
+                kafkaContainer = new KafkaContainer("5.1.2")
                 kafkaContainer.start()
             }
 

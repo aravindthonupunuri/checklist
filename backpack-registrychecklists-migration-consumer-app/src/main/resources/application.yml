@@ -136,10 +136,12 @@ msgbus:
       enabled: true
     producer:
       enabled: true
+      client-id: backpack-registrychecklists-migration-producer
     dlqconsumer:
       enabled: true
     dlqproducer:
       enabled: true
+      client-id: backpack-registrychecklists-migration-dlq-producer
     topic: registry-internal-data-bus-stage
     consumer-group: backpack-registrychecklists-migration-consumer
     consumer-batch-size: 10

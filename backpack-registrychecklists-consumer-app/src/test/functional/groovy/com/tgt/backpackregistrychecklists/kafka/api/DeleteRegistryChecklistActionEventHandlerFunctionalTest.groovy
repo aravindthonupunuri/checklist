@@ -12,7 +12,7 @@ import com.tgt.backpackregistrychecklists.transport.kafka.model.DeleteChecklistA
 import com.tgt.lists.msgbus.ListsMessageBusProducer
 import com.tgt.lists.msgbus.event.EventHeaders
 import com.tgt.lists.msgbus.event.EventLifecycleNotificationProvider
-import io.micronaut.test.annotation.MicronautTest
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import io.opentracing.Tracer
 import org.jetbrains.annotations.NotNull
 import org.slf4j.Logger
