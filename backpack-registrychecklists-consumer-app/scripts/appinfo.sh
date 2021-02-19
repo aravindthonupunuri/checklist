@@ -10,6 +10,7 @@ appname=backpackregistrychecklistsconsumer
 gitorg=Registry-Modernization
 gitrepo=backpack-registrychecklists
 resources_location=$scriptDir/../src/main/resources
+service_resources_location=${scriptDir}/../../backpack-registrychecklists-service/src/main/resources
 secret_resources_location=$resources_location/secrets
 data_folder=${scriptDir}/../../data
 
