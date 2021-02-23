@@ -33,7 +33,7 @@ class GetChecklistTemplatesFunctionalTest extends BasePersistenceFunctionalTest{
     def "Test getAllTemplates - baby - single template"() {
         def guestId = "1234"
         def registryType = "BABY"
-        def uri = "/registry_checklists/v1/checklist_templates?registry_type="+registryType+"&channel=WEB&sub_channel=TGTWEB"
+        def uri = "/registries_checklists/v1/checklist_templates?registry_type="+registryType+"&channel=WEB&sub_channel=TGTWEB"
 
         checklistTemplateRepository.save(new ChecklistTemplate(new ChecklistTemplatePK( 1,
             101), RegistryType.BABY, "firstChecklistName", true, 1, "name", "name", "name",
@@ -57,7 +57,7 @@ class GetChecklistTemplatesFunctionalTest extends BasePersistenceFunctionalTest{
     def "Test getAllTemplates - baby - multiple templates"() {
         def guestId = "1234"
         def registryType = "BABY"
-        def uri = "/registry_checklists/v1/checklist_templates?registry_type="+registryType+"&channel=WEB&sub_channel=TGTWEB"
+        def uri = "/registries_checklists/v1/checklist_templates?registry_type="+registryType+"&channel=WEB&sub_channel=TGTWEB"
 
         checklistTemplateRepository.save(new ChecklistTemplate(new ChecklistTemplatePK( 1,
             111), RegistryType.BABY, "firstChecklistName", true, 2, "name", "name", "name",
@@ -87,7 +87,7 @@ class GetChecklistTemplatesFunctionalTest extends BasePersistenceFunctionalTest{
     def "test getChecklistTemplates - baby - multiple categories but single template"() {
         def guestId = "1234"
         def registryType = "BABY"
-        def uri = "/registry_checklists/v1/checklist_templates?registry_type="+registryType+"&channel=WEB&sub_channel=TGTWEB"
+        def uri = "/registries_checklists/v1/checklist_templates?registry_type="+registryType+"&channel=WEB&sub_channel=TGTWEB"
 
         ChecklistTemplate checklistTemplate3 = new ChecklistTemplate(new ChecklistTemplatePK( 1,
             100), RegistryType.BABY, "firstChecklistName", true, 3, "name", "name", "name",
@@ -114,7 +114,7 @@ class GetChecklistTemplatesFunctionalTest extends BasePersistenceFunctionalTest{
     def "test getChecklistTemplates - no templates for a registry type"() {
         def guestId = "1234"
         def registryType = "WEDDING"
-        def uri = "/registry_checklists/v1/checklist_templates?registry_type="+registryType+"&channel=WEB&sub_channel=TGTWEB"
+        def uri = "/registries_checklists/v1/checklist_templates?registry_type="+registryType+"&channel=WEB&sub_channel=TGTWEB"
 
         when:
         HttpResponse<RegistryChecklistTemplateResponseTO> getAllTemplatesResponse =
@@ -133,7 +133,7 @@ class GetChecklistTemplatesFunctionalTest extends BasePersistenceFunctionalTest{
     def "test getChecklistTemplates - wedding - multiple templates of different registryTypes"() {
         def guestId = "1234"
         def registryType = "WEDDING"
-        def uri = "/registry_checklists/v1/checklist_templates?registry_type="+registryType+"&channel=WEB&sub_channel=TGTWEB"
+        def uri = "/registries_checklists/v1/checklist_templates?registry_type="+registryType+"&channel=WEB&sub_channel=TGTWEB"
 
         ChecklistTemplate checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK( 2,
             100), RegistryType.WEDDING, "weddingChecklistName", true, 1, "name", "name", "name",

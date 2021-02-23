@@ -55,7 +55,7 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
 
     def "test get checklist info for a registryId - integrity"() {
         def guestId = "1234"
-        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates?channel=WEB&sub_channel=TGTWEB"
+        def uri = "/registries_checklists/v1/"+registryId+"/checklist_templates?channel=WEB&sub_channel=TGTWEB"
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
         def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", null, 2, 0, "itemTitle1",LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0), LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0)),
@@ -164,7 +164,7 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
     def "test get checklist info - if timestamps from getDetails are null"() {
         def guestId = "1234"
         def registryId = UUID.randomUUID()
-        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates?channel=WEB&sub_channel=TGTWEB"
+        def uri = "/registries_checklists/v1/"+registryId+"/checklist_templates?channel=WEB&sub_channel=TGTWEB"
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
         def items = [
@@ -214,7 +214,7 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
     def "test get checklist info - if redsky response is null"() {
         def guestId = "1234"
         def registryId = UUID.randomUUID()
-        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates?channel=WEB&sub_channel=TGTWEB"
+        def uri = "/registries_checklists/v1/"+registryId+"/checklist_templates?channel=WEB&sub_channel=TGTWEB"
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
         def items = [
@@ -260,7 +260,7 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
 
     def "test get checklist info - if there are no items in the registry"() {
         def guestId = "1234"
-        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates?channel=WEB&sub_channel=TGTWEB"
+        def uri = "/registries_checklists/v1/"+registryId+"/checklist_templates?channel=WEB&sub_channel=TGTWEB"
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
         RegistryDetailsResponseTO getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", "", null, [], null,
@@ -300,7 +300,7 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
     def "test get checklist info - if no checklist exists for the given templateId"() {
         def registryId = UUID.randomUUID()
         def guestId = "1234"
-        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates?channel=WEB&sub_channel=TGTWEB"
+        def uri = "/registries_checklists/v1/"+registryId+"/checklist_templates?channel=WEB&sub_channel=TGTWEB"
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
         registryChecklistRepository.save(new RegistryChecklist(registryId, 2, LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)).block()
@@ -319,7 +319,7 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
     def "test get checklist info - if registryId doesn't have an active checklist"() {
         def registryId = UUID.randomUUID()
         def guestId = "1234"
-        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates?channel=WEB&sub_channel=TGTWEB"
+        def uri = "/registries_checklists/v1/"+registryId+"/checklist_templates?channel=WEB&sub_channel=TGTWEB"
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
         when:

@@ -22,7 +22,7 @@ import java.util.*
 import javax.xml.stream.XMLInputFactory
 import javax.xml.stream.XMLStreamException
 
-@Controller("/registry_checklists/v1")
+@Controller("/registries_checklists/v1/")
 class RegistryChecklistController(
     private val createChecklistTemplateService: CreateChecklistTemplateService,
     private val getCheckListTemplatesService: GetChecklistTemplatesService,
@@ -137,7 +137,6 @@ class RegistryChecklistController(
      * @param channel channel
      * @param subChannel sub channel
      * @param locationId location id
-     * @param registryChecklistRequest Update template request body
      * @return Checklist response transfer object
      *
      */
@@ -163,7 +162,6 @@ class RegistryChecklistController(
      *
      * @param guestId guest id
      * @param registryId registry id
-     * @param checklistId checklist id
      * @param channel channel
      * @param subChannel sub channel
      * @param locationId location id
@@ -171,7 +169,7 @@ class RegistryChecklistController(
      * @return Registry checklist response transfer object
      *
      */
-    @Post("/{registry_id}/checklist_templates/{checklist_id}")
+    @Post("/{registry_id}/checklist_templates")
     @Status(HttpStatus.CREATED)
     @ApiResponse(
         content = [Content(mediaType = "application/json", schema = Schema(implementation = RegistryChecklistResponseTO::class))]
@@ -179,13 +177,12 @@ class RegistryChecklistController(
     fun markChecklist(
         @Header("profile_id") guestId: String,
         @PathVariable("registry_id") registryId: UUID,
-        @PathVariable("checklist_id") checklistId: Int,
         @QueryValue("location_id") locationId: Long?,
         @QueryValue("channel") channel: RegistryChannel,
         @QueryValue("sub_channel") subChannel: RegistrySubChannel,
         @Body registryChecklistRequest: RegistryChecklistRequestTO
     ): Mono<RegistryChecklistResponseTO> {
-        return markChecklistService.markChecklistId(registryId, checklistId, registryChecklistRequest.templateId, subChannel)
+        return markChecklistService.markChecklistId(registryId, registryChecklistRequest.checklistId, registryChecklistRequest.templateId, subChannel)
     }
 
     /**

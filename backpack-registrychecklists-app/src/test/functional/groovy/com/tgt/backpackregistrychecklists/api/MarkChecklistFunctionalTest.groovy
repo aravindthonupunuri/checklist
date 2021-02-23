@@ -41,16 +41,21 @@ class MarkChecklistFunctionalTest extends BasePersistenceFunctionalTest {
     @Inject
     ChecklistTemplateRepository checklistTemplateRepository
 
+    String uri
+    UUID registryId
+
+    def setup() {
+        registryId = UUID.randomUUID()
+        uri = "/registries_checklists/v1/"+registryId+"/checklist_templates?location_id=3991&channel=WEB&sub_channel=TGTWEB"
+    }
 
     def "test markChecklistId - happy path"() {
         given:
         def guestId = "1234"
-        def registryId = UUID.randomUUID()
         def checklistId = 201
         def templateId = 2
 
-        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
-        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=TGTWEB"
+        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId, checklistId)
 
         RegistryChecklist registryChecklist = new RegistryChecklist(registryId, templateId, LocalDate.now(), RegistrySubChannel.KIOSK.value,
             LocalDate.now(), RegistrySubChannel.KIOSK.value)
@@ -79,13 +84,10 @@ class MarkChecklistFunctionalTest extends BasePersistenceFunctionalTest {
     def "test markChecklistId - No templateId found for given registryId"() {
         given:
         def guestId = "1234"
-        def registryId = UUID.randomUUID()
         def checklistId = 201
         def templateId = 2
 
-        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
-        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=TGTWEB"
-
+        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId, checklistId)
         when:
         client.toBlocking().exchange(HttpRequest.POST(uri, registryChecklistRequest).headers(DataProvider.getHeaders(guestId)), RegistryChecklistResponseTO)
 
@@ -97,12 +99,10 @@ class MarkChecklistFunctionalTest extends BasePersistenceFunctionalTest {
     def "test markChecklistId - No checklistId found for given templateId"() {
         given:
         def guestId = "1234"
-        def registryId = UUID.randomUUID()
         def checklistId = 201
         def templateId = 3
 
-        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
-        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=TGTWEB"
+        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId, checklistId)
 
         RegistryChecklist registryChecklist = new RegistryChecklist(registryId, templateId, LocalDate.now(), RegistrySubChannel.KIOSK.value,
             LocalDate.now(), RegistrySubChannel.KIOSK.value)
@@ -120,12 +120,10 @@ class MarkChecklistFunctionalTest extends BasePersistenceFunctionalTest {
 
     def "test markChecklistId - Provided RegistryId - TemplateId combination is not valid"() {
         def guestId = "1234"
-        def registryId = UUID.randomUUID()
         def checklistId = 201
         def templateId = 2
 
-        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
-        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=TGTWEB"
+        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId, checklistId)
 
         RegistryChecklist registryChecklist = new RegistryChecklist(registryId, 4, LocalDate.now(), RegistrySubChannel.KIOSK.value,
             LocalDate.now(), RegistrySubChannel.KIOSK.value)
@@ -142,12 +140,10 @@ class MarkChecklistFunctionalTest extends BasePersistenceFunctionalTest {
 
     def "test markChecklistId - Provided TemplateId - ChecklistId combination is not valid"() {
         def guestId = "1234"
-        def registryId = UUID.randomUUID()
         def checklistId = 201
         def templateId = 1
 
-        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId)
-        def uri = "/registry_checklists/v1/"+registryId+"/checklist_templates/"+checklistId+"?template_id="+templateId+"&channel=WEB&sub_channel=TGTWEB"
+        RegistryChecklistRequestTO registryChecklistRequest = new RegistryChecklistRequestTO(templateId, checklistId)
 
         RegistryChecklist registryChecklist = new RegistryChecklist(registryId, templateId, LocalDate.now(), RegistrySubChannel.KIOSK.value,
             LocalDate.now(), RegistrySubChannel.KIOSK.value)

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "dcabe647-0520-4e23-b187-046622383690",
+		"_postman_id": "98e28c6b-4651-4d2b-91f3-a297058c1d96",
 		"name": "RegistryChecklists",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -37,12 +37,12 @@
 					]
 				},
 				"url": {
-					"raw": "{{host}}/registry_checklists/v1?channel={{channel}}&sub_channel={{sub_channel}}&registry_type={{registry_type}}&template_id={{template_id}}&checklist_name={{checklist_name}}&location_id={{location_id}}",
+					"raw": "{{host}}/registries_checklists/v1?channel={{channel}}&sub_channel={{sub_channel}}&registry_type={{registry_type}}&template_id={{template_id}}&checklist_name={{checklist_name}}&location_id={{location_id}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"registry_checklists",
+						"registries_checklists",
 						"v1"
 					],
 					"query": [
@@ -98,12 +98,12 @@
 					}
 				],
 				"url": {
-					"raw": "{{host}}/registry_checklists/v1/checklist_templates?channel={{channel}}&sub_channel={{sub_channel}}&template_id={{template_id}}&location_id={{location_id}}",
+					"raw": "{{host}}/registries_checklists/v1/checklist_templates?channel={{channel}}&sub_channel={{sub_channel}}&template_id={{template_id}}&location_id={{location_id}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"registry_checklists",
+						"registries_checklists",
 						"v1",
 						"checklist_templates"
 					],
@@ -152,7 +152,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n \"template_id\": 1\n}",
+					"raw": "{\n \"template_id\": 1,\n \"checklist_id\": 201\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -160,16 +160,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/registry_checklists/v1/{{registry_id}}/checklist_templates/{{checklist_id}}?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
+					"raw": "{{host}}/registries_checklists/v1/{{registry_id}}/checklist_templates?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"registry_checklists",
+						"registries_checklists",
 						"v1",
 						"{{registry_id}}",
-						"checklist_templates",
-						"{{checklist_id}}"
+						"checklist_templates"
 					],
 					"query": [
 						{
@@ -211,12 +210,12 @@
 					}
 				],
 				"url": {
-					"raw": "{{host}}/registry_checklists/v1/{{registry_id}}/checklist_templates/{{checklist_id}}/{{template_id}}?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
+					"raw": "{{host}}/registries_checklists/v1/{{registry_id}}/checklist_templates/{{checklist_id}}/{{template_id}}?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"registry_checklists",
+						"registries_checklists",
 						"v1",
 						"{{registry_id}}",
 						"checklist_templates",
@@ -263,12 +262,12 @@
 					}
 				],
 				"url": {
-					"raw": "{{host}}/registry_checklists/v1/checklist_templates?registry_type={{registry_type}}&channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
+					"raw": "{{host}}/registries_checklists/v1/checklist_templates?registry_type={{registry_type}}&channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"registry_checklists",
+						"registries_checklists",
 						"v1",
 						"checklist_templates"
 					],
@@ -316,12 +315,12 @@
 					}
 				],
 				"url": {
-					"raw": "{{host}}/registry_checklists/v1/{{registry_id}}/checklist_templates?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
+					"raw": "{{host}}/registries_checklists/v1/{{registry_id}}/checklist_templates?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"registry_checklists",
+						"registries_checklists",
 						"v1",
 						"{{registry_id}}",
 						"checklist_templates"
@@ -366,16 +365,16 @@
 					}
 				],
 				"url": {
-					"raw": "{{host}}/registry_checklists/v1/{{registry_id}}/checklist_templates?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
+					"raw": "{{host}}/registries_checklists/v1/{{registry_id}}/checklist_templates/{{template_id}}?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"registry_checklists",
+						"registries_checklists",
 						"v1",
 						"{{registry_id}}",
-                        "{{template_id}}",
-						"checklist_templates"
+						"checklist_templates",
+						"{{template_id}}"
 					],
 					"query": [
 						{
@@ -395,6 +394,5 @@
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

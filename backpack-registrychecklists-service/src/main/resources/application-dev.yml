@@ -46,7 +46,7 @@ logging:
       - profile_id
       - x-api-id
     filter:
-      path: /registry_checklists/v1/**
+      path: /registries_checklists/v1/**
 
 resilience4j:
   circuit-breaker:
