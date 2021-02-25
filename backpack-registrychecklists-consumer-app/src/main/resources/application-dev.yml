@@ -65,6 +65,7 @@ kafka-sources:
     - backpack-registry
     - backpack-registrychecklists
     - backpackregistrychecklists-migration
+    - backpackregistry-migration-stage
 
 kafka:
   bootstrap:
