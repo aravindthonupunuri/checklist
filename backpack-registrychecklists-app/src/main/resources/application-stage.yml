@@ -60,7 +60,7 @@ components:
       approver-email-ids:
         - Indrakumar.Thimmaiah@target.com
     list-authorization-filter:
-      enabled: false
+      enabled: true
       base-uri: /registry_checklists/v1
     id2-custom-scopes:
       names:
