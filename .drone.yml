@@ -66,6 +66,24 @@ pipeline:
       - 'tap_api_token=$TAP_API_TOKEN app_private_key=$BACKPACKREGISTRYCHECKLISTSCONSUMER_APP_PRIVATE_KEY_STAGE ./backpack-registrychecklists-consumer-app/scripts/config_deploy_manager.sh ${DRONE_TAG}'
       - 'tap_api_token=$TAP_API_TOKEN app_private_key=$BACKPACKREGISTRYCHECKLISTSMIGRATIONCONSUMER_APP_PRIVATE_KEY_STAGE ./backpack-registrychecklists-migration-consumer-app/scripts/config_deploy_manager.sh ${DRONE_TAG}'
 
+  publish-config-backpack-registrychecklists-prod:
+    when:
+      event: tag
+      ref: 'refs/tags/conf.prod.backpackregistrychecklists.*'
+      branch: master
+    image: 'docker.target.com/app/lists/alpine-bash-curl-ssl:1.0.5'
+    environment:
+      CICD_MODE: 'true'
+    secrets:
+      - TAP_API_TOKEN
+      - backpackregistrychecklists_app_private_key_prod
+      - backpackregistrychecklistsconsumer_app_private_key_prod
+      - backpackregistrychecklistsmigrationconsumer_app_private_key_prod
+    commands:
+      - 'tap_api_token=$TAP_API_TOKEN app_private_key=$BACKPACKREGISTRYCHECKLISTS_APP_PRIVATE_KEY_PROD ./backpack-registrychecklists-app/scripts/config_deploy_manager.sh ${DRONE_TAG}'
+      - 'tap_api_token=$TAP_API_TOKEN app_private_key=$BACKPACKREGISTRYCHECKLISTSCONSUMER_APP_PRIVATE_KEY_PROD ./backpack-registrychecklists-consumer-app/scripts/config_deploy_manager.sh ${DRONE_TAG}'
+      - 'tap_api_token=$TAP_API_TOKEN app_private_key=$BACKPACKREGISTRYCHECKLISTSMIGRATIONCONSUMER_APP_PRIVATE_KEY_PROD ./backpack-registrychecklists-migration-consumer-app/scripts/config_deploy_manager.sh ${DRONE_TAG}'
+
   build:
     when:
       event: [pull_request, push, tag]
@@ -134,6 +152,21 @@ pipeline:
       - {source: artifactory_username, target: plugin_username}
       - {source: artifactory_password, target: plugin_password}
 
+  publish-docker-backpack-registrychecklists-app-prod:
+    image: 'plugins/docker:latest'
+    group: prodimggroup
+    registry: docker.target.com
+    repo: docker.target.com/app/backpack-registrychecklists/backpack-registrychecklists-app
+    dockerfile: ./backpack-registrychecklists-app/Dockerfile
+    tags: 'prod.${DRONE_TAG:37}'
+    when:
+      event: tag
+      branch: master
+      ref: 'refs/tags/conf.prod.backpackregistrychecklists.*'
+    secrets:
+      - { source: artifactory_username, target: plugin_username }
+      - { source: artifactory_password, target: plugin_password }
+
   publish-docker-backpack-registrychecklists-consumer-app-dev:
     image: plugins/docker
     environment:
@@ -169,6 +202,23 @@ pipeline:
       - {source: artifactory_username, target: plugin_username}
       - {source: artifactory_password, target: plugin_password}
 
+  publish-docker-backpack-registrychecklists-consumer-app-prod:
+    image: 'plugins/docker:latest'
+    environment:
+      CICD_MODE: 'true'
+    group: prodimggroup
+    registry: docker.target.com
+    repo: docker.target.com/app/backpack-registrychecklists/backpack-registrychecklists-consumer-app
+    dockerfile: ./backpack-registrychecklists-consumer-app/Dockerfile
+    tags: 'prod.${DRONE_TAG:37}'
+    when:
+      event: tag
+      branch: master
+      ref: 'refs/tags/conf.prod.backpackregistrychecklists.*'
+    secrets:
+      - { source: artifactory_username, target: plugin_username }
+      - { source: artifactory_password, target: plugin_password }
+
   publish-docker-backpack-registrychecklists-migration-consumer-app-dev:
     image: plugins/docker
     environment:
@@ -200,6 +250,23 @@ pipeline:
       event: tag
       branch: master
       ref: 'refs/tags/conf.stage.backpackregistrychecklists.*'
+    secrets:
+      - { source: artifactory_username, target: plugin_username }
+      - { source: artifactory_password, target: plugin_password }
+
+  publish-docker-backpack-registrychecklists-migration-consumer-app-prod:
+    image: 'plugins/docker:latest'
+    environment:
+      CICD_MODE: 'true'
+    group: prodimggroup
+    registry: docker.target.com
+    repo: docker.target.com/app/backpack-registrychecklists/backpack-registrychecklists-migration-consumer-app
+    dockerfile: ./backpack-registrychecklists-migration-consumer-app/Dockerfile
+    tags: 'prod.${DRONE_TAG:37}'
+    when:
+      event: tag
+      branch: master
+      ref: 'refs/tags/conf.prod.backpackregistrychecklists.*'
     secrets:
       - { source: artifactory_username, target: plugin_username }
       - { source: artifactory_password, target: plugin_password }
@@ -241,3 +308,9 @@ secrets:
     path: secret/repo/Registry-Modernization/backpack-registrychecklists/backpackregistrychecklistsconsumer-privkey-stage
   backpackregistrychecklistsmigrationconsumer_app_private_key_stage:
     path: secret/repo/Registry-Modernization/backpack-registrychecklists/backpackregistrychecklistsmigrationconsumer-privkey-stage
+  backpackregistrychecklists_app_private_key_prod:
+    path: secret/repo/Registry-Modernization/backpack-registrychecklists/backpackregistrychecklists-privkey-prod
+  backpackregistrychecklistsconsumer_app_private_key_prod:
+    path: secret/repo/Registry-Modernization/backpack-registrychecklists/backpackregistrychecklistsconsumer-privkey-prod
+  backpackregistrychecklistsmigrationconsumer_app_private_key_prod:
+    path: secret/repo/Registry-Modernization/backpack-registrychecklists/backpackregistrychecklistsmigrationconsumer-privkey-prod

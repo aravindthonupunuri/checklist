@@ -1,0 +1,109 @@
+micronaut:
+  application:
+    name: backpack-registrychecklists-consumer
+  server:
+    host: ${backpack-registrychecklists-consumer-host:localhost}
+    port: 8080
+    idle-timeout: 2000ms
+  metrics:
+    binders:
+      web:
+        enabled: false # we are using our own binder via our custom micronaut-metrics lib
+
+postgres:
+  max-db-pool-size: 10
+  min-db-pool-size: 5
+
+filter:
+  server:
+    order:
+      lists-brave-tracing-server-filter: 100
+      lists-traceid-filter: 101
+      list-authorization-filter: 200
+      registry-channel-subchannel-filter: 400
+  client:
+    order:
+      lists-brave-tracing-client-filter: 900
+      resilience-client-filter: 800
+      oauth-filter: 701
+      oauth-key-filter: 700
+
+components:
+  server:
+    list-authorization-filter:
+      enabled: false
+    sanitizing-filter:
+      enabled: false
+    registry-channel-subchannel-filter:
+      enabled: false
+
+msgbus:
+  source: backpack-registrychecklists-prod
+  dlq-source: backpackregistrychecklists-dlq-prod
+  kafka:
+    consumer:
+      enabled: true
+    producer:
+      enabled: true
+      client-id: backpack-registrychecklists-con-data-bus-prod-producer
+    dlqconsumer:
+      enabled: true
+    dlqproducer:
+      enabled: true
+      client-id: backpack-registrychecklists-con-dlq-prod-producer
+    topic: registry-internal-data-bus-prod
+    consumer-group: backpack-registrychecklists-con-data-bus-prod-consumer
+    consumer-batch-size: 100
+    dlq-topic: registry-internal-data-bus-prod-dlq
+    dlq-consumer-group: backpack-registrychecklists-con-dlq-prod-consumer
+    dlq-event-retry-interval-secs: 1
+    dlq-max-event-retry-count: 3
+    dlq-consumer-batch-size: 50
+
+kafka-sources:
+  allow:
+    - backpack-registry-prod
+    - backpack-registrychecklists-prod
+    - backpackregistrychecklists-migration-prod
+    - backpackregistry-migration-prod
+
+kafka:
+  bootstrap:
+    servers: ${kafkaenv.servers}
+  ssl:
+    endpoint.identification.algorithm: ""# disable karka broker cert's hostname verification
+    keystore:
+      location: /lists-bus-keystore.jks
+      password: ${kafka-secret.keystore-password}
+    truststore:
+      location: /client-truststore.jks
+      password: ${kafka-secret.truststore-password}
+      type: PKCS12
+  security:
+    protocol: ssl
+  consumers:
+    backpack-registrychecklists-con-data-bus-prod-consumer:
+      key:
+        deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value:
+        deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+    backpack-registrychecklists-con-dlq-prod-consumer:
+      key:
+        deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value:
+        deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+  producers:
+    # default is a Jackson based JSON serializer for key/value
+    backpack-registrychecklists-con-data-bus-prod-producer:
+      retries: 3
+      retry:
+        backoff:
+          ms: 1000
+      max:
+        in:
+          flight:
+            requests:
+              per:
+                connection: 1
+        block:
+          ms: 2000

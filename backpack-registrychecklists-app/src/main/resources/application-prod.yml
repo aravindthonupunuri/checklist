@@ -1,0 +1,127 @@
+micronaut:
+  application:
+    name: backpack-registrychecklists-app
+  server:
+    port: 8080
+  http:
+    client.connect-ttl: 30m
+    client.pool.acquire-timeout: 2000ms
+    services:
+      redsky-api:
+        urls:
+          - "https://redsky.target.com"
+        pool:
+          enabled: false
+      backpack-registry-api:
+        urls:
+          - "https://backpackregistry.prod.target.com"
+        pool:
+          enabled: false
+  metrics:
+    binders:
+      web:
+        enabled: false # we are using our own binder via our custom micronaut-metrics lib
+
+postgres:
+  max-db-pool-size: 10
+  min-db-pool-size: 5
+
+filter:
+  server:
+    order:
+      mdc-filter: 50
+      onbehalf-filter: 51
+      lists-brave-tracing-server-filter: 100
+      list-authorization-filter: 200
+      sanitizing-filter: 300
+      registry-channel-subchannel-filter: 400
+  client:
+    order:
+      lists-brave-tracing-client-filter: 900
+      metrics-filter: 850
+      resilience-client-filter: 800
+      oauth-filter: 701
+      oauth-key-filter: 700
+
+components:
+  apispec:
+    filepath: apispec/backpack-registrychecklists-v1.yml
+  errocodes:
+    classes:
+      - com.tgt.lists.common.components.exception.BaseErrorCodes #Haven't defined app specific error codes yet
+  server:
+    onbehalf-filter:
+      enabled: true
+      gsp-validation-base-url: "https://backpackregistrychecklists.prod.target.com"
+      team-email-ids:
+        - Indrakumar.Thimmaiah@target.com
+        - Kiran.Shivalingaiah@target.com
+        - Parthasarathy.Hd@target.com
+      approver-email-ids:
+        - Indrakumar.Thimmaiah@target.com
+    list-authorization-filter:
+      enabled: true
+      base-uri: /registry_checklists/v1
+    id2-custom-scopes:
+      names:
+        - axiom.user
+        - axiom.admin
+        - axiom.leader
+      profile-header: member_id
+    registry-channel-subchannel-filter:
+      base-uri: /registry_checklists/v1
+    sanitizing-filter:
+      enabled: true
+
+msgbus:
+  source: backpack-registrychecklists-prod
+  dlq-source: backpackregistrychecklists-dlq-prod
+  kafka:
+    consumer:
+      enabled: false
+    producer:
+      enabled: true
+      client-id: backpack-registrychecklists-app-data-bus-prod-producer
+    dlqconsumer:
+      enabled: false
+    dlqproducer:
+      enabled: false
+      client-id: backpack-registrychecklists-app-prod-dlq-producer
+    topic: registry-internal-data-bus-prod
+    consumer-group: backpack-registrychecklists-app-data-bus-prod-consumer
+    consumer-batch-size: 10
+    dlq-topic: registry-internal-data-bus-prod-dlq
+    dlq-consumer-group: backpack-registrychecklists-app-dlq-prod-consumer
+    dlq-event-retry-interval-secs: 1
+    dlq-max-event-retry-count: 2
+    dlq-consumer-batch-size: 10
+
+kafka:
+  bootstrap:
+    servers: ${kafkaenv.servers}
+  ssl:
+    endpoint.identification.algorithm: ""# disable karka broker cert's hostname verification
+    keystore:
+      location: /lists-bus-keystore.jks
+      password: ${kafka-secret.keystore-password}
+    truststore:
+      location: /client-truststore.jks
+      password: ${kafka-secret.truststore-password}
+      type: PKCS12
+  security:
+    protocol: ssl
+  producers:
+    # default is a Jackson based JSON serializer for key/value
+    backpack-registrychecklists-app-data-bus-prod-producer:
+      retries: 3
+      retry:
+        backoff:
+          ms: 1000
+      max:
+        in:
+          flight:
+            requests:
+              per:
+                connection: 1
+        block:
+          ms: 2000
