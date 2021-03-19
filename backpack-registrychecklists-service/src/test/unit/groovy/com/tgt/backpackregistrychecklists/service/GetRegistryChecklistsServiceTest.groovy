@@ -270,6 +270,51 @@ class GetRegistryChecklistsServiceTest extends Specification{
         ).size() == 1
     }
 
+    def "test get checklist info - if redsky returns empty response"() {
+        given:
+        def guestId = "1234"
+
+        when:
+        def result = getRegistryChecklistsService.getChecklistsForRegistryId(registryId, guestId, channel, subChannel).block()
+
+        then:
+        1 * registryChecklistRepository.find(registryId) >> Mono.just(registryChecklist)
+        1 * checklistTemplateRepository.findByTemplateId(1) >> Flux.just(checklistTemplate1, checklistTemplate2, checklistTemplate3)
+        1 * backPackRegistryClient.getRegistryDetails(*_) >> Mono.just(getRegistryDetailsResponse)
+        1 * redSkyClient.getRegistryItemTaxonomyDetails("12954094", _) >> Mono.empty()
+        1 * redSkyClient.getRegistryItemTaxonomyDetails("22222", _) >> Mono.empty()
+        1 * redSkyClient.getRegistryItemTaxonomyDetails("55555", _) >> Mono.empty()
+        1 * registryChecklistSubCategoryRepository.findByRegistryIdAndTemplateId(registryId, 1) >> Flux.just(checkedSubcategories1, checkedSubcategories2)
+
+        result != null
+        result.registryId == registryId
+        result.registryItemCount == 0
+        result.categories.size() == 1
+        result.checklistCheckedCount == 2
+        result.checklistTotalCount == 3
+        result.categories.findAll( category ->
+            category.categoryId == "963002" &&
+                category.categoryTotalCount == 3 &&
+                category.categoryCheckedCount == 2 &&
+                category.subcategories.size() == 3 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 201 &&
+                        subcategory.subcategoryTaxonomyIds == "5xtjw" &&
+                        subcategory.itemCount == 0 &&
+                        subcategory.lastUpdatedItem == null
+                ).size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 202
+                ).size() == 1 &&
+                category.subcategories.findAll( subcategory ->
+                    subcategory.checklistId == 203 &&
+                        subcategory.subcategoryTaxonomyIds == "5q0ev" &&
+                        subcategory.itemCount == 0 &&
+                        subcategory.lastUpdatedItem == null
+                ).size() == 1
+        ).size() == 1
+    }
+
     def "test get checklist info - if registry details response is empty"() {
         given:
         def guestId = "1234"
@@ -398,7 +443,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
         then:
         1 * registryChecklistRepository.find(registryId) >> Mono.empty()
         0 * checklistTemplateRepository.findByTemplateId(1) >> Flux.empty()
-        0 * backPackRegistryClient.getRegistry(*_) >> Mono.just(new RegistryDetailsResponseTO())
+        0 * backPackRegistryClient.getRegistryDetails(*_) >> Mono.just(new RegistryDetailsResponseTO())
         0 * registryChecklistSubCategoryRepository.findByRegistryIdAndTemplateId(registryId, 1) >> Flux.just(checkedSubcategories1)
 
         def error = thrown(BadRequestException)

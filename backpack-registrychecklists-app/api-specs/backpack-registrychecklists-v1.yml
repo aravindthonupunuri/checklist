@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.0.6
+  version: 1.0.7
   title: registries_checklists-v1
   description: Api to get list of checklist items for a given registry type
 host: api.target.com
@@ -687,7 +687,7 @@ definitions:
         type: string
       subcategory_display_order:
         type: integer
-      subcategory_url:
+      subcategory_image_url:
         type: string
       plp_param:
         type: string

@@ -7,7 +7,7 @@ data class SubcategoryTO(
     val subcategoryTaxonomyIds: String?,
     val subcategoryName: String?,
     val subcategoryDisplayOrder: Int?,
-    val subcategoryUrl: String?,
+    val subcategoryImageUrl: String?,
     val plpParam: String?,
     var itemCount: Long = 0,
     var checked: Boolean = false,
@@ -18,6 +18,6 @@ data class SubcategoryTO(
     ) :
         this(
             checklistId = checklistTemplate.checklistTemplatePK.checklistId, subcategoryTaxonomyIds = checklistTemplate.subcategoryChildIds, subcategoryName = checklistTemplate.subcategoryName,
-            subcategoryDisplayOrder = checklistTemplate.subcategoryOrder, subcategoryUrl = checklistTemplate.subcategoryUrl, checked = false, plpParam = checklistTemplate.plpParam, itemCount = 0
+            subcategoryDisplayOrder = checklistTemplate.subcategoryOrder, subcategoryImageUrl = checklistTemplate.subcategoryUrl, checked = false, plpParam = checklistTemplate.plpParam, itemCount = 0
         )
 }

@@ -33,8 +33,6 @@ class GetRegistryChecklistsService(
 ) {
     private val logger = KotlinLogging.logger { GetRegistryChecklistsService::class.java.name }
     @Value("\${list.default-web-store-id}") private val storeId: Long = 3991
-    private var checklistTotalCount: Int = 0
-    private var checklistCheckedCount: Int = 0
 
     fun getChecklistsForRegistryId(
         registryId: UUID,
@@ -69,11 +67,12 @@ class GetRegistryChecklistsService(
                         // Make a call to getDetails api of bp-registry
                         getDetailsResponse(registryId, guestId, channel, subChannel)
                             .flatMap {
-                                if (it?.registryItems.isNullOrEmpty())
+                                if (it.registryItems.isNullOrEmpty())
                                     Mono.just(emptyList())
                                 else
-                                    it?.registryItems?.let { it1 -> getItemDetailsFromRedsky(it1) }
-                            }.switchIfEmpty {
+                                    getItemDetailsFromRedsky(it.registryItems!!)
+                            }
+                            .switchIfEmpty {
                                 Mono.just(emptyList())
                             }
                     }
@@ -83,6 +82,8 @@ class GetRegistryChecklistsService(
                             .flatMap {
                                 markSubcategories(registryId, templateId, it)
                                     .map { categoryList ->
+                                        val checklistTotalCount = categoryList.map { it.categoryTotalCount }.sum()
+                                        val checklistCheckedCount = categoryList.map { it.categoryCheckedCount }.sum()
                                         logger.info { "checkedCount - $checklistCheckedCount, totalCount = $checklistTotalCount, categoryList - $categoryList" }
                                         ChecklistResponseTO(registryId = registryId, registryItemCount = itemDetails.size.toLong(),
                                             templateId = templateId, categories = categoryList, checklistCheckedCount = checklistCheckedCount, checklistTotalCount = checklistTotalCount)
@@ -126,8 +127,6 @@ class GetRegistryChecklistsService(
                 if (it.checked) categoryTO.categoryCheckedCount += 1
             }
             categoryTO.categoryTotalCount = categoryTO.subcategories?.size ?: 0
-            checklistCheckedCount += categoryTO.categoryCheckedCount
-            checklistTotalCount += categoryTO.categoryTotalCount
             categoryList.add(categoryTO)
         }
         return categoryList.toFlux()
@@ -172,7 +171,6 @@ class GetRegistryChecklistsService(
                         }
                     }
                     it.categoryCheckedCount += categoryCheckedCount
-                    checklistCheckedCount += categoryCheckedCount
                 }
                 categoryList
             }
@@ -183,7 +181,7 @@ class GetRegistryChecklistsService(
         guestId: String,
         channel: RegistryChannel,
         subChannel: RegistrySubChannel
-    ): Mono<RegistryDetailsResponseTO?> {
+    ): Mono<RegistryDetailsResponseTO> {
         return backpackClient.getRegistryDetails(guestId, registryId, storeId, channel, subChannel, false)
             .switchIfEmpty {
                 logger.error("Empty response from get Details API")
@@ -198,13 +196,24 @@ class GetRegistryChecklistsService(
         registryDetails: List<RegistryItemsBasicInfoTO>
     ): Mono<List<ChecklistItemTO>> {
         // Make call to Redsky to get ItemDetails
-        return registryDetails.toFlux()
+        return registryDetails
+            .filter { !it.tcin.isNullOrEmpty() }
+            .toFlux()
             .flatMap { registryItems ->
-                registryItems.tcin?.let { it1 -> redskyHydrationManager.getRegistryItemTaxonomyDetails(it1) }
-                    ?.map {
+                redskyHydrationManager.getRegistryItemTaxonomyDetails(registryItems.tcin!!)
+                    .switchIfEmpty {
+                        logger.info("Empty respose from redsky for the tcin - ${registryItems.tcin!!}")
+                        Mono.empty()
+                    }
+                    .onErrorResume {
+                        logger.error("Error while getting item taxonomy details from redsky - $it")
+                        Mono.empty()
+                    }
+                    .map {
                         ChecklistItemTO(nodeId = it.taxonomy?.category?.nodeId, itemDetails = ItemDetailsTO(it.tcin, it.item?.productDescription?.title, it.item?.enrichment?.images?.primaryImageUrl,
                             it.item?.enrichment?.images?.alternateImageUrls, registryItems?.addedTs, registryItems?.lastModifiedTs))
                     }
-            }.collectList()
+            }
+            .collectList()
     }
 }
