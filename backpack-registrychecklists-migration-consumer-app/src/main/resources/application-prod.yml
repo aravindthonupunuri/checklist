@@ -76,7 +76,6 @@ msgbus:
 kafka-sources:
   allow:
     - migration-GRWS
-    - backpackregistrychecklists-migration-dlq-prod
 
 kafka:
   bootstrap:
