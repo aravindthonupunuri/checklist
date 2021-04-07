@@ -11,6 +11,8 @@ import com.tgt.backpackregistrychecklists.transport.ChecklistResponseTO
 import com.tgt.backpackregistryclient.transport.RedskyResponseTO
 import com.tgt.backpackregistryclient.transport.RegistryDetailsResponseTO
 import com.tgt.backpackregistryclient.transport.RegistryItemsBasicInfoTO
+import com.tgt.backpackregistryclient.util.RegistrySearchVisibility
+import com.tgt.backpackregistryclient.util.RegistryStatus
 import com.tgt.backpackregistryclient.util.RegistrySubChannel
 import com.tgt.backpackregistryclient.util.RegistryType
 import io.micronaut.http.HttpRequest
@@ -67,7 +69,7 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
 
 
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", "", null,
-            items, null, null, null, null, LocalDate.now())
+            items, null, null, null, null, LocalDate.now(), RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE)
         RedskyResponseTO redskyResponseTO1 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("12954094", "5xtjw"))
         RedskyResponseTO redskyResponseTO2 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("22222", "5xtjw"))
         RedskyResponseTO redskyResponseTO3 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("55555", "5q0ev"))
@@ -173,7 +175,7 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         ]
 
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "","", null, items, null,
-            null, null, null, LocalDate.now())
+            null, null, null, LocalDate.now(), RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE)
 
         RedskyResponseTO redskyResponseTO4 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("44444", "5xtk4"))
         RedskyResponseTO redskyResponseTO5 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("33333", "54x8u"))
@@ -223,7 +225,7 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         ]
 
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", "",null, items, null,
-            null, null, null, LocalDate.now())
+            null, null, null, LocalDate.now(), RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE)
 
         RedskyResponseTO redskyResponseTO4 = new RedskyResponseTO(null, null)
         RedskyResponseTO redskyResponseTO5 = new RedskyResponseTO(null, null)
@@ -264,7 +266,7 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
         RegistryDetailsResponseTO getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", "", null, [], null,
-            null, null, null, LocalDate.now())
+            null, null, null, LocalDate.now(), RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE)
 
         when:
         HttpResponse<ChecklistResponseTO> getChecklistsResponse =

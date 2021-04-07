@@ -60,6 +60,7 @@ class CreateListNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalTest
     static String registryType
     static String channel
     static String subChannel
+    static String location
 
     @Override
     Logger getLogger() {
@@ -74,6 +75,7 @@ class CreateListNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalTest
         registryType = RegistryType.BABY.name()
         channel = RegistryChannel.WEB.name()
         subChannel =  RegistrySubChannel.TGTWEB.name()
+        location = "3991"
     }
 
     def setup() {
@@ -86,8 +88,8 @@ class CreateListNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalTest
         guestId = UUID.randomUUID().toString()
 
         def createListNotifyEvent = new CreateListNotifyEvent(guestId, registryId,
-            listType, registryType, registryTitle, channel, subChannel, LIST_STATE.INACTIVE, null,
-            LocalDate.now(), null, null, null, null, null)
+            listType, registryType, registryTitle, channel, subChannel, location, null,
+            null, LIST_STATE.INACTIVE, null, LocalDate.now(),null, null, null, null, null, null)
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 101)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", true, 1, "categoryId", "categoryName",
@@ -129,9 +131,9 @@ class CreateListNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalTest
         registryId = UUID.randomUUID()
         guestId = UUID.randomUUID().toString()
 
-        def createListNotifyEvent = new CreateListNotifyEvent(guestId, registryId, listType, RegistryType.WEDDING.name(),
-            registryTitle, channel, subChannel, LIST_STATE.INACTIVE, null, LocalDate.now(), null,
-        null, null, null, null)
+        def createListNotifyEvent = new CreateListNotifyEvent(guestId, registryId,
+            listType, RegistryType.WEDDING.name(), registryTitle, channel, subChannel, location, null,
+            null, LIST_STATE.INACTIVE, null, LocalDate.now(),null, null, null, null, null, null)
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 3)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", false, 1, "categoryId", "categoryName",

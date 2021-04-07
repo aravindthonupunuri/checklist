@@ -13,6 +13,8 @@ import com.tgt.backpackregistryclient.transport.RegistryDetailsResponseTO
 import com.tgt.backpackregistryclient.transport.RegistryItemsBasicInfoTO
 import com.tgt.backpackregistryclient.transport.redsky.getitemtaxonomy.*
 import com.tgt.backpackregistryclient.util.RegistryChannel
+import com.tgt.backpackregistryclient.util.RegistrySearchVisibility
+import com.tgt.backpackregistryclient.util.RegistryStatus
 import com.tgt.backpackregistryclient.util.RegistrySubChannel
 import com.tgt.backpackregistryclient.util.RegistryType
 import com.tgt.lists.common.components.exception.BadRequestException
@@ -96,7 +98,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
                  new RegistryItemsBasicInfoTO(registryId, "22222", null, 2, 0, "itemTitle2", LocalDateTime.of(2020, Month.DECEMBER, 12,0,0,0), LocalDateTime.of(2020, Month.DECEMBER, 30,0,0,0)),
                  new RegistryItemsBasicInfoTO(registryId, "55555", null, 2, 0, "itemTitle3", LocalDateTime.of(2020, Month.DECEMBER, 12,0,0,0), LocalDateTime.of(2020, Month.DECEMBER, 30,0,0,0))]
         getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "","", null, items, null,
-            null, null, null, LocalDate.now())
+            null, null, null, LocalDate.now(), RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE)
 
         redskyItemDetails1 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("12954094", "5xtjw"))
         redskyItemDetails2 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("22222", "5xtjw"))
@@ -219,7 +221,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
 
         items.add(new RegistryItemsBasicInfoTO(registryId, "44444", null, 2, 0, "itemTitle4", LocalDateTime.of(2020, Month.MAY, 30,0,0,0), LocalDateTime.of(2020, Month.APRIL, 12,0,0,0)))
         RegistryDetailsResponseTO getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", "", null, items, null,
-            null, null, null, LocalDate.now())
+            null, null, null, LocalDate.now(), RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE)
         def redskyItemDetails4 = new RedskyResponseTO(null, new ItemAndTaxonomyDetailsVO(new ItemTaxonomyDetails("44444",new ItemVO(new ProductDescriptionVO("itemTitle4"),
             new Enrichment(new ImageVO("primary.image.url", []))), new TaxonomyVO(new Category("name", "5xtk7")))))
 
@@ -373,7 +375,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
             "5xtk7, 5q0ev", "stroller", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
         RegistryDetailsResponseTO getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "","", null, [], null,
-            null, null, null, LocalDate.now())
+            null, null, null, LocalDate.now(), RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE)
 
         when:
         def result = getRegistryChecklistsService.getChecklistsForRegistryId(registryId, guestId, channel, subChannel).block()
@@ -458,7 +460,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
                      new RegistryItemsBasicInfoTO(registryId, "22222", null, 2, 0, "itemTitle2", null, null),
                      new RegistryItemsBasicInfoTO(registryId, "55555", null, 2, 0, "itemTitle3", null, null)]
         RegistryDetailsResponseTO getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "","", null, items, null,
-            null, null, null, LocalDate.now())
+            null, null, null, LocalDate.now(), RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE)
 
         when:
         def result = getRegistryChecklistsService.getChecklistsForRegistryId(registryId, guestId, channel, subChannel).block()
