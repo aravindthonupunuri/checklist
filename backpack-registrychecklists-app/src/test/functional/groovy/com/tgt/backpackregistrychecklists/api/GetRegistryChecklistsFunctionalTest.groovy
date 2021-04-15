@@ -60,12 +60,12 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         def uri = "/registries_checklists/v1/"+registryId+"/checklist_templates?channel=WEB&sub_channel=TGTWEB"
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
-        def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", null, 2, 0, "itemTitle1",LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0), LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0)),
-                     new RegistryItemsBasicInfoTO(registryId, "22222", null, 2, 0, "itemTitle2", LocalDateTime.of(2020, Month.APRIL, 12, 0, 0 ,0), LocalDateTime.of(2020, Month.AUGUST, 30, 0, 0 ,0)),
-                     new RegistryItemsBasicInfoTO(registryId, "55555", null, 2, 0, "itemTitle3",LocalDateTime.of(2020, Month.DECEMBER, 12, 0, 0 ,0), LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0)),
-                     new RegistryItemsBasicInfoTO(registryId, "44444", null, 2, 0, "itemTitle4", LocalDateTime.of(2020, Month.MAY, 12, 0, 0 ,0), LocalDateTime.of(2020, Month.OCTOBER, 30, 0, 0 ,0)),
-                     new RegistryItemsBasicInfoTO(registryId, "33333", null, 2, 0, "itemTitle5", LocalDateTime.of(2020, Month.MAY, 12, 0, 0 ,0), LocalDateTime.of(2020, Month.SEPTEMBER, 30, 0, 0 ,0)),
-                     new RegistryItemsBasicInfoTO(registryId, "66666", null, 2, 0, "itemTitle6", null, null)]
+        def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", 2, 0, "itemTitle1",LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0), LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0)),
+                     new RegistryItemsBasicInfoTO(registryId, "22222", 2, 0, "itemTitle2", LocalDateTime.of(2020, Month.APRIL, 12, 0, 0 ,0), LocalDateTime.of(2020, Month.AUGUST, 30, 0, 0 ,0)),
+                     new RegistryItemsBasicInfoTO(registryId, "55555", 2, 0, "itemTitle3",LocalDateTime.of(2020, Month.DECEMBER, 12, 0, 0 ,0), LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0)),
+                     new RegistryItemsBasicInfoTO(registryId, "44444", 2, 0, "itemTitle4", LocalDateTime.of(2020, Month.MAY, 12, 0, 0 ,0), LocalDateTime.of(2020, Month.OCTOBER, 30, 0, 0 ,0)),
+                     new RegistryItemsBasicInfoTO(registryId, "33333", 2, 0, "itemTitle5", LocalDateTime.of(2020, Month.MAY, 12, 0, 0 ,0), LocalDateTime.of(2020, Month.SEPTEMBER, 30, 0, 0 ,0)),
+                     new RegistryItemsBasicInfoTO(registryId, "66666", 2, 0, "itemTitle6", null, null)]
 
 
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", "", null,
@@ -170,8 +170,8 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
         def items = [
-            new RegistryItemsBasicInfoTO(registryId, "44444", null, 2, 0, "itemTitle4", null, null),
-            new RegistryItemsBasicInfoTO(registryId, "33333", null, 2, 0, "itemTitle5", null, null)
+            new RegistryItemsBasicInfoTO(registryId, "44444", 2, 0, "itemTitle4", null, null),
+            new RegistryItemsBasicInfoTO(registryId, "33333", 2, 0, "itemTitle5", null, null)
         ]
 
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "","", null, items, null,
@@ -220,8 +220,8 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
         def items = [
-            new RegistryItemsBasicInfoTO(registryId, "44444", null, 2, 0, "itemTitle4", null, null),
-            new RegistryItemsBasicInfoTO(registryId, "33333", null, 2, 0, "itemTitle5", null, null)
+            new RegistryItemsBasicInfoTO(registryId, "44444", 2, 0, "itemTitle4", null, null),
+            new RegistryItemsBasicInfoTO(registryId, "33333", 2, 0, "itemTitle5", null, null)
         ]
 
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", "",null, items, null,
