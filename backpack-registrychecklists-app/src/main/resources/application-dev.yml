@@ -3,6 +3,8 @@ micronaut:
     name: backpack-registrychecklists-app
   server:
     port: 8080
+    netty:
+      max-header-size: 16384 # Handling RequestTooLarge headers - Default value (8192)
   http:
     client.connect-ttl: 30m
     client.pool.acquire-timeout: 2000ms
@@ -112,6 +114,12 @@ kafka:
   producers:
     # default is a Jackson based JSON serializer for key/value
     backpack-registrychecklists-app-msg-bus-producer:
+      key:
+        serializer: org.apache.kafka.common.serialization.StringSerializer
+      value:
+        serializer: com.tgt.lists.msgbus.ListsJsonSerde
+      compression:
+        type: zstd
       retries: 3
       retry:
         backoff:

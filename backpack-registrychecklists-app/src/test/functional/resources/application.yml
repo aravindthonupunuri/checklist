@@ -127,7 +127,7 @@ msgbus:
     dlqconsumer:
       enabled: false
     dlqproducer:
-      enabled: true
+      enabled: false
       client-id: backpack-registrychecklists-dlq-producer
     topic: registry-internal-data-bus-stage
     consumer-group: backpack-registrychecklists-msg-bus-consumer
@@ -137,6 +137,36 @@ msgbus:
     dlq-event-retry-interval-secs: 1
     dlq-max-event-retry-count: 2
     dlq-consumer-batch-size: 10
+
+kafka:
+  bootstrap:
+    servers: kafka-ttc-app.dev.target.com:9093
+  ssl:
+    endpoint.identification.algorithm: ""# disable karka broker cert's hostname verification
+    keystore:
+      location: /lists-bus-keystore.jks
+      password: ${kafka-secret.keystore-password}
+    truststore:
+      location: /client-truststore.jks
+      password: ${kafka-secret.truststore-password}
+      type: PKCS12
+  security:
+    protocol: ssl
+  producers:
+    # default is a Jackson based JSON serializer for key/value
+    backpack-registrychecklists-msg-bus-producer:
+      retries: 3
+      retry:
+        backoff:
+          ms: 1000
+      max:
+        in:
+          flight:
+            requests:
+              per:
+                connection: 1
+        block:
+          ms: 2000
 
 mockfilter:
   paths: /zipkin,/testserver/auth/oauth/v2/token,/,/redsky_aggregations/v1.*,/registries/v2.*

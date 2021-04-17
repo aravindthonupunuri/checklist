@@ -40,7 +40,7 @@ kafka:
       retries: 3
       retry:
         backoff:
-          ms: 1_000
+          ms: 1000
       max:
         in:
           flight:
@@ -48,7 +48,7 @@ kafka:
               per:
                 connection: 1
         block:
-          ms: 2_000
+          ms: 2000
   embedded:
     enabled: false
 
