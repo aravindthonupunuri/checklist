@@ -54,8 +54,8 @@ class GrafanaBuilderMigrationConsumerUnitTest extends Specification {
                 prodEnvironment: new GrafanaBuilderConfig.KafkaConsumerEnvironment(
                     topic: "registry-internal-data-bus-prod",
                     consumerGroup: "backpack-registrychecklists-migration-data-bus-prod-consumer",
-                    ttcCluster: "ost-ttc-prod-app'",
-                    tteCluster: "ost-ttce-prod-app'"
+                    ttcCluster: "ost-ttc-prod-app",
+                    tteCluster: "ost-ttce-prod-app"
                 )
             ),
             new GrafanaBuilderConfig.KafkaConsumer(
@@ -77,8 +77,8 @@ class GrafanaBuilderMigrationConsumerUnitTest extends Specification {
                 prodEnvironment: new GrafanaBuilderConfig.KafkaConsumerEnvironment(
                     topic: "registry-internal-data-bus-prod-dlq",
                     consumerGroup: "backpack-registrychecklists-migration-dlq-prod-consumer",
-                    ttcCluster: "ost-ttc-prod-app'",
-                    tteCluster: "ost-ttce-prod-app'"
+                    ttcCluster: "ost-ttc-prod-app",
+                    tteCluster: "ost-ttce-prod-app"
                 )
             )
         ]

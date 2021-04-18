@@ -129,7 +129,7 @@ class CheckListMarkNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalT
         }
 
         when:
-        listsMessageBusProducer.sendMessage(checkListMarkNotifyEvent.getEventType(), checkListMarkNotifyEvent, registryId).block()
+        listsMessageBusProducer.sendMessage(checkListMarkNotifyEvent.getEventType(), checkListMarkNotifyEvent, registryId.toString()).block()
 
         then:
         testEventListener.verifyEvents { consumerEvents, producerEvents, consumerStatusEvents ->
@@ -170,7 +170,7 @@ class CheckListMarkNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalT
         }
 
         when:
-        listsMessageBusProducer.sendMessage(checkListMarkNotifyEvent.getEventType(), checkListMarkNotifyEvent, registryId).block()
+        listsMessageBusProducer.sendMessage(checkListMarkNotifyEvent.getEventType(), checkListMarkNotifyEvent, registryId.toString()).block()
 
         then:
         testEventListener.verifyEvents { consumerEvents, producerEvents, consumerStatusEvents ->
@@ -223,7 +223,7 @@ class CheckListMarkNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalT
         }
 
         when:
-        listsMessageBusProducer.sendMessage(checkListMarkNotifyEvent.getEventType(), checkListMarkNotifyEvent, registryId).block()
+        listsMessageBusProducer.sendMessage(checkListMarkNotifyEvent.getEventType(), checkListMarkNotifyEvent, registryId.toString()).block()
 
         then:
         testEventListener.verifyEvents { consumerEvents, producerEvents, consumerStatusEvents ->

@@ -14,6 +14,7 @@ import io.micrometer.core.instrument.MockClock
 import io.micrometer.core.instrument.simple.SimpleConfig
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry
 import io.micronaut.context.annotation.Value
+import io.micronaut.context.env.Environment
 import io.micronaut.http.client.RxHttpClient
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.test.support.TestPropertyProvider
@@ -74,7 +75,9 @@ abstract class BaseFunctionalTest extends Specification implements TestPropertyP
     ListsMessageBusProducer newMockMsgbusKafkaProducerClient(EventLifecycleNotificationProvider eventNotificationsProvider) {
         MeterRegistry meterRegistry = new SimpleMeterRegistry(SimpleConfig.DEFAULT, new MockClock());
         EventHeaderFactory eventHeaderFactory = new EventHeaderFactory(2, 5, dlqSource)
-        return new ListsMessageBusProducer("dummySrc", "dummyTopic", eventHeaderFactory, new MsgbusKafkaProducerClient() {
+        def mockedEnvironment = Mock(Environment)
+        1 * mockedEnvironment.containsProperties(_) >> true
+        return new ListsMessageBusProducer("testcLient", "dummySrc", "dummyTopic", eventHeaderFactory, new MsgbusKafkaProducerClient() {
             @Override
             Mono<RecordMetadata> sendEvent(Object partitionKey, @NotNull Mono data, @NotNull byte[] eventId, @NotNull byte[] eventType,
                                            @Nullable byte[] correlationId, @Nullable byte[] timestamp,
@@ -86,6 +89,6 @@ abstract class BaseFunctionalTest extends Specification implements TestPropertyP
                     1, 1, 1)
                 return Mono.just(metadata)
             }
-        }, eventNotificationsProvider, new EventTracer(new MockTracer(), new ZipkinTracingMapper(), null, false), new MetricsPublisher(meterRegistry), null)
+        }, eventNotificationsProvider, new EventTracer(new MockTracer(), new ZipkinTracingMapper(), null, false), new MetricsPublisher(meterRegistry), null, mockedEnvironment )
     }
 }
