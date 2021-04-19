@@ -110,7 +110,7 @@ class CheckListMarkNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalT
 
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(new ChecklistTemplatePK( templateId, checkListId), registryType,
             "firstChecklistName", true, 1, "name", "name", "name",
-            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
+            "1", "name", "subcategory_child_ids", 1, "name", "taxonomyUrl", "name", LocalDate.now(), LocalDate.now())
 
         registryChecklistRepository.save(registryChecklist).block()
         checklistTemplateRepository.save(checklistTemplate).block()
@@ -199,7 +199,7 @@ class CheckListMarkNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalT
 
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(new ChecklistTemplatePK( templateId, checkListId), registryType,
             "firstChecklistName", true, 1, "name", "name", "name",
-            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
+            "1", "name", "subcategory_child_ids", 1, "name", "taxonomyUrl", "name", LocalDate.now(), LocalDate.now())
 
         testEventListener.preDispatchLambda = new PreDispatchLambda() {
             @Override

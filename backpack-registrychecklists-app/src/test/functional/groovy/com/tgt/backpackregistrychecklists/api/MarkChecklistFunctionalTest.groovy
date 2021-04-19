@@ -62,7 +62,7 @@ class MarkChecklistFunctionalTest extends BasePersistenceFunctionalTest {
 
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(new ChecklistTemplatePK( templateId, checklistId), RegistryType.BABY,
             "firstChecklistName", true, 1, "name", "name", "name",
-            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
+            "1", "name", "subcategory_child_ids", 1, "name", "taxonomyUrl", "name", LocalDate.now(), LocalDate.now())
 
         registryChecklistRepository.save(registryChecklist).block()
         checklistTemplateRepository.save(checklistTemplate).block()
@@ -150,7 +150,7 @@ class MarkChecklistFunctionalTest extends BasePersistenceFunctionalTest {
 
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(new ChecklistTemplatePK( templateId, 202), RegistryType.BABY,
             "firstChecklistName", true, 1, "name", "name", "name",
-            "1", "name", "subcategory_child_ids", 1, "name", "name", LocalDate.now(), LocalDate.now())
+            "1", "name", "subcategory_child_ids", 1, "name", "taxonomyUrl", "name", LocalDate.now(), LocalDate.now())
 
         registryChecklistRepository.save(registryChecklist).block()
         checklistTemplateRepository.save(checklistTemplate).block()

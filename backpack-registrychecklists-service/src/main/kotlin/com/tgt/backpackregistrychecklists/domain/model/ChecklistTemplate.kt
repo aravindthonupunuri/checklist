@@ -38,6 +38,8 @@ data class ChecklistTemplate(
     val subcategoryOrder: Int? = null,
     @Column(name = "subcategory_url")
     val subcategoryUrl: String? = null,
+    @Column(name = "subcategory_taxonomy_url")
+    val subcategoryTaxonomyUrl: String? = null,
     @Column(name = "plp_param")
     val plpParam: String? = null,
     @Column(name = "created_ts")

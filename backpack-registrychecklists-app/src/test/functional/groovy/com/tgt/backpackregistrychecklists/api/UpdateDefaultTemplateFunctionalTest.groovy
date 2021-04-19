@@ -68,7 +68,7 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
 
         def checklistTemplate1 = new ChecklistTemplate(new ChecklistTemplatePK(2, 201), RegistryType.BABY,
             "firstChecklistName", true, 1, "963002", "strollers and car seats", "name",
-            "5xtjw", "5xtjw", "travel system", 1, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
+            "5xtjw", "5xtjw", "travel system", 1, "name", "taxonomyUrl", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
         def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", 2, 0, "itemTitle1", LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0), LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0))]
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", "", null, items, null,
@@ -118,7 +118,7 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
 
         def checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK(3, 203), RegistryType.BABY,
             "firstChecklistName", true, 1, "963003", "strollers and car seats", "name",
-            "5q0ev", "5q0ev", "infant car seat", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
+            "5q0ev", "5q0ev", "infant car seat", 2, "name", "taxonomyUrl", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
 
         def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", 2, 0, "itemTitle1", LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0), LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0))]
@@ -166,7 +166,7 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
 
         def checklistTemplate3 = new ChecklistTemplate(new ChecklistTemplatePK(4, 204), RegistryType.BABY,
             "firstChecklistName", true, 1, "963003", "strollers and car seats", "name",
-            "5q0ev", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "infant car seat", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
+            "5q0ev", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "infant car seat", 2, "name", "taxonomyUrl", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
 
         def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", 2, 0, "itemTitle1", LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0), LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0))]

@@ -90,7 +90,8 @@ class CreateChecklistTemplateService(
             subcategoryChildIds = category.l2ChildIds,
             subcategoryName = category.l2AliasName,
             subcategoryOrder = category.l2DisplayOrder,
-            subcategoryUrl = category.l2TaxonomyUrl,
+            subcategoryUrl = category.imageUrl,
+            subcategoryTaxonomyUrl = category.l2TaxonomyUrl,
             plpParam = category.plpParam,
             createdTs = LocalDate.now(),
             updatedTs = LocalDate.now()

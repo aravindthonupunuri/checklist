@@ -30,7 +30,7 @@ class CreateListNotifyEventHandlerUnitTest extends Specification {
         UUID registryId = UUID.randomUUID()
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 101)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", true, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDate.now(), LocalDate.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "taxonomyUrl", "plpParam", LocalDate.now(), LocalDate.now())
 
         RegistryChecklist registryChecklist = new RegistryChecklist(registryId, 1, LocalDate.now(), "user", LocalDate.now(), "user")
 
@@ -47,7 +47,7 @@ class CreateListNotifyEventHandlerUnitTest extends Specification {
         UUID registryId = UUID.randomUUID()
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 101)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", true, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDate.now(), LocalDate.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "taxonomyUrl", "plpParam", LocalDate.now(), LocalDate.now())
 
         RegistryChecklist registryChecklist = new RegistryChecklist(registryId, 1, LocalDate.now(), "user", LocalDate.now(), "user")
 
@@ -65,7 +65,7 @@ class CreateListNotifyEventHandlerUnitTest extends Specification {
         UUID registryId = UUID.randomUUID()
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 101)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "checklistName", true, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDate.now(), LocalDate.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "taxonomyUrl", "plpParam", LocalDate.now(), LocalDate.now())
 
         RegistryChecklist registryChecklist = new RegistryChecklist(registryId, 1, LocalDate.now(), "user", LocalDate.now(), "user")
 

@@ -86,13 +86,13 @@ class GetRegistryChecklistsServiceTest extends Specification{
         registryChecklist = new RegistryChecklist(registryId, 1, LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)
         checklistTemplate1 = new ChecklistTemplate(new ChecklistTemplatePK(1, 201), RegistryType.BABY,
             "firstChecklistName", true, 1, "963002", "strollers and car seats", "name",
-            "5xtjw", "5xtjw", "travel system", 1, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
+            "5xtjw", "5xtjw", "travel system", 1, "name", "taxonomyUrl", "reg_type=baby", LocalDate.now(), LocalDate.now())
         checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK(1, 202), RegistryType.BABY,
             "firstChecklistName", true, 1, "963002", "strollers and car seats", "name",
-            "5xtk7", "5xtk7", "stroller", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
+            "5xtk7", "5xtk7", "stroller", 2, "name", "taxonomyUrl", "reg_type=baby", LocalDate.now(), LocalDate.now())
         checklistTemplate3 = new ChecklistTemplate(new ChecklistTemplatePK(1, 203), RegistryType.BABY,
             "firstChecklistName", true, 1, "963002", "strollers and car seats", "name",
-            "5q0ev", "5q0ev", "infant car seat", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
+            "5q0ev", "5q0ev", "infant car seat", 2, "name", "taxonomyUrl", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
         items = [new RegistryItemsBasicInfoTO(registryId, "12954094", 2, 0, "itemTitle1", LocalDateTime.of(2020, Month.DECEMBER, 30,0,0,0), LocalDateTime.of(2020, Month.DECEMBER, 30,0,0,0)),
                  new RegistryItemsBasicInfoTO(registryId, "22222", 2, 0, "itemTitle2", LocalDateTime.of(2020, Month.DECEMBER, 12,0,0,0), LocalDateTime.of(2020, Month.DECEMBER, 30,0,0,0)),
@@ -160,7 +160,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
 
         def checklistTemplate4 = new ChecklistTemplate(new ChecklistTemplatePK(1, 203), RegistryType.BABY,
             "firstChecklistName", true, 1, "963003", "strollers and car seats", "name",
-            "5q0ev", "5q0ev", "infant car seat", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
+            "5q0ev", "5q0ev", "infant car seat", 2, "name", "taxonomyUrl", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
         when:
         def result = getRegistryChecklistsService.getChecklistsForRegistryId(registryId, guestId, channel, subChannel).block()
@@ -217,7 +217,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
 
         def checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK(1, 202), RegistryType.BABY,
             "firstChecklistName", true, 1, "963003", "strollers and car seats", "name",
-            "5xtk7", "5xtk7, 5q0ev", "stroller", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
+            "5xtk7", "5xtk7, 5q0ev", "stroller", 2, "name", "taxonomyUrl", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
         items.add(new RegistryItemsBasicInfoTO(registryId, "44444", 2, 0, "itemTitle4", LocalDateTime.of(2020, Month.MAY, 30,0,0,0), LocalDateTime.of(2020, Month.APRIL, 12,0,0,0)))
         RegistryDetailsResponseTO getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", "", null, items, null,
@@ -322,7 +322,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
         def guestId = "1234"
         def checklistTemplate4 = new ChecklistTemplate(new ChecklistTemplatePK(1, 202), RegistryType.BABY,
             "firstChecklistName", true, 1, "963003", "strollers and car seats", "name", "5xtk7",
-            "5xtk7, 5q0ev", "stroller", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
+            "5xtk7, 5q0ev", "stroller", 2, "name", "taxonomyUrl", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
         when:
         def result = getRegistryChecklistsService.getChecklistsForRegistryId(registryId, guestId, channel, subChannel).block()
@@ -372,7 +372,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
         def guestId = "1234"
         def checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK(1, 202), RegistryType.BABY,
             "firstChecklistName", true, 1, "963003", "strollers and car seats", "name", "5xtk7",
-            "5xtk7, 5q0ev", "stroller", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
+            "5xtk7, 5q0ev", "stroller", 2, "name", "taxonomyUrl", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
         RegistryDetailsResponseTO getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "","", null, [], null,
             null, null, null, LocalDate.now(), RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE)

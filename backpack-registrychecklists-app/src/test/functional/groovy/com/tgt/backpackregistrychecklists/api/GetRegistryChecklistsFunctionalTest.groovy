@@ -79,16 +79,16 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
 
         def checklistTemplate1 = new ChecklistTemplate(new ChecklistTemplatePK(1, 201), RegistryType.BABY,
             "firstChecklistName", true, 1, "963002", "strollers and car seats", "name",
-            "5xtjw", "5xtjw", "travel system", 1, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
+            "5xtjw", "5xtjw", "travel system", 1, "name", "taxonomyUrl", "reg_type=baby", LocalDate.now(), LocalDate.now())
         def checklistTemplate2 = new ChecklistTemplate(new ChecklistTemplatePK(1, 202), RegistryType.BABY,
             "firstChecklistName", true, 1, "963002", "strollers and car seats", "name",
-            "5xtk7", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "stroller", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
+            "5xtk7", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "stroller", 2, "name", "taxonomyUrl", "reg_type=baby", LocalDate.now(), LocalDate.now())
         def checklistTemplate3 = new ChecklistTemplate(new ChecklistTemplatePK(1, 203), RegistryType.BABY,
             "firstChecklistName", true, 1, "963002", "strollers and car seats", "name",
-            "5q0ev", "5q0ev", "infant car seat", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
+            "5q0ev", "5q0ev", "infant car seat", 2, "name", "taxonomyUrl", "reg_type=baby", LocalDate.now(), LocalDate.now())
         def checklistTemplate4 = new ChecklistTemplate(new ChecklistTemplatePK(1, 208), RegistryType.BABY,
             "checklistName", true, 1, "29504", "gear &amp; activity", "name",
-            "5q0eu", "5q0eu", "baby carrier", 2, "name", "reg_type=baby", LocalDate.now(), LocalDate.now())
+            "5q0eu", "5q0eu", "baby carrier", 2, "name", "taxonomyUrl", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
         def checkedSubcategories1 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 201), LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)
         def checkedSubcategories2 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 202), LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)

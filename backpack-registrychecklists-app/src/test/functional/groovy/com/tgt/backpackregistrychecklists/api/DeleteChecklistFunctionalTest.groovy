@@ -48,11 +48,11 @@ class DeleteChecklistFunctionalTest extends BasePersistenceFunctionalTest{
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 401)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.WEDDING, "name", true, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDate.now(), LocalDate.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "taxonomyUrl", "plpParam", LocalDate.now(), LocalDate.now())
 
         ChecklistTemplatePK checklistTemplatePK1 = new ChecklistTemplatePK( 2, 401)
         ChecklistTemplate checklistTemplate1 = new ChecklistTemplate(checklistTemplatePK1, RegistryType.WEDDING, "name", true, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDate.now(), LocalDate.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "taxonomyUrl", "plpParam", LocalDate.now(), LocalDate.now())
         checklistTemplateRepository.save(checklistTemplate).block()
         checklistTemplateRepository.save(checklistTemplate1).block()
         when:
@@ -75,11 +75,11 @@ class DeleteChecklistFunctionalTest extends BasePersistenceFunctionalTest{
 
         ChecklistTemplatePK checklistTemplatePK = new ChecklistTemplatePK( 1, 401)
         ChecklistTemplate checklistTemplate = new ChecklistTemplate(checklistTemplatePK, RegistryType.BABY, "name", true, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDate.now(), LocalDate.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "taxonomyUrl", "plpParam", LocalDate.now(), LocalDate.now())
 
         ChecklistTemplatePK checklistTemplatePK1 = new ChecklistTemplatePK( 2, 501)
         ChecklistTemplate checklistTemplate1 = new ChecklistTemplate(checklistTemplatePK1, RegistryType.WEDDING, "name", true, 1, "categoryId", "categoryName",
-            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "plpParam", LocalDate.now(), LocalDate.now())
+            "categoryImageUrl", "subCategoryId", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "subCategoryName", 1, "subCategoryUrl", "taxonomyUrl", "plpParam", LocalDate.now(), LocalDate.now())
         checklistTemplateRepository.save(checklistTemplate).block()
         checklistTemplateRepository.save(checklistTemplate1).block()
         when:
