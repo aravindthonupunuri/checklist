@@ -70,9 +70,9 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
             "firstChecklistName", true, 1, "963002", "strollers and car seats", "name",
             "5xtjw", "5xtjw", "travel system", 1, "name", "taxonomyUrl", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
-        def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", 2, 0, "itemTitle1", LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0), LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0))]
+        def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", 2, 0, "itemTitle1", "itemNote", LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0), LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0))]
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", "", null, items, null,
-            null, null, null, LocalDate.now(), RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE)
+            null, RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE, null, null)
 
         RedskyResponseTO redskyResponseTO1 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("12954094", "5xtjw"))
         def checkedSubcategories1 = new CheckedSubCategories(new CheckedSubCategoriesId(registryId, 1, 201), LocalDate.now(), subChannel.value, LocalDate.now(), subChannel.value)
@@ -121,9 +121,9 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
             "5q0ev", "5q0ev", "infant car seat", 2, "name", "taxonomyUrl", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
 
-        def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", 2, 0, "itemTitle1", LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0), LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0))]
+        def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", 2, 0, "itemTitle1", "itemNote", LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0), LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0))]
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", "", null, items, null,
-            null, null, null, LocalDate.now(), RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE)
+            null, RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE, null, null)
 
         RedskyResponseTO redskyResponseTO1 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("12954094", "5xtjw"))
 
@@ -169,9 +169,9 @@ class UpdateDefaultTemplateFunctionalTest extends BasePersistenceFunctionalTest 
             "5q0ev", "5xtk4,5xtk3,5xtk2,5xtk5,5xtk6,54x8u", "infant car seat", 2, "name", "taxonomyUrl", "reg_type=baby", LocalDate.now(), LocalDate.now())
 
 
-        def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", 2, 0, "itemTitle1", LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0), LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0))]
+        def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", 2, 0, "itemTitle1", "itemNote", LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0), LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0))]
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", "", null, items, null,
-            null, null, null, LocalDate.now(), RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE)
+            null, RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE, null, null)
 
         RedskyResponseTO redskyResponseTO1 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("12954094", "5xtk6"))
 

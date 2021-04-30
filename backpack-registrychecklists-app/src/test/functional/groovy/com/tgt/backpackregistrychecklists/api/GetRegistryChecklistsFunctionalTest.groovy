@@ -60,16 +60,16 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         def uri = "/registries_checklists/v1/"+registryId+"/checklist_templates?channel=WEB&sub_channel=TGTWEB"
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
-        def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", 2, 0, "itemTitle1",LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0), LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0)),
-                     new RegistryItemsBasicInfoTO(registryId, "22222", 2, 0, "itemTitle2", LocalDateTime.of(2020, Month.APRIL, 12, 0, 0 ,0), LocalDateTime.of(2020, Month.AUGUST, 30, 0, 0 ,0)),
-                     new RegistryItemsBasicInfoTO(registryId, "55555", 2, 0, "itemTitle3",LocalDateTime.of(2020, Month.DECEMBER, 12, 0, 0 ,0), LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0)),
-                     new RegistryItemsBasicInfoTO(registryId, "44444", 2, 0, "itemTitle4", LocalDateTime.of(2020, Month.MAY, 12, 0, 0 ,0), LocalDateTime.of(2020, Month.OCTOBER, 30, 0, 0 ,0)),
-                     new RegistryItemsBasicInfoTO(registryId, "33333", 2, 0, "itemTitle5", LocalDateTime.of(2020, Month.MAY, 12, 0, 0 ,0), LocalDateTime.of(2020, Month.SEPTEMBER, 30, 0, 0 ,0)),
-                     new RegistryItemsBasicInfoTO(registryId, "66666", 2, 0, "itemTitle6", null, null)]
+        def items = [new RegistryItemsBasicInfoTO(registryId, "12954094", 2, 0, "itemTitle1", "itemNote", LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0), LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0)),
+                     new RegistryItemsBasicInfoTO(registryId, "22222", 2, 0, "itemTitle2", "itemNote", LocalDateTime.of(2020, Month.APRIL, 12, 0, 0 ,0), LocalDateTime.of(2020, Month.AUGUST, 30, 0, 0 ,0)),
+                     new RegistryItemsBasicInfoTO(registryId, "55555", 2, 0, "itemTitle3", "itemNote",LocalDateTime.of(2020, Month.DECEMBER, 12, 0, 0 ,0), LocalDateTime.of(2020, Month.DECEMBER, 30, 0, 0 ,0)),
+                     new RegistryItemsBasicInfoTO(registryId, "44444", 2, 0, "itemTitle4", "itemNote", LocalDateTime.of(2020, Month.MAY, 12, 0, 0 ,0), LocalDateTime.of(2020, Month.OCTOBER, 30, 0, 0 ,0)),
+                     new RegistryItemsBasicInfoTO(registryId, "33333", 2, 0, "itemTitle5", "itemNote", LocalDateTime.of(2020, Month.MAY, 12, 0, 0 ,0), LocalDateTime.of(2020, Month.SEPTEMBER, 30, 0, 0 ,0)),
+                     new RegistryItemsBasicInfoTO(registryId, "66666", 2, 0, "itemTitle6", null, null, null)]
 
 
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", "", null,
-            items, null, null, null, null, LocalDate.now(), RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE)
+            items, null, null, RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE, null, null)
         RedskyResponseTO redskyResponseTO1 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("12954094", "5xtjw"))
         RedskyResponseTO redskyResponseTO2 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("22222", "5xtjw"))
         RedskyResponseTO redskyResponseTO3 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("55555", "5q0ev"))
@@ -170,12 +170,12 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
         def items = [
-            new RegistryItemsBasicInfoTO(registryId, "44444", 2, 0, "itemTitle4", null, null),
-            new RegistryItemsBasicInfoTO(registryId, "33333", 2, 0, "itemTitle5", null, null)
+            new RegistryItemsBasicInfoTO(registryId, "44444", 2, 0, "itemTitle4", null, null, null),
+            new RegistryItemsBasicInfoTO(registryId, "33333", 2, 0, "itemTitle5", null, null, null)
         ]
 
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "","", null, items, null,
-            null, null, null, LocalDate.now(), RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE)
+            null, RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE, null, null)
 
         RedskyResponseTO redskyResponseTO4 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("44444", "5xtk4"))
         RedskyResponseTO redskyResponseTO5 = new RedskyResponseTO(null, redskyDataProvider.getChecklistItemDetails("33333", "54x8u"))
@@ -220,12 +220,12 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
         def items = [
-            new RegistryItemsBasicInfoTO(registryId, "44444", 2, 0, "itemTitle4", null, null),
-            new RegistryItemsBasicInfoTO(registryId, "33333", 2, 0, "itemTitle5", null, null)
+            new RegistryItemsBasicInfoTO(registryId, "44444", 2, 0, "itemTitle4", null, null, null),
+            new RegistryItemsBasicInfoTO(registryId, "33333", 2, 0, "itemTitle5", null, null, null)
         ]
 
         def getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", "",null, items, null,
-            null, null, null, LocalDate.now(), RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE)
+            null, RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE, null, null)
 
         RedskyResponseTO redskyResponseTO4 = new RedskyResponseTO(null, null)
         RedskyResponseTO redskyResponseTO5 = new RedskyResponseTO(null, null)
@@ -257,7 +257,6 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         1 * mockServer.get({ path -> path.contains(getRegistryDetailsUri)},*_) >> [status: 200, body: getRegistryDetailsResponse]
         1 * mockServer.get({ path -> path.contains("/redsky_aggregations/v1/registry_services/get_registry_checklist_v1?tcin=44444") }, _) >> [status: 200, body: redskyResponseTO4]
         1 * mockServer.get({ path -> path.contains("/redsky_aggregations/v1/registry_services/get_registry_checklist_v1?tcin=33333") }, _) >> [status: 200, body: redskyResponseTO5]
-
     }
 
     def "test get checklist info - if there are no items in the registry"() {
@@ -266,7 +265,7 @@ class GetRegistryChecklistsFunctionalTest extends BasePersistenceFunctionalTest{
         def getRegistryDetailsUri = "/registries/v2/"+registryId+"/summary_details"
 
         RegistryDetailsResponseTO getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", "", null, [], null,
-            null, null, null, LocalDate.now(), RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE)
+            null, RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE, null, null)
 
         when:
         HttpResponse<ChecklistResponseTO> getChecklistsResponse =
