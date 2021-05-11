@@ -37,13 +37,14 @@
 					]
 				},
 				"url": {
-					"raw": "{{host}}/registries_checklists/v1?channel={{channel}}&sub_channel={{sub_channel}}&registry_type={{registry_type}}&template_id={{template_id}}&checklist_name={{checklist_name}}&location_id={{location_id}}",
+					"raw": "{{host}}/registries_checklists/v1/checklist_templates?channel={{channel}}&sub_channel={{sub_channel}}&registry_type={{registry_type}}&template_id={{template_id}}&checklist_name={{checklist_name}}&location_id={{location_id}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"registries_checklists",
-						"v1"
+						"v1",
+						"checklist_templates"
 					],
 					"query": [
 						{
@@ -394,5 +395,6 @@
 			},
 			"response": []
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }
