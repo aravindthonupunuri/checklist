@@ -51,7 +51,7 @@ components:
       enabled: false
 
 msgbus:
-  source: backpackregistrychecklists-migration
+  source: backpack-registrychecklists
   dlq-source: backpackregistrychecklists-migration-dlq
   kafka:
     consumer:

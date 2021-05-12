@@ -147,4 +147,3 @@ kafka-sources:
   allow:
     - backpack-registry
     - backpack-registrychecklists
-    - backpackregistrychecklists-migration

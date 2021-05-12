@@ -168,7 +168,6 @@ kafka-sources:
   allow:
     - backpack-registry
     - backpack-registrychecklists
-    - backpackregistrychecklists-migration
 
 list:
   default-web-store-id: 3991

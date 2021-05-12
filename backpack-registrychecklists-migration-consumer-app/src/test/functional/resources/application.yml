@@ -143,7 +143,7 @@ components:
       enabled: false
 
 msgbus:
-  source: backpackregistrychecklists-migration
+  source: backpack-registrychecklists
   dlq-source: backpackregistrychecklists-migration-dlq
   kafka:
     consumer:
@@ -168,7 +168,6 @@ msgbus:
 kafka-sources:
   allow:
     - migration-GRWS
-    - backpackregistrychecklists-migration-dlq
 
 list:
   default-web-store-id: 3991

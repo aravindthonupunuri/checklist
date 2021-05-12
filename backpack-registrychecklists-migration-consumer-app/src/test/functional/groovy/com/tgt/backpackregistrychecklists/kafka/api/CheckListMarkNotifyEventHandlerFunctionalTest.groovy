@@ -213,7 +213,7 @@ class CheckListMarkNotifyEventHandlerFunctionalTest extends BaseKafkaFunctionalT
                             checklistTemplateRepository.save(checklistTemplate).block()
                             return true
                         }
-                        if (eventHeaders.source == "backpackregistrychecklists-migration") {
+                        if (eventHeaders.source == "backpack-registrychecklists") {
                             return true
                         }
                     }
