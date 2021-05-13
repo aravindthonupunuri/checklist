@@ -74,6 +74,7 @@ components:
       base-uri: /registry_checklists/v1
     sanitizing-filter:
       enabled: true
+
 msgbus:
   source: backpack-registrychecklists-stage
   dlq-source: backpackregistrychecklists-dlq-stage
