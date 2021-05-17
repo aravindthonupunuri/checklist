@@ -71,12 +71,12 @@ allprojects {
             exclude group: 'com.tgt.lists', module: 'lists-components'
         }
         implementation("com.tgt.lists:atlas-client:2.231.15")
-        implementation("com.tgt.lists:lists-components:2.231.6") {
+        implementation("com.tgt.lists:lists-components:2.231.7") {
             exclude group: 'com.tgt.lists.micronaut', module: 'micronaut-resilience4j'
         }
         implementation "com.tgt.lists:lists-permissions-client:2.231.0"
 
-        implementation("com.tgt.backpackregistry:backpack-registry-client:2.231.49") {
+        implementation("com.tgt.backpackregistry:backpack-registry-client:2.231.53") {
             exclude group: 'com.tgt.lists', module: 'lists-components'
         }
         implementation "com.tgt.lists:lists-oauth:2.231.0"
@@ -86,13 +86,13 @@ allprojects {
         implementation 'com.tgt.lists.micronaut:micronaut-jdbc:2.231.3'
         implementation "com.target.oss:platform-connector-micronaut:${micronautTapPlatformConnectorVersion}"
         implementation "io.swagger.core.v3:swagger-annotations"
-        implementation "com.tgt.lists.micronaut:micronaut-metrics:2.231.0"
+        implementation "com.tgt.lists.micronaut:micronaut-metrics:2.231.3"
         implementation "io.micronaut.kotlin:micronaut-kotlin-runtime"
         implementation "io.micronaut:micronaut-runtime"
         implementation "io.micronaut.kafka:micronaut-kafka"
         implementation "org.apache.kafka:kafka_2.12:${kafka_version}"
 
-        implementation("com.tgt.backpackregistry:backpack-redsky-components:2.231.9") {
+        implementation("com.tgt.backpackregistry:backpack-redsky-components:2.231.10") {
             exclude group: 'com.tgt.backpackregistry', module: 'backpack-registry-client'
         }
         // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml
@@ -134,7 +134,7 @@ allprojects {
         testImplementation "cglib:cglib:3.3.0"
         testImplementation group: 'io.opentracing', name: 'opentracing-mock', version: '0.33.0'
         testImplementation "org.testcontainers:kafka:1.14.3"
-        testImplementation "com.tgt.lists:grafana-builder:2.231.24"
+        testImplementation "com.tgt.lists:grafana-builder:2.231.32"
     }
 
     configurations.all {

@@ -153,19 +153,18 @@ pipeline:
       - {source: artifactory_password, target: plugin_password}
 
   publish-docker-backpack-registrychecklists-app-prod:
-    image: 'plugins/docker:latest'
-    group: prodimggroup
-    registry: docker.target.com
-    repo: docker.target.com/app/backpack-registrychecklists/backpack-registrychecklists-app
-    dockerfile: ./backpack-registrychecklists-app/Dockerfile
-    tags: 'prod.${DRONE_TAG:37}'
+    image: 'docker.target.com/drone/docker-promotion:1'
+    source_repo: docker.target.com/app/backpack-registrychecklists/backpack-registrychecklists-app
+    source_tag: 'rc.${DRONE_TAG:37}'
+    target_repo: docker.target.com/app/backpack-registrychecklists/backpack-registrychecklists-app
+    target_tags: 'prod.${DRONE_TAG:37}'
     when:
       event: tag
       branch: master
       ref: 'refs/tags/conf.prod.backpackregistrychecklists.*'
     secrets:
-      - { source: artifactory_username, target: plugin_username }
-      - { source: artifactory_password, target: plugin_password }
+      - { source: artifactory_username, target: registry_username }
+      - { source: artifactory_password, target: registry_password }
 
   publish-docker-backpack-registrychecklists-consumer-app-dev:
     image: plugins/docker
@@ -203,21 +202,20 @@ pipeline:
       - {source: artifactory_password, target: plugin_password}
 
   publish-docker-backpack-registrychecklists-consumer-app-prod:
-    image: 'plugins/docker:latest'
+    image: 'docker.target.com/drone/docker-promotion:1'
     environment:
       CICD_MODE: 'true'
-    group: prodimggroup
-    registry: docker.target.com
-    repo: docker.target.com/app/backpack-registrychecklists/backpack-registrychecklists-consumer-app
-    dockerfile: ./backpack-registrychecklists-consumer-app/Dockerfile
-    tags: 'prod.${DRONE_TAG:37}'
+    source_repo: docker.target.com/app/backpack-registrychecklists/backpack-registrychecklists-consumer-app
+    source_tag: 'rc.${DRONE_TAG:37}'
+    target_repo: docker.target.com/app/backpack-registrychecklists/backpack-registrychecklists-consumer-app
+    target_tags: 'prod.${DRONE_TAG:37}'
     when:
       event: tag
       branch: master
       ref: 'refs/tags/conf.prod.backpackregistrychecklists.*'
     secrets:
-      - { source: artifactory_username, target: plugin_username }
-      - { source: artifactory_password, target: plugin_password }
+      - { source: artifactory_username, target: registry_username }
+      - { source: artifactory_password, target: registry_password }
 
   publish-docker-backpack-registrychecklists-migration-consumer-app-dev:
     image: plugins/docker
@@ -255,21 +253,20 @@ pipeline:
       - { source: artifactory_password, target: plugin_password }
 
   publish-docker-backpack-registrychecklists-migration-consumer-app-prod:
-    image: 'plugins/docker:latest'
+    image: 'docker.target.com/drone/docker-promotion:1'
     environment:
       CICD_MODE: 'true'
-    group: prodimggroup
-    registry: docker.target.com
-    repo: docker.target.com/app/backpack-registrychecklists/backpack-registrychecklists-migration-consumer-app
-    dockerfile: ./backpack-registrychecklists-migration-consumer-app/Dockerfile
-    tags: 'prod.${DRONE_TAG:37}'
+    source_repo: docker.target.com/app/backpack-registrychecklists/backpack-registrychecklists-migration-consumer-app
+    source_tag: 'rc.${DRONE_TAG:37}'
+    target_repo: docker.target.com/app/backpack-registrychecklists/backpack-registrychecklists-migration-consumer-app
+    target_tags: 'prod.${DRONE_TAG:37}'
     when:
       event: tag
       branch: master
       ref: 'refs/tags/conf.prod.backpackregistrychecklists.*'
     secrets:
-      - { source: artifactory_username, target: plugin_username }
-      - { source: artifactory_password, target: plugin_password }
+      - { source: artifactory_username, target: registry_username }
+      - { source: artifactory_password, target: registry_password }
 
   publish-client:
     when:
