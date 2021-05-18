@@ -1,9 +1,7 @@
 package com.tgt.grafana_builder
 
-import spock.lang.Ignore
 import spock.lang.Specification
 
-@Ignore
 class GrafanaBuilderRegistryChecklistsConsumerUnitTest extends Specification {
 
     def "build backpack-registry-checklists-consumer-app grafana dashboard"() {
