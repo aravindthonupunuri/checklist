@@ -5,7 +5,6 @@ micronaut:
     port: ${server-port:32000}
   http:
     client.connect-ttl: 30m
-    client.pool.acquire-timeout: 2000ms
     services:
       backpack-registrychecklists-api:
         urls:

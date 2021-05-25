@@ -4,8 +4,8 @@ micronaut:
   server:
     port: ${server-port:32000}
   http:
-    client.connect-ttl: 30m
-    client.pool.acquire-timeout: 2000ms
+    client.connect-ttl: 2000ms
+    client.read-timeout: 5000ms
     services:
       redsky-api:
         urls:

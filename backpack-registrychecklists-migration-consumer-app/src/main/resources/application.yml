@@ -7,7 +7,7 @@ micronaut:
     idle-timeout: 2000ms
   http:
     client.connect-ttl: 30m
-    client.pool.acquire-timeout: 2000ms
+    client.read-timeout: 5000ms
     services:
       redsky-api:
         urls:
@@ -16,8 +16,7 @@ micronaut:
         read-timeout: 1500ms
         pool:
           enabled: true
-          max-connections: 128
-          max-pending-acquires: 50
+          max-connections: 1024
   metrics:
     binders:
       web:

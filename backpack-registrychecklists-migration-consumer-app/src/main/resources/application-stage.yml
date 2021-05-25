@@ -16,8 +16,7 @@ micronaut:
         read-timeout: 1500ms
         pool:
           enabled: true
-          max-connections: 128
-          max-pending-acquires: 50
+          max-connections: 1024
   metrics:
     binders:
       web:

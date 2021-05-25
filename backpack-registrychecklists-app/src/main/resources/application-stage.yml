@@ -7,13 +7,16 @@ micronaut:
       max-header-size: 16384 # Handling RequestTooLarge headers - Default value (8192)
   http:
     client.connect-ttl: 30m
-    client.pool.acquire-timeout: 2000ms
+    client.read-timeout: 5000ms
     services:
       redsky-api:
         urls:
           - "https://redsky-stage.perf.target.com"
+        connect-timeout: 1500ms
+        read-timeout: 1500ms
         pool:
-          enabled: false
+          enabled: true
+          max-connections: 1024
       backpack-registry-api:
         urls:
           - "https://backpackregistry-stage.dev.target.com/"
