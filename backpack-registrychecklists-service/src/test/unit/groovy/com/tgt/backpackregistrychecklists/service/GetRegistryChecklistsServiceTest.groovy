@@ -223,7 +223,7 @@ class GetRegistryChecklistsServiceTest extends Specification{
         RegistryDetailsResponseTO getRegistryDetailsResponse = new RegistryDetailsResponseTO(registryId, "", "", "", null, items, null,
             null, RegistrySearchVisibility.PUBLIC, RegistryType.BABY, RegistryStatus.@ACTIVE, null, null)
         def redskyItemDetails4 = new RedskyResponseTO(null, new ItemAndTaxonomyDetailsVO(new ItemTaxonomyDetails("44444",new ItemVO(new ProductDescriptionVO("itemTitle4"),
-            new Enrichment(new ImageVO("primary.image.url", []))), new TaxonomyVO(new Category("name", "5xtk7")))))
+            new Enrichment(new ImageVO("primary.image.url", []))), new TaxonomyVO(new Category("name", "5xtk7"), null))))
 
         when:
         def result = getRegistryChecklistsService.getChecklistsForRegistryId(registryId, guestId, channel, subChannel).block()
