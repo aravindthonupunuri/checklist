@@ -184,7 +184,7 @@ class GetRegistryChecklistsService(
     ): Mono<RegistryDetailsResponseTO> {
         return backpackClient.getRegistryDetails(guestId, registryId, storeId, channel, subChannel, false)
             .switchIfEmpty {
-                logger.error("Empty response from get Details API")
+                logger.debug("Empty response from get Details API")
                 Mono.empty()
             }.onErrorResume {
                 logger.error("Error response from get Details API" + it.printStackTrace())

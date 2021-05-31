@@ -76,13 +76,13 @@ allprojects {
         }
         implementation "com.tgt.lists:lists-permissions-client:2.231.0"
 
-        implementation("com.tgt.backpackregistry:backpack-registry-client:2.231.60") {
+        implementation("com.tgt.backpackregistry:backpack-registry-client:2.231.62") {
             exclude group: 'com.tgt.lists', module: 'lists-components'
         }
         implementation "com.tgt.lists:lists-oauth:2.231.0"
         implementation "com.tgt.lists.micronaut:micronaut-zipkin:2.231.0"
         implementation "com.tgt.lists:lists-message-bus:2.231.5"
-        implementation "com.tgt.lists:lists-logging:2.231.0"
+        implementation "com.tgt.lists:lists-logging:2.231.3"
         implementation 'com.tgt.lists.micronaut:micronaut-jdbc:2.231.3'
         implementation "com.target.oss:platform-connector-micronaut:${micronautTapPlatformConnectorVersion}"
         implementation "io.swagger.core.v3:swagger-annotations"
@@ -112,8 +112,8 @@ allprojects {
         kaptTest platform("io.micronaut:micronaut-bom:$micronautVersion")
         kaptTest "io.micronaut:micronaut-inject-java"
 
-        runtime "com.fasterxml.jackson.core:jackson-databind:2.10.4"
-        implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.10.4"
+        runtime "com.fasterxml.jackson.core:jackson-databind:2.11.2"
+        implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.11.2"
 
         testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
         testImplementation "io.micronaut:micronaut-inject-groovy:$micronautVersion"
@@ -122,7 +122,7 @@ allprojects {
         }
         testImplementation "org.codehaus.groovy:groovy-json:3.0.5"
         testImplementation "io.micronaut.test:micronaut-test-spock"
-        testImplementation "com.tgt.swaggerlib:swagger-sync:1.210.16"
+        testImplementation "com.tgt.swaggerlib:swagger-sync:2.231.2"
         testImplementation "com.tgt.lists.micronaut:micronaut-test:2.231.0"
         testImplementation("org.objenesis:objenesis:2.6")
         testImplementation 'io.micronaut.micrometer:micronaut-micrometer-registry-prometheus'

@@ -63,7 +63,7 @@ class ChecklistService(
                 Mono.just(retryState)
             }
             else -> {
-                logger.error("Unknown step for processDeleteRegistryState()")
+                logger.debug("Unknown step for processDeleteRegistryState()")
                 retryState.deleteChecklistTemplateFromChecklistRepository = true
                 retryState.deleteChecklistTemplateFromCheckedSubCategoriesRepository = true
                 Mono.just(retryState)

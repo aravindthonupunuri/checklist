@@ -56,8 +56,8 @@ msgbus:
     consumer-batch-size: 100
     dlq-topic: registry-internal-data-bus-prod-dlq
     dlq-consumer-group: backpack-registrychecklists-con-dlq-prod-consumer
-    dlq-event-retry-interval-secs: 1
-    dlq-max-event-retry-count: 3
+    dlq-event-retry-interval-secs: 10800 # 3 hours, bring down post data migration
+    dlq-max-event-retry-count: 16 # bring down post data migration
     dlq-consumer-batch-size: 50
 
 kafka-sources:
