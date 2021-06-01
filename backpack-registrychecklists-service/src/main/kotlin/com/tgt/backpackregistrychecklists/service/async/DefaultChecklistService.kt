@@ -25,12 +25,14 @@ class DefaultChecklistService(
         listSubType: String,
         subChannel: String
     ): Mono<Boolean> {
-        return checklistTemplateRepository.findByDefaultChecklistAndRegistryType(true, RegistryType.toRegistryType(listSubType))
-            .switchIfEmpty<ChecklistTemplate> {
-                throw BadRequestException(ErrorCode(BAD_REQUEST_ERROR_CODE, listOf("no subcategory with default value of true is found")))
-            }.collectList().flatMap {
-            val registryChecklist = RegistryChecklist(registryId, it.first().checklistTemplatePK.templateId, LocalDate.now(), subChannel, LocalDate.now(), subChannel)
-            registryChecklistRepository.save(registryChecklist).map { true }
-            }
+        return if (listOf(RegistryType.WEDDING, RegistryType.BABY).contains(RegistryType.toRegistryType(listSubType))) {
+            checklistTemplateRepository.findByDefaultChecklistAndRegistryType(true, RegistryType.toRegistryType(listSubType))
+                .switchIfEmpty<ChecklistTemplate> {
+                    throw BadRequestException(ErrorCode(BAD_REQUEST_ERROR_CODE, listOf("no subcategory with default value of true is found")))
+                }.collectList().flatMap {
+                    val registryChecklist = RegistryChecklist(registryId, it.first().checklistTemplatePK.templateId, LocalDate.now(), subChannel, LocalDate.now(), subChannel)
+                    registryChecklistRepository.save(registryChecklist).map { true }
+                }
+        } else Mono.just(true)
     }
 }
