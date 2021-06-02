@@ -20,7 +20,7 @@ api-key: ${global-secret.api-key}
 
 datasources:
   default:
-    url: jdbc:postgresql://pgclx10789.hq.target.com,pgelx10597.hq.target.com/bp_checklist_prod?ssl=true&sslmode=require
+    url: jdbc:postgresql://pgclx10789.hq.target.com,pgelx10597.hq.target.com/bp_checklist_prod?targetServerType=master&ssl=true&sslmode=require
     driverClassName: org.postgresql.Driver
     username: ${postgres-secret.username}
     password: ${postgres-secret.password}
