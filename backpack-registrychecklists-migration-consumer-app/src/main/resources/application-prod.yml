@@ -11,9 +11,9 @@ micronaut:
     services:
       redsky-api:
         urls:
-          - "https://redsky-stage.perf.target.com"
-        connect-timeout: 1500ms
-        read-timeout: 1500ms
+          - "https://redsky.target.com"
+        connect-timeout: 3000ms
+        read-timeout: 3000ms
         pool:
           enabled: true
           max-connections: 1024

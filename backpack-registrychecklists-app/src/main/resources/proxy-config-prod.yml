@@ -1,7 +1,7 @@
 version: 2
 server:
   listen_address: localhost:8080
-environment: stage
+environment: prod
 health:
   proxy:
    enabled: true
@@ -11,7 +11,7 @@ metrics:
   push: true
 handlers:
   key_validation:
-    environment: STAGE
+    environment: PROD
   auth:
     anonymous_routes:
       - GET: /health
