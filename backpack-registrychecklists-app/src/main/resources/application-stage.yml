@@ -22,6 +22,15 @@ micronaut:
           - "https://backpackregistry-stage.dev.target.com/"
         pool:
           enabled: false
+      permissions-api:
+        urls:
+          - "https://registriespermissions-stage.dev.target.com"
+        connect-timeout: 300ms
+        read-timeout: 300ms
+        pool:
+          enabled: true
+          max-connections: 128
+          max-pending-acquires: 50
   metrics:
     binders:
       web:
@@ -66,7 +75,7 @@ components:
         - Indrakumar.Thimmaiah@target.com
     list-authorization-filter:
       enabled: true
-      base-uri: /registry_checklists/v1
+      base-uri: /registries_checklists/v1
     id2-custom-scopes:
       names:
         - axiom.user
