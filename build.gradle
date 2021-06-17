@@ -76,7 +76,7 @@ allprojects {
         }
         implementation "com.tgt.lists:lists-permissions-client:2.231.0"
 
-        implementation("com.tgt.backpackregistry:backpack-registry-client:2.231.63") {
+        implementation("com.tgt.backpackregistry:backpack-registry-client:2.231.71") {
             exclude group: 'com.tgt.lists', module: 'lists-components'
         }
         implementation "com.tgt.lists:lists-oauth:2.231.0"
