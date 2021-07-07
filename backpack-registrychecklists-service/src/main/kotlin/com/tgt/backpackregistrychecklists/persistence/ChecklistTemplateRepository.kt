@@ -8,6 +8,7 @@ import reactor.core.publisher.Mono
 
 interface ChecklistTemplateRepository {
     fun save(checkList: ChecklistTemplate): Mono<ChecklistTemplate>
+    fun findByRegistryTypeAndDefaultChecklist(registryType: RegistryType, default: Boolean = true): Flux<ChecklistTemplate>
     fun countByRegistryTypeAndDefaultChecklist(registryType: RegistryType, default: Boolean = true): Mono<Long>
     fun findByDefaultChecklistAndRegistryType(defaultChecklist: Boolean, registryType: RegistryType): Flux<ChecklistTemplate>
     fun findByTemplateId(templateId: Int): Flux<ChecklistTemplate>

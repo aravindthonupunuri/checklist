@@ -26,6 +26,7 @@ import javax.xml.stream.XMLStreamException
 class RegistryChecklistController(
     private val createChecklistTemplateService: CreateChecklistTemplateService,
     private val getCheckListTemplatesService: GetChecklistTemplatesService,
+    private val getDefaultChecklistsService: GetDefaultChecklistsService,
     private val deleteChecklistService: DeleteChecklistService,
     private val markChecklistService: MarkChecklistService,
     private val unmarkChecklistService: UnmarkChecklistService,
@@ -126,6 +127,31 @@ class RegistryChecklistController(
         @QueryValue("sub_channel") subChannel: RegistrySubChannel
     ): Mono<ChecklistResponseTO> {
         return getRegistryChecklistsService.getChecklistsForRegistryId(registryId, guestId, channel, subChannel)
+    }
+
+    /**
+     *
+     * Get all default checklists information for the provided registry type
+     *
+     * @param registryType registry type
+     * @param channel channel
+     * @param subChannel sub channel
+     * @param locationId location id
+     * @return Default checklist response transfer object
+     *
+     */
+    @Get("/checklist_templates/{registry_type}")
+    @Status(HttpStatus.OK)
+    @ApiResponse(
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = DefaultChecklistResponseTO::class))]
+    )
+    fun getDefaultChecklistTemplates(
+        @PathVariable("registry_type") registryType: RegistryType,
+        @QueryValue("location_id") locationId: Long?,
+        @QueryValue("channel") channel: RegistryChannel,
+        @QueryValue("sub_channel") subChannel: RegistrySubChannel
+    ): Mono<DefaultChecklistResponseTO> {
+        return getDefaultChecklistsService.getDefaultChecklistsForRegistryType(registryType, channel, subChannel)
     }
 
     /**

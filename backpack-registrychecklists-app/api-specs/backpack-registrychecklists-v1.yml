@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.0.8
+  version: 1.0.9
   title: registries_checklists-v1
   description: Api to get list of checklist items for a given registry type
 host: api.target.com
@@ -374,6 +374,7 @@ paths:
           description: Not found
           schema:
             $ref: '#/definitions/Error404'
+
     post:
       x-incident_priority: P4
       x-response_time_sla: 800ms
@@ -430,6 +431,68 @@ paths:
           description: registry checklist transfer object
           schema:
             $ref: '#/definitions/RegistryChecklistResponseTO'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error403'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Error404'
+  '/checklist_templates/{registry_type}':
+    x-data_classification: PUBLIC
+    get:
+      x-incident_priority: P4
+      x-response_time_sla: 800ms
+      x-success_http_code: '200'
+      x-expected_tps: '100'
+      summary: Get registry checklists
+      description: Api to get list of checklist items for a given registry type
+      tags:
+        - checklists
+      parameters:
+        - name: key
+          in: query
+          description: The consumer's valid API key.
+          required: true
+          type: string
+        - name: registry_type
+          in: path
+          description: The registry type for which checklist will be used
+          enum: [ "BABY", "WEDDING", "CUSTOM", "CHARITY" ]
+          required: true
+          type: string
+        - name: channel
+          in: query
+          description: registry channel
+          required: true
+          type: string
+          enum: [ "WEB", "MOBILE", "STORE", "ADMIN", "EXTERNAL" ]
+        - name: sub_channel
+          in: query
+          description: registry subchannel
+          required: true
+          type: string
+          enum: [ "KIOSK", "SCANNER", "TGTWEB", "IOS", "ANDROID", "SPARTAG", "CC", "POS", "GOM", "SPARTAR", "EGIFT", "XO" ]
+        - name: location_id
+          in: query
+          description: The store id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: default checklist transfer object
+          schema:
+            $ref: '#/definitions/DefaultChecklistResponseTO'
         '400':
           description: Bad Request
           schema:
@@ -650,6 +713,21 @@ definitions:
       checklist_checked_count:
         type: integer
         format: int32
+      checklist_total_count:
+        type: integer
+        format: int32
+
+  DefaultChecklistResponseTO:
+    type: object
+    properties:
+      registry_type:
+        $ref: '#/definitions/RegistryType'
+      default_template_id:
+        type: integer
+      categories:
+        type: array
+        items:
+          $ref: '#/definitions/ChecklistCategoryTO'
       checklist_total_count:
         type: integer
         format: int32

@@ -16,6 +16,8 @@ handlers:
     anonymous_routes:
       - GET: /health
       - GET: /apispec
+    bypass_routes:
+      - GET: /registries_checklists/v1/checklist_templates/*
     strategies:
       gsp:
           - routes_by_scope:

@@ -17,7 +17,10 @@ data class ChecklistCategoryTO(
     ) :
         this(
             categoryId = checklistTemplate.categoryId,
-            categoryDisplayOrder = checklistTemplate.categoryOrder, categoryImageUrl = checklistTemplate.categoryImageUr,
-            categoryName = checklistTemplate.categoryName, subcategories = subCategories
+            categoryDisplayOrder = checklistTemplate.categoryOrder,
+            categoryImageUrl = checklistTemplate.categoryImageUr,
+            categoryName = checklistTemplate.categoryName,
+            subcategories = subCategories,
+            categoryTotalCount = subCategories?.size ?: 0
         )
 }
