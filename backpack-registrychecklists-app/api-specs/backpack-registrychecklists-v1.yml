@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.0.9
+  version: 1.0.10
   title: registries_checklists-v1
   description: Api to get list of checklist items for a given registry type
 host: api.target.com
@@ -71,13 +71,13 @@ x-api-definition:
     api_spec: https://git.target.com/Registry-Modernization/backpack-registrychecklists/blob/master/api-spec/backpack-registrychecklists-v1.yml
   endpoints:
     external:
-      production: https://api.target.com/registry_checklists/v1
-      stage: https://stage-api.target.com/registry_checklists/v1
+      production: https://api.target.com/registries_checklists/v1
+      stage: https://stage-api.target.com/registries_checklists/v1
       qa: null
       ci: null
     internal:
-      production: https://api-internal.target.com/registry_checklists/v1
-      stage: https://stgapi-internal.target.com/registry_checklists/v1
+      production: https://api-internal.target.com/registries_checklists/v1
+      stage: https://stgapi-internal.target.com/registries_checklists/v1
       qa: null
       ci: null
 securityDefinitions:

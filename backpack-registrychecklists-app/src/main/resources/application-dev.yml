@@ -83,7 +83,7 @@ components:
         - axiom.leader
       profile-header: member_id
     registry-channel-subchannel-filter:
-      base-uri: /registry_checklists/v1
+      base-uri: /registries_checklists/v1
     sanitizing-filter:
       enabled: true
 

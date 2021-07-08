@@ -156,7 +156,8 @@ steps:
       action: docker-promote
       docker_registry: app/backpack-registrychecklists/backpack-registrychecklists-app
       target_docker_registry: app/backpack-registrychecklists/backpack-registrychecklists-app
-      tags: "rc.${BUILD_TAG:37}"
+      tag: "rc.${BUILD_TAG:37}"
+      target_tags: 'prod.${BUILD_TAG:37}'
     ruleset:
       event: tag
       branch: master
@@ -209,7 +210,8 @@ steps:
       action: docker-promote
       docker_registry: app/backpack-registrychecklists/backpack-registrychecklists-consumer-app
       target_docker_registry: app/backpack-registrychecklists/backpack-registrychecklists-consumer-app
-      tags: "rc.${BUILD_TAG:37}"
+      tag: "rc.${BUILD_TAG:37}"
+      target_tags: 'prod.${BUILD_TAG:37}'
     ruleset:
       event: tag
       branch: master
@@ -262,7 +264,8 @@ steps:
       action: docker-promote
       docker_registry: app/backpack-registrychecklists/backpack-registrychecklists-migration-consumer-app
       target_docker_registry: app/backpack-registrychecklists/backpack-registrychecklists-migration-consumer-app
-      tags: "rc.${BUILD_TAG:37}"
+      tag: "rc.${BUILD_TAG:37}"
+      target_tags: 'prod.${BUILD_TAG:37}'
     ruleset:
       event: tag
       branch: master

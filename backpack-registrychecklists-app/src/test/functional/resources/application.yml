@@ -109,9 +109,9 @@ components:
   server:
     list-authorization-filter:
       enabled: false
-      base-uri: /registry_checklists/v1
+      base-uri: /registries_checklists/v1
     registry-channel-subchannel-filter:
-      base-uri: /registry_checklists/v1
+      base-uri: /registries_checklists/v1
     sanitizing-filter:
       enabled: true
 
