@@ -410,7 +410,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{host}}/registries_checklists/v1/checklist_templates/BABY?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}&registry_type={{registry_type}}",
+					"raw": "{{host}}/registries_checklists/v1/checklist_templates/{{registry_type}}?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}",
 					"host": [
 						"{{host}}"
 					],
@@ -418,7 +418,7 @@
 						"registries_checklists",
 						"v1",
 						"checklist_templates",
-						"BABY"
+						"{{registry_type}}"
 					],
 					"query": [
 						{
@@ -432,10 +432,6 @@
 						{
 							"key": "location_id",
 							"value": "{{location_id}}"
-						},
-						{
-							"key": "registry_type",
-							"value": "{{registry_type}}"
 						}
 					]
 				}
