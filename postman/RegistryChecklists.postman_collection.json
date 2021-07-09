@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "98e28c6b-4651-4d2b-91f3-a297058c1d96",
+		"_postman_id": "109152a0-e6bf-42ef-b8d8-7c7c8ed40033",
 		"name": "RegistryChecklists",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -221,7 +221,7 @@
 						"{{registry_id}}",
 						"checklist_templates",
 						"{{checklist_id}}",
-                        "{{template_id}}"
+						"{{template_id}}"
 					],
 					"query": [
 						{
@@ -394,7 +394,60 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get default checklists",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{key}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/registries_checklists/v1/checklist_templates/BABY?channel={{channel}}&sub_channel={{sub_channel}}&location_id={{location_id}}&registry_type={{registry_type}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"registries_checklists",
+						"v1",
+						"checklist_templates",
+						"BABY"
+					],
+					"query": [
+						{
+							"key": "channel",
+							"value": "{{channel}}"
+						},
+						{
+							"key": "sub_channel",
+							"value": "{{sub_channel}}"
+						},
+						{
+							"key": "location_id",
+							"value": "{{location_id}}"
+						},
+						{
+							"key": "registry_type",
+							"value": "{{registry_type}}"
+						}
+					]
+				}
+			},
+			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
